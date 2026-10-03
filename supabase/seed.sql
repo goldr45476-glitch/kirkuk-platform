@@ -165,3 +165,56 @@ insert into public.pharmacy_duty (business_id, duty_date, note)
 select id, current_date, 'مناوبة ليلية حتى الصباح' from public.businesses where slug in ('pharm-shifa24','pharm-amal');
 insert into public.pharmacy_duty (business_id, duty_date, note)
 select id, current_date + 1, 'مناوبة ليلية حتى الصباح' from public.businesses where slug in ('pharm-noor','pharm-qoriya');
+
+
+-- =====================================================================
+-- Demo users (so reviews / classifieds have authors). DELETE before launch:
+--   delete from auth.users where id::text like '00000000-0000-0000-0000-0000000000d%';
+-- =====================================================================
+insert into auth.users (id, phone, raw_user_meta_data) values
+ ('00000000-0000-0000-0000-0000000000d1', '+9647700000101', '{"full_name":"أحمد الكركوكلي"}'),
+ ('00000000-0000-0000-0000-0000000000d2', '+9647700000102', '{"full_name":"سارة محمد"}'),
+ ('00000000-0000-0000-0000-0000000000d3', '+9647700000103', '{"full_name":"هاورى كريم"}'),
+ ('00000000-0000-0000-0000-0000000000d4', '+9647700000104', '{"full_name":"محمد التركماني"}')
+on conflict (id) do nothing;
+
+insert into public.reviews (business_id, user_id, rating, body)
+select b.id, u.id, v.rating, v.body
+from (values
+ ('mutaam-al-qala','00000000-0000-0000-0000-0000000000d1',5,'أفضل كباب في كركوك، الخدمة سريعة والأسعار مناسبة.'),
+ ('mutaam-al-qala','00000000-0000-0000-0000-0000000000d2',4,'الطعام ممتاز لكن المكان يزدحم في عطلة نهاية الأسبوع.'),
+ ('mutaam-al-qala','00000000-0000-0000-0000-0000000000d3',5,'جلسة عائلية رائعة.'),
+ ('cafe-asri','00000000-0000-0000-0000-0000000000d1',5,'قهوة ممتازة وأجواء هادئة للدراسة.'),
+ ('cafe-asri','00000000-0000-0000-0000-0000000000d4',4,'جيد جداً، الحلويات لذيذة.'),
+ ('pharm-amal','00000000-0000-0000-0000-0000000000d2',5,'صيدلاني متعاون وتوصيل سريع.'),
+ ('lab-shifa','00000000-0000-0000-0000-0000000000d3',5,'نتائج دقيقة وسريعة.'),
+ ('lab-shifa','00000000-0000-0000-0000-0000000000d4',4,'سحب منزلي مريح.'),
+ ('workshop-askari','00000000-0000-0000-0000-0000000000d1',4,'فحص الكمبيوتر دقيق وأسعار معقولة.'),
+ ('azadi-mall','00000000-0000-0000-0000-0000000000d2',4,'مول نظيف ومواقف واسعة.')
+) as v(slug, uid, rating, body)
+join public.businesses b on b.slug = v.slug
+join auth.users u on u.id = v.uid::uuid;
+
+update public.reviews set owner_reply = 'شكراً لذوقك، نتشرف بزيارتك دائماً 🌹', replied_at = now()
+where body like 'أفضل كباب%';
+
+-- Classifieds ----------------------------------------------------------
+insert into public.listings (user_id, kind, district_id, title, description, price, currency, details, phone, lat, lng)
+select '00000000-0000-0000-0000-0000000000d1', v.kind::listing_kind, d.id, v.title, v.descr, v.price, v.cur, v.details::jsonb, v.phone, d.lat, d.lng
+from (values
+ ('property','wasiti','شقة للإيجار في الواسطي - 3 غرف','شقة نظيفة في الطابق الثاني، تشطيب جيد، قريبة من الخدمات والمدارس.', 450000,'IQD','{"deal":"rent","type":"apartment","area_m2":130,"rooms":3,"baths":2,"floor":2}','07702000001'),
+ ('property','asri','بيت للبيع في الحي العصري 200 م','بيت طابقين، موقع تجاري مميز على شارع رئيسي، سند طابو.', 235000,'USD','{"deal":"sale","type":"house","area_m2":200,"rooms":5,"baths":3}','07702000002'),
+ ('property','azadi','قطعة أرض سكنية في آزادي','أرض 300 م مفرزة وجاهزة للبناء، قريبة من الشارع العام.', 90000,'USD','{"deal":"sale","type":"land","area_m2":300}','07702000003'),
+ ('property','iskan','محل تجاري للإيجار - الإسكان','محل 40 م على شارع تجاري، مناسب لمعظم الأنشطة.', 700000,'IQD','{"deal":"rent","type":"shop","area_m2":40}','07702000004'),
+ ('property','rahimawa','دار للإيجار في رحيم آوا','دار بحديقة، 4 غرف، مناسبة لعائلة كبيرة.', 600000,'IQD','{"deal":"rent","type":"house","area_m2":250,"rooms":4,"baths":2}','07702000005'),
+ ('property','tisin','شقة للبيع في تسعين','شقة جديدة 110 م في مجمع سكني مسوّر.', 78000,'USD','{"deal":"sale","type":"apartment","area_m2":110,"rooms":3,"baths":2,"floor":3}','07702000006'),
+ ('vehicle','tisin','تويوتا كورولا 2018 نظيفة','سيارة بحالة ممتازة، فحص كامل، ماكينة وكير أصلي.', 13500,'USD','{"deal":"sale","type":"car","make":"Toyota","model":"Corolla","year":2018,"mileage_km":95000,"fuel":"بنزين"}','07703000001'),
+ ('vehicle','askari','هيونداي النترا 2016','سيارة اقتصادية، صبغ وكالة، لا حوادث.', 9800,'USD','{"deal":"sale","type":"car","make":"Hyundai","model":"Elantra","year":2016,"mileage_km":140000,"fuel":"بنزين"}','07703000002'),
+ ('vehicle','domiz','ماطور هوندا 150 سي سي 2021','ماطور شبه جديد، أوراق كاملة.', 1900,'USD','{"deal":"sale","type":"motorcycle","make":"Honda","year":2021,"mileage_km":12000}','07703000003'),
+ ('vehicle','shorja','مطلوب: قطع غيار كيا سبورتاج 2014','أبحث عن قطع غيار أصلية أو مستعملة بحالة جيدة.', null,'IQD','{"deal":"wanted","type":"parts","make":"Kia","model":"Sportage"}','07703000004'),
+ ('job','asri','مطلوب محاسب لشركة تجارية','خبرة لا تقل عن سنتين، إتقان إكسل، الدوام صباحي.', null,'IQD','{"type":"offer","employment":"full","salary":"700,000 - 900,000 د.ع"}','07704000001'),
+ ('job','wasiti','مطلوب موظفو مبيعات - مول','دوام جزئي أو كامل، راتب + عمولة، لا يشترط خبرة.', null,'IQD','{"type":"offer","employment":"part","salary":"450,000 + عمولة"}','07704000002'),
+ ('job','azadi','أبحث عن عمل: مهندس مدني حديث التخرج','خريج 2025، أجيد أوتوكاد وبرامج الحساب الإنشائي.', null,'IQD','{"type":"seeking","employment":"full"}','07704000003'),
+ ('job','musalla','مطلوب سائق توصيل بدراجة نارية','دراجة من الشركة، دوام مسائي، راتب شهري ثابت.', null,'IQD','{"type":"offer","employment":"contract","salary":"600,000"}','07704000004')
+) as v(kind, dist, title, descr, price, cur, details, phone)
+join public.districts d on d.slug = v.dist;

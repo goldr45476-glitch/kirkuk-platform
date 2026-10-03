@@ -70,10 +70,44 @@ const ar = {
   notifications: {
     title: "الإشعارات", empty: "لا توجد إشعارات", markAll: "تعليم الكل كمقروء",
     follow: "{actor} بدأ بمتابعة {business}", like: "{actor} أعجبه منشورك", comment: "{actor} علّق على منشورك", offer: "{business} نشر عرضاً جديداً",
+    review: "{actor} قيّم {business}", review_reply: "{business} ردّ على تقييمك",
     post: "{business} نشر منشوراً جديداً", system: "إشعار جديد", someone: "أحد المستخدمين",
   },
   stories: { title: "القصص", close: "إغلاق", next: "التالي", prev: "السابق" },
   profile: { myPosts: "منشوراتي", following: "الأنشطة التي أتابعها", noPosts: "لم تنشر شيئاً بعد", noFollowing: "لا تتابع أي نشاط بعد" },
+
+  reviews: {
+    title: "التقييمات", write: "قيّم هذا النشاط", edit: "تعديل تقييمك", yourRating: "تقييمك", placeholder: "شاركنا تجربتك (اختياري)", submit: "نشر التقييم", update: "تحديث التقييم",
+    delete: "حذف تقييمي", reply: "رد", replyPlaceholder: "اكتب ردك على هذا التقييم…", ownerReply: "رد صاحب النشاط", noReviews: "لا توجد تقييمات بعد، كن أول من يقيّم",
+    loginToReview: "سجّل الدخول لتقيّم", ownerCannot: "لا يمكنك تقييم نشاطك الخاص", stars: "من 5", sent: "تم حفظ تقييمك", pickRating: "اختر عدد النجوم",
+  },
+  listings: {
+    title: "الإعلانات المبوّبة", kinds: { property: "العقارات", vehicle: "السيارات والماطورات", job: "الوظائف" },
+    post: "أضف إعلاناً", filters: "الفلاتر", apply: "تطبيق", reset: "مسح", any: "الكل", results: "إعلان", noResults: "لا توجد إعلانات مطابقة", search: "ابحث في الإعلانات…",
+    deal: { sale: "بيع", rent: "إيجار", wanted: "مطلوب" },
+    types: { apartment: "شقة", house: "بيت", villa: "فيلا", land: "أرض", shop: "محل", office: "مكتب", car: "سيارة", motorcycle: "ماطور / دراجة", parts: "قطع غيار" },
+    jobTypes: { offer: "مطلوب موظف", seeking: "أبحث عن عمل" },
+    employment: { full: "دوام كامل", part: "دوام جزئي", contract: "عقد", freelance: "عمل حر" },
+    sort: { newest: "الأحدث", price_asc: "الأرخص", price_desc: "الأغلى" },
+    f: {
+      title: "عنوان الإعلان", description: "الوصف", price: "السعر", currency: "العملة", district: "المنطقة", area: "المساحة (م²)", rooms: "عدد الغرف", baths: "الحمامات", floor: "الطابق",
+      make: "الماركة", model: "الموديل", year: "سنة الصنع", mileage: "المسافة المقطوعة (كم)", fuel: "الوقود", salary: "الراتب", phone: "رقم الهاتف", photos: "الصور (حتى 6)",
+      deal: "نوع الإعلان", type: "النوع", employment: "نوع الدوام", minPrice: "السعر من", maxPrice: "السعر إلى", minArea: "المساحة من", minRooms: "غرف (على الأقل)", minYear: "السنة من",
+    },
+    negotiable: "السعر عند الاتصال", contact: "تواصل مع المعلن", mine: "إعلاناتي", markSold: "تمّ (بيع/إيجار/توظيف)", reactivate: "إعادة التفعيل", delete: "حذف الإعلان",
+    confirmDelete: "حذف هذا الإعلان نهائياً؟", sold: "منتهي", published: "تم نشر إعلانك", workshops: "ورش صيانة السيارات", views: "مشاهدة", noMine: "لا توجد إعلانات لديك بعد",
+    details: "التفاصيل", areaUnit: "م²", rooms: "غرف", baths: "حمامات", floor: "الطابق", km: "كم", featured: "مميز", featuredNote: "الإعلانات المميزة تظهر أولاً", loginToPost: "سجّل الدخول لتضيف إعلاناً",
+    invalid: "تحقّق من الحقول المطلوبة", uploadError: "فشل رفع الصورة", currencies: { IQD: "د.ع", USD: "$" },
+  },
+  live: {
+    title: "خدمات مباشرة", pharmacies: "الصيدليات المناوبة", fuel: "محطات البنزين", water: "محطات الماء",
+    dutyToday: "مناوبة اليوم", dutyTomorrow: "مناوبة غداً", noDuty: "لم تُضَف المناوبات بعد", allPharmacies: "كل الصيدليات",
+    status: { available: "متوفر", unavailable: "غير متوفر", queue: "طابور" },
+    queue: ["بدون طابور", "طابور قصير", "طابور متوسط", "طابور طويل"], noReports: "لا توجد بلاغات حديثة", report: "أبلغ عن الحالة", reportThanks: "شكراً، تم تسجيل بلاغك",
+    updated: "آخر تحديث", reports: "بلاغ", addDuty: "سجّل مناوبة صيدليتي", dutyDate: "التاريخ", dutyNote: "ملاحظة (اختياري)", dutyAdded: "تمت إضافة المناوبة",
+    loginToReport: "سجّل الدخول لتبلّغ", hint: "الحالة مبنية على بلاغات المستخدمين خلال آخر 6 ساعات", queueLevel: "حجم الطابور", send: "إرسال", today: "اليوم", tomorrow: "غداً",
+  },
+  home2: { classifieds: "الإعلانات المبوّبة", live: "خدمات مباشرة" },
 };
 
 export type Dictionary = typeof ar;
@@ -149,10 +183,44 @@ const ku: Dictionary = {
   notifications: {
     title: "ئاگادارکردنەوەکان", empty: "هیچ ئاگادارکردنەوەیەک نییە", markAll: "هەموو وەک خوێندراوە دیاری بکە",
     follow: "{actor} دەستی کرد بە فۆڵۆکردنی {business}", like: "{actor} پۆستەکەتی بەدڵ بوو", comment: "{actor} کۆمێنتی لەسەر پۆستەکەت کرد", offer: "{business} ئۆفەرێکی نوێی بڵاوکردەوە",
+    review: "{actor} {business}ی هەڵسەنگاند", review_reply: "{business} وەڵامی هەڵسەنگاندنەکەتی دایەوە",
     post: "{business} پۆستێکی نوێی بڵاوکردەوە", system: "ئاگادارکردنەوەی نوێ", someone: "بەکارهێنەرێک",
   },
   stories: { title: "ستۆرییەکان", close: "داخستن", next: "دواتر", prev: "پێشوو" },
   profile: { myPosts: "پۆستەکانم", following: "ئەو چالاکییانەی فۆڵۆم کردوون", noPosts: "هێشتا هیچت بڵاو نەکردووەتەوە", noFollowing: "هێشتا هیچ چالاکییەکت فۆڵۆ نەکردووە" },
+
+  reviews: {
+    title: "هەڵسەنگاندنەکان", write: "ئەم چالاکییە هەڵبسەنگێنە", edit: "دەستکاریکردنی هەڵسەنگاندن", yourRating: "هەڵسەنگاندنەکەت", placeholder: "ئەزموونەکەت هاوبەش بکە (ئارەزوومەندانە)", submit: "بڵاوکردنەوەی هەڵسەنگاندن", update: "نوێکردنەوە",
+    delete: "سڕینەوەی هەڵسەنگاندنەکەم", reply: "وەڵام", replyPlaceholder: "وەڵامەکەت بنووسە…", ownerReply: "وەڵامی خاوەنی چالاکی", noReviews: "هێشتا هیچ هەڵسەنگاندنێک نییە، یەکەم کەس بە",
+    loginToReview: "بچۆ ژوورەوە بۆ هەڵسەنگاندن", ownerCannot: "ناتوانیت چالاکی خۆت هەڵبسەنگێنیت", stars: "لە ٥", sent: "هەڵسەنگاندنەکەت پاشەکەوت کرا", pickRating: "ژمارەی ئەستێرەکان هەڵبژێرە",
+  },
+  listings: {
+    title: "ڕیکلامە پۆلێنکراوەکان", kinds: { property: "خانووبەرە", vehicle: "ئۆتۆمبێل و مۆتۆر", job: "کار" },
+    post: "ڕیکلامێک زیاد بکە", filters: "فلتەرەکان", apply: "جێبەجێکردن", reset: "سڕینەوە", any: "هەموو", results: "ڕیکلام", noResults: "هیچ ڕیکلامێکی گونجاو نییە", search: "لە ڕیکلامەکاندا بگەڕێ…",
+    deal: { sale: "فرۆشتن", rent: "کرێ", wanted: "پێویستە" },
+    types: { apartment: "شوقە", house: "خانوو", villa: "ڤێلا", land: "زەوی", shop: "دوکان", office: "نووسینگە", car: "ئۆتۆمبێل", motorcycle: "مۆتۆر / پاسکیل", parts: "پارچەی یەدەگ" },
+    jobTypes: { offer: "کارمەند پێویستە", seeking: "بەدوای کار دەگەڕێم" },
+    employment: { full: "کاتی تەواو", part: "کاتی نیمچە", contract: "گرێبەست", freelance: "کاری ئازاد" },
+    sort: { newest: "نوێترین", price_asc: "هەرزانترین", price_desc: "گرانترین" },
+    f: {
+      title: "ناونیشانی ڕیکلام", description: "وەسف", price: "نرخ", currency: "دراو", district: "ناوچە", area: "ڕووبەر (م²)", rooms: "ژمارەی ژوور", baths: "حەمام", floor: "نهۆم",
+      make: "مارکە", model: "مۆدێل", year: "ساڵی دروستکردن", mileage: "مەودای بڕاو (کم)", fuel: "سووتەمەنی", salary: "مووچە", phone: "ژمارەی مۆبایل", photos: "وێنەکان (تا ٦)",
+      deal: "جۆری ڕیکلام", type: "جۆر", employment: "جۆری کار", minPrice: "نرخ لە", maxPrice: "نرخ بۆ", minArea: "ڕووبەر لە", minRooms: "ژوور (لانیکەم)", minYear: "ساڵ لە",
+    },
+    negotiable: "نرخ بە پەیوەندی", contact: "پەیوەندی بە ڕیکلامکەر", mine: "ڕیکلامەکانم", markSold: "تەواو بوو", reactivate: "چالاککردنەوە", delete: "سڕینەوەی ڕیکلام",
+    confirmDelete: "ئەم ڕیکلامە بە تەواوی بسڕدرێتەوە؟", sold: "تەواو بوو", published: "ڕیکلامەکەت بڵاوکرایەوە", workshops: "کارگەی چاکسازی ئۆتۆمبێل", views: "بینین", noMine: "هێشتا هیچ ڕیکلامێکت نییە",
+    details: "وردەکاری", areaUnit: "م²", rooms: "ژوور", baths: "حەمام", floor: "نهۆم", km: "کم", featured: "تایبەت", featuredNote: "ڕیکلامە تایبەتەکان یەکەم دەردەکەون", loginToPost: "بچۆ ژوورەوە بۆ زیادکردنی ڕیکلام",
+    invalid: "خانە پێویستەکان بپشکنە", uploadError: "بارکردنی وێنە سەرکەوتوو نەبوو", currencies: { IQD: "د.ع", USD: "$" },
+  },
+  live: {
+    title: "خزمەتگوزاری ڕاستەوخۆ", pharmacies: "دەرمانخانە نۆبەتییەکان", fuel: "وێستگەی بەنزین", water: "وێستگەی ئاو",
+    dutyToday: "نۆبەتی ئەمڕۆ", dutyTomorrow: "نۆبەتی سبەینێ", noDuty: "هێشتا نۆبەتەکان زیاد نەکراون", allPharmacies: "هەموو دەرمانخانەکان",
+    status: { available: "بەردەستە", unavailable: "بەردەست نییە", queue: "ڕیز" },
+    queue: ["بێ ڕیز", "ڕیزی کورت", "ڕیزی مامناوەند", "ڕیزی درێژ"], noReports: "هیچ ڕاپۆرتێکی تازە نییە", report: "ڕاپۆرتی دۆخ بدە", reportThanks: "سوپاس، ڕاپۆرتەکەت تۆمار کرا",
+    updated: "دوایین نوێکردنەوە", reports: "ڕاپۆرت", addDuty: "نۆبەتی دەرمانخانەکەم تۆمار بکە", dutyDate: "بەروار", dutyNote: "تێبینی (ئارەزوومەندانە)", dutyAdded: "نۆبەتەکە زیاد کرا",
+    loginToReport: "بچۆ ژوورەوە بۆ ڕاپۆرتدان", hint: "دۆخەکە لەسەر ڕاپۆرتی بەکارهێنەران دامەزراوە لە ٦ کاتژمێری ڕابردوودا", queueLevel: "قەبارەی ڕیز", send: "ناردن", today: "ئەمڕۆ", tomorrow: "سبەینێ",
+  },
+  home2: { classifieds: "ڕیکلامە پۆلێنکراوەکان", live: "خزمەتگوزاری ڕاستەوخۆ" },
 };
 
 const tr: Dictionary = {
@@ -226,10 +294,44 @@ const tr: Dictionary = {
   notifications: {
     title: "Bildirimler", empty: "Bildirim yok", markAll: "Tümünü okundu say",
     follow: "{actor}, {business} işletmesini takip etmeye başladı", like: "{actor} gönderinizi beğendi", comment: "{actor} gönderinize yorum yaptı", offer: "{business} yeni bir fırsat paylaştı",
+    review: "{actor}, {business} işletmesini değerlendirdi", review_reply: "{business} değerlendirmenize yanıt verdi",
     post: "{business} yeni bir gönderi paylaştı", system: "Yeni bildirim", someone: "Bir kullanıcı",
   },
   stories: { title: "Hikâyeler", close: "Kapat", next: "Sonraki", prev: "Önceki" },
   profile: { myPosts: "Gönderilerim", following: "Takip ettiğim işletmeler", noPosts: "Henüz paylaşım yapmadınız", noFollowing: "Henüz hiçbir işletmeyi takip etmiyorsunuz" },
+
+  reviews: {
+    title: "Değerlendirmeler", write: "Bu işletmeyi değerlendir", edit: "Değerlendirmeni düzenle", yourRating: "Puanın", placeholder: "Deneyimini paylaş (isteğe bağlı)", submit: "Değerlendirmeyi yayınla", update: "Güncelle",
+    delete: "Değerlendirmemi sil", reply: "Yanıtla", replyPlaceholder: "Yanıtınızı yazın…", ownerReply: "İşletme yanıtı", noReviews: "Henüz değerlendirme yok, ilk siz olun",
+    loginToReview: "Değerlendirmek için giriş yapın", ownerCannot: "Kendi işletmenizi değerlendiremezsiniz", stars: "/ 5", sent: "Değerlendirmeniz kaydedildi", pickRating: "Yıldız sayısını seçin",
+  },
+  listings: {
+    title: "İlanlar", kinds: { property: "Emlak", vehicle: "Araç ve motosiklet", job: "İş ilanları" },
+    post: "İlan ver", filters: "Filtreler", apply: "Uygula", reset: "Temizle", any: "Tümü", results: "ilan", noResults: "Eşleşen ilan yok", search: "İlanlarda ara…",
+    deal: { sale: "Satılık", rent: "Kiralık", wanted: "Aranıyor" },
+    types: { apartment: "Daire", house: "Ev", villa: "Villa", land: "Arsa", shop: "Dükkan", office: "Ofis", car: "Otomobil", motorcycle: "Motosiklet / bisiklet", parts: "Yedek parça" },
+    jobTypes: { offer: "Eleman aranıyor", seeking: "İş arıyorum" },
+    employment: { full: "Tam zamanlı", part: "Yarı zamanlı", contract: "Sözleşmeli", freelance: "Serbest" },
+    sort: { newest: "En yeni", price_asc: "En ucuz", price_desc: "En pahalı" },
+    f: {
+      title: "İlan başlığı", description: "Açıklama", price: "Fiyat", currency: "Para birimi", district: "Bölge", area: "Alan (m²)", rooms: "Oda sayısı", baths: "Banyo", floor: "Kat",
+      make: "Marka", model: "Model", year: "Model yılı", mileage: "Kilometre", fuel: "Yakıt", salary: "Maaş", phone: "Telefon", photos: "Fotoğraflar (en fazla 6)",
+      deal: "İlan türü", type: "Tür", employment: "Çalışma şekli", minPrice: "Fiyat min", maxPrice: "Fiyat maks", minArea: "Alan min", minRooms: "Oda (en az)", minYear: "Yıl min",
+    },
+    negotiable: "Fiyat için arayın", contact: "İlan sahibiyle iletişim", mine: "İlanlarım", markSold: "Tamamlandı", reactivate: "Yeniden etkinleştir", delete: "İlanı sil",
+    confirmDelete: "Bu ilan kalıcı olarak silinsin mi?", sold: "Sona erdi", published: "İlanınız yayınlandı", workshops: "Oto servisler", views: "görüntülenme", noMine: "Henüz ilanınız yok",
+    details: "Ayrıntılar", areaUnit: "m²", rooms: "oda", baths: "banyo", floor: "Kat", km: "km", featured: "Öne çıkan", featuredNote: "Öne çıkan ilanlar önce görünür", loginToPost: "İlan vermek için giriş yapın",
+    invalid: "Zorunlu alanları kontrol edin", uploadError: "Fotoğraf yüklenemedi", currencies: { IQD: "IQD", USD: "$" },
+  },
+  live: {
+    title: "Canlı hizmetler", pharmacies: "Nöbetçi eczaneler", fuel: "Akaryakıt istasyonları", water: "Su istasyonları",
+    dutyToday: "Bugünün nöbetçileri", dutyTomorrow: "Yarının nöbetçileri", noDuty: "Nöbet listesi henüz eklenmedi", allPharmacies: "Tüm eczaneler",
+    status: { available: "Mevcut", unavailable: "Yok", queue: "Kuyruk" },
+    queue: ["Kuyruk yok", "Kısa kuyruk", "Orta kuyruk", "Uzun kuyruk"], noReports: "Güncel bildirim yok", report: "Durumu bildir", reportThanks: "Teşekkürler, bildiriminiz alındı",
+    updated: "Son güncelleme", reports: "bildirim", addDuty: "Eczanemin nöbetini ekle", dutyDate: "Tarih", dutyNote: "Not (isteğe bağlı)", dutyAdded: "Nöbet eklendi",
+    loginToReport: "Bildirmek için giriş yapın", hint: "Durum, son 6 saatteki kullanıcı bildirimlerine dayanır", queueLevel: "Kuyruk yoğunluğu", send: "Gönder", today: "Bugün", tomorrow: "Yarın",
+  },
+  home2: { classifieds: "İlanlar", live: "Canlı hizmetler" },
 };
 
 const en: Dictionary = {
@@ -303,10 +405,44 @@ const en: Dictionary = {
   notifications: {
     title: "Notifications", empty: "No notifications", markAll: "Mark all as read",
     follow: "{actor} started following {business}", like: "{actor} liked your post", comment: "{actor} commented on your post", offer: "{business} posted a new offer",
+    review: "{actor} reviewed {business}", review_reply: "{business} replied to your review",
     post: "{business} shared a new post", system: "New notification", someone: "Someone",
   },
   stories: { title: "Stories", close: "Close", next: "Next", prev: "Previous" },
   profile: { myPosts: "My posts", following: "Businesses I follow", noPosts: "You haven't posted yet", noFollowing: "You don't follow any business yet" },
+
+  reviews: {
+    title: "Reviews", write: "Rate this business", edit: "Edit your review", yourRating: "Your rating", placeholder: "Share your experience (optional)", submit: "Post review", update: "Update review",
+    delete: "Delete my review", reply: "Reply", replyPlaceholder: "Write your reply…", ownerReply: "Owner's reply", noReviews: "No reviews yet — be the first",
+    loginToReview: "Log in to review", ownerCannot: "You can't review your own business", stars: "out of 5", sent: "Your review was saved", pickRating: "Pick a star rating",
+  },
+  listings: {
+    title: "Classifieds", kinds: { property: "Real estate", vehicle: "Cars & motorbikes", job: "Jobs" },
+    post: "Post an ad", filters: "Filters", apply: "Apply", reset: "Clear", any: "Any", results: "ads", noResults: "No matching ads", search: "Search ads…",
+    deal: { sale: "For sale", rent: "For rent", wanted: "Wanted" },
+    types: { apartment: "Apartment", house: "House", villa: "Villa", land: "Land", shop: "Shop", office: "Office", car: "Car", motorcycle: "Motorbike / bicycle", parts: "Spare parts" },
+    jobTypes: { offer: "Hiring", seeking: "Looking for work" },
+    employment: { full: "Full-time", part: "Part-time", contract: "Contract", freelance: "Freelance" },
+    sort: { newest: "Newest", price_asc: "Cheapest", price_desc: "Most expensive" },
+    f: {
+      title: "Ad title", description: "Description", price: "Price", currency: "Currency", district: "Area", area: "Area (m²)", rooms: "Rooms", baths: "Bathrooms", floor: "Floor",
+      make: "Make", model: "Model", year: "Year", mileage: "Mileage (km)", fuel: "Fuel", salary: "Salary", phone: "Phone", photos: "Photos (up to 6)",
+      deal: "Ad type", type: "Type", employment: "Employment", minPrice: "Min price", maxPrice: "Max price", minArea: "Min area", minRooms: "Rooms (min)", minYear: "Year from",
+    },
+    negotiable: "Call for price", contact: "Contact the advertiser", mine: "My ads", markSold: "Mark as done", reactivate: "Reactivate", delete: "Delete ad",
+    confirmDelete: "Delete this ad permanently?", sold: "Closed", published: "Your ad is live", workshops: "Car workshops", views: "views", noMine: "You have no ads yet",
+    details: "Details", areaUnit: "m²", rooms: "rooms", baths: "baths", floor: "Floor", km: "km", featured: "Featured", featuredNote: "Featured ads appear first", loginToPost: "Log in to post an ad",
+    invalid: "Check the required fields", uploadError: "Photo upload failed", currencies: { IQD: "IQD", USD: "$" },
+  },
+  live: {
+    title: "Live services", pharmacies: "Pharmacies on duty", fuel: "Fuel stations", water: "Water stations",
+    dutyToday: "On duty today", dutyTomorrow: "On duty tomorrow", noDuty: "Duty roster not added yet", allPharmacies: "All pharmacies",
+    status: { available: "Available", unavailable: "Unavailable", queue: "Queue" },
+    queue: ["No queue", "Short queue", "Medium queue", "Long queue"], noReports: "No recent reports", report: "Report status", reportThanks: "Thanks, your report was recorded",
+    updated: "Updated", reports: "reports", addDuty: "Add my pharmacy's duty", dutyDate: "Date", dutyNote: "Note (optional)", dutyAdded: "Duty added",
+    loginToReport: "Log in to report", hint: "Status is based on user reports from the last 6 hours", queueLevel: "Queue size", send: "Send", today: "Today", tomorrow: "Tomorrow",
+  },
+  home2: { classifieds: "Classifieds", live: "Live services" },
 };
 
 export const dictionaries: Record<"ar" | "ku" | "tr" | "en", Dictionary> = { ar, ku, tr, en };

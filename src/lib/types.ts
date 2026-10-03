@@ -65,6 +65,7 @@ export interface BusinessDetail extends Business {
   followers_count: number;
   views_count: number;
   category_id: number;
+  owner_id: string | null;
   hours: BusinessHour[];
   images: { id: string; url: string; caption: string | null }[];
   products: Product[];
@@ -102,4 +103,25 @@ export interface NotificationRow {
   data: { excerpt?: string };
   actor: { full_name: string } | null;
   business: { name: string; slug: string } | null;
+}
+
+export interface ReviewRow {
+  id: string; rating: number; body: string | null; owner_reply: string | null; replied_at: string | null; created_at: string; user_id: string;
+  author: { full_name: string; avatar_url: string | null };
+}
+export interface ListingCardRow {
+  id: string; kind: "property" | "vehicle" | "job"; title: string; price: number | null; currency: "IQD" | "USD";
+  details: Record<string, string | number | undefined>; district_id: number | null; is_featured: boolean; created_at: string; image: string | null; total_count: number;
+}
+export interface ListingDetail extends Omit<ListingCardRow, "image" | "total_count"> {
+  description: string | null; phone: string | null; lat: number | null; lng: number | null; user_id: string; status: string; views_count: number;
+  images: { id: string; url: string }[]; owner: { full_name: string };
+}
+export interface ServiceStatusRow {
+  id: string; slug: string; name: string; address: string | null; phone: string | null; district_id: number | null; is_open: boolean;
+  status: "available" | "unavailable" | "queue" | null; queue_level: number | null; note: string | null; reported_at: string | null; recent_reports: number;
+}
+export interface ListingFilters {
+  q?: string; deal?: string; type?: string; district?: number; currency?: string; minPrice?: number; maxPrice?: number;
+  minArea?: number; minRooms?: number; minYear?: number; employment?: string; sort?: "newest" | "price_asc" | "price_desc"; page?: number;
 }

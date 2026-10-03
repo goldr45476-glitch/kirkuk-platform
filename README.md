@@ -2,7 +2,13 @@
 
 منصة اجتماعية + دليل أعمال لمحافظة كركوك. Next.js 15 (App Router) · TypeScript · Tailwind · Supabase.
 
-## الحالة: المراحل 1 و2 و3 ✅
+## الحالة: المراحل 1 و2 و3 و4 ✅
+**المرحلة 4:** التقييمات (تقييم واحد لكل مستخدم، توزيع النجوم، رد صاحب النشاط مع إشعارات للطرفين)،
+الإعلانات المبوّبة: العقارات `/real-estate` والسيارات والماطورات `/cars` والوظائف `/jobs` بفلاتر قوية (بيع/إيجار، النوع، السعر، المساحة، الغرف، السنة، الدوام…) وصفحة إعلان `/listings/[id]` ونشر إعلان مع صور `/listings/new` وإدارة «إعلاناتي»،
+الخدمات المباشرة `/live/pharmacies` (مناوبة اليوم وغداً + تسجيل المناوبة لصاحب الصيدلية) و`/live/fuel` و`/live/water` (بلاغات المستخدمين: متوفر / غير متوفر / طابور، آخر 6 ساعات).
+> نفّذ `0004_reviews_listings_live.sql` بعد `0003`. يضيف seed بيانات تجريبية جديدة (مستخدمون تجريبيون 4، 10 تقييمات، 14 إعلاناً)؛ احذف المستخدمين التجريبيين قبل الإطلاق (الأمر في آخر `seed.sql`).
+
+### المراحل 1–3
 **المرحلة 3:** الخلاصة الاجتماعية على الرئيسية (الكل / من أتابعهم) مع تحميل المزيد، منشورات المستخدمين والأنشطة والعروض (مع تاريخ انتهاء)،
 رفع صور (ضغط تلقائي إلى WebP في المتصفح، حتى 4)، إعجاب (تفاعل فوري) وتعليقات في `/post/[id]`، إبلاغ وحذف المنشور، قصص 24 ساعة بعارض ملء الشاشة،
 إشعارات تُنتَج تلقائياً من قاعدة البيانات (متابعة، إعجاب، تعليق، عرض/منشور جديد) مع جرس وعدّاد مباشر عبر Realtime وصفحة `/notifications`،
@@ -29,7 +35,7 @@ npm run dev                    # http://localhost:3000
 
 ### 1) إنشاء مشروع Supabase
 1. أنشئ مشروعاً على supabase.com، وانسخ `Project URL` و`anon key` إلى `.env.local`.
-2. في **SQL Editor** نفّذ بالترتيب: `0001_schema.sql` ثم `0002_search.sql` ثم `0003_social.sql` (من `supabase/migrations/`) ثم `supabase/seed.sql`
+2. في **SQL Editor** نفّذ بالترتيب: `0001_schema.sql` ثم `0002_search.sql` ثم `0003_social.sql` ثم `0004_reviews_listings_live.sql` (من `supabase/migrations/`) ثم `supabase/seed.sql`
    (أو `supabase db push` عبر Supabase CLI).
 3. **Authentication → Providers**:
    - *Phone*: فعّله واربطه بمزوّد SMS (Twilio / MessageBird / Vonage). الـ OTP يتطلب مزوّداً مدفوعاً؛ استخدم *Test phone numbers* أثناء التطوير.
@@ -44,6 +50,7 @@ update public.profiles set role = 'admin' where id = '<UUID-من-auth.users>';
 ```bash
 node scripts/check-migration.mjs   # يشغّل migrations + seed على Postgres داخل الذاكرة (PGlite)
 node scripts/test-search.mjs       # يختبر دالة البحث (إملاء، تشكيل، فلاتر، الأقرب، مفتوح الآن)
+node scripts/test-phase4.mjs       # يختبر التقييمات والإعلانات والخدمات المباشرة (RLS + دوال البحث)
 node scripts/test-social.mjs       # يختبر RLS والتدفق الاجتماعي بدور authenticated (إشعارات، صلاحيات، حدود معدّل)
 npm test                           # اختبارات الوحدة
 npm run typecheck && npm run lint

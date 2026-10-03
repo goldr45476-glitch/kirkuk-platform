@@ -23,6 +23,10 @@ export async function Header() {
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/categories">{t.nav.categories}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/search">{t.nav.search}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/map">{t.nav.map}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/real-estate">{t.listings.kinds.property}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/cars">{t.listings.kinds.vehicle}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/jobs">{t.listings.kinds.job}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/live/pharmacies">{t.live.title}</Link>
         </nav>
         <div className="ms-auto flex items-center gap-1">
           <LocaleSwitcher current={locale} label={t.common.language} />

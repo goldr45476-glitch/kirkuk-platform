@@ -3,6 +3,7 @@ import { DynamicIcon } from "@/components/icon";
 import { Card } from "@/components/ui/card";
 import { getCategories } from "@/lib/data";
 import { getI18n, localized } from "@/lib/i18n/server";
+import { categoryHref } from "@/lib/category-href";
 
 export async function generateMetadata() {
   const { t } = await getI18n();
@@ -23,7 +24,7 @@ export default async function CategoriesPage() {
           const subs = all.filter((s) => s.parent_id === c.id);
           return (
             <Card key={c.id} className="p-4">
-              <Link href={`/categories/${c.slug}`} className="flex items-center gap-3">
+              <Link href={categoryHref(c.slug)} className="flex items-center gap-3">
                 <span className="grid size-11 place-items-center rounded-xl text-white" style={{ background: c.color ?? "hsl(var(--primary))" }}>
                   <DynamicIcon icon={c.icon} className="size-5" aria-hidden />
                 </span>

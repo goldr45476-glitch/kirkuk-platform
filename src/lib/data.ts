@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { supabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
-import type { Business, BusinessDetail, BusinessHour, Category, CommentRow, District, FeedPost, MapBusiness, NotificationRow, Product, Profile, SearchParams, StoryRing } from "@/lib/types";
+import type { ListingCardRow, ListingDetail, ListingFilters, ReviewRow, ServiceStatusRow, Business, BusinessDetail, BusinessHour, Category, CommentRow, District, FeedPost, MapBusiness, NotificationRow, Product, Profile, SearchParams, StoryRing } from "@/lib/types";
 
 /** Current auth user's profile, or null (guest / not configured). */
 export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
@@ -90,7 +90,7 @@ export async function getBusinessBySlug(slug: string): Promise<BusinessDetail | 
   const { data } = await supabase
     .from("businesses")
     .select(
-      `id, slug, name, description, phone, whatsapp, website, address, lat, lng, logo_url, cover_url, category_id,
+      `id, slug, name, description, phone, whatsapp, website, address, lat, lng, logo_url, cover_url, category_id, owner_id,
        is_verified, is_featured, rating_avg, rating_count, followers_count, views_count,
        district:districts(name_ar,name_ku,name_tr,name_en),
        hours:business_hours(day_of_week, open_time, close_time, is_closed),
@@ -197,4 +197,89 @@ export async function getFollowedBusinesses(): Promise<{ slug: string; name: str
   const supabase = await createClient();
   const { data } = await supabase.from("follows").select("business:businesses(slug, name)").order("created_at", { ascending: false }).limit(50);
   return ((data ?? []) as unknown as { business: { slug: string; name: string } | null }[]).flatMap((r) => (r.business ? [r.business] : []));
+}
+
+
+// ---------------------------------------------------------------------
+// Reviews, classifieds, live services
+// ---------------------------------------------------------------------
+export async function getReviews(businessId: string): Promise<ReviewRow[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("reviews")
+    .select("id, rating, body, owner_reply, replied_at, created_at, user_id, author:profiles(full_name, avatar_url)")
+    .eq("business_id", businessId).eq("is_hidden", false).order("created_at", { ascending: false }).limit(100);
+  return (data ?? []) as unknown as ReviewRow[];
+}
+
+export const LISTINGS_PAGE = 18;
+
+export async function searchListings(kind: "property" | "vehicle" | "job", f: ListingFilters) {
+  if (!supabaseConfigured) return { rows: [] as ListingCardRow[], total: 0 };
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("search_listings", {
+    p_kind: kind, p_q: f.q?.trim() || null, p_deal: f.deal || null, p_type: f.type || null, p_district: f.district ?? null,
+    p_currency: f.currency || null, p_min_price: f.minPrice ?? null, p_max_price: f.maxPrice ?? null, p_min_area: f.minArea ?? null,
+    p_min_rooms: f.minRooms ?? null, p_min_year: f.minYear ?? null, p_employment: f.employment || null, p_sort: f.sort ?? "newest",
+    p_limit: LISTINGS_PAGE, p_offset: ((f.page ?? 1) - 1) * LISTINGS_PAGE,
+  });
+  const rows = (data ?? []) as ListingCardRow[];
+  return { rows, total: Number(rows[0]?.total_count ?? 0) };
+}
+
+export async function getListing(id: string): Promise<ListingDetail | null> {
+  if (!supabaseConfigured) return null;
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("listings")
+    .select("id, kind, title, description, price, currency, details, district_id, phone, lat, lng, user_id, status, is_featured, views_count, created_at, images:listing_images(id, url, sort_order), owner:profiles(full_name)")
+    .eq("id", id).maybeSingle();
+  if (!data) return null;
+  const l = data as unknown as ListingDetail & { images: { id: string; url: string; sort_order: number }[] };
+  l.images = [...l.images].sort((a, b) => a.sort_order - b.sort_order);
+  return l;
+}
+
+export async function getMyListings(): Promise<ListingCardRow[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return [];
+  const { data } = await supabase
+    .from("listings").select("id, kind, title, price, currency, details, district_id, is_featured, created_at, status")
+    .eq("user_id", auth.user.id).order("created_at", { ascending: false }).limit(50);
+  return ((data ?? []) as unknown as (ListingCardRow & { status: string })[]).map((l) => ({ ...l, image: null, total_count: 0 }));
+}
+
+export async function getServiceStatus(category: "fuel" | "water"): Promise<ServiceStatusRow[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("get_service_status", { p_category: category });
+  return (data ?? []) as ServiceStatusRow[];
+}
+
+/** Duty roster for [today, tomorrow] in Baghdad time. */
+export async function getDutyRoster(): Promise<{ today: Business[]; tomorrow: Business[] }> {
+  if (!supabaseConfigured) return { today: [], tomorrow: [] };
+  const supabase = await createClient();
+  const fmt = (d: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Baghdad" }).format(d);
+  const now = new Date();
+  const days = [fmt(now), fmt(new Date(now.getTime() + 86400_000))];
+  const { data } = await supabase
+    .from("pharmacy_duty")
+    .select(`duty_date, business:businesses(${BUSINESS_COLS})`)
+    .in("duty_date", days);
+  const rows = (data ?? []) as unknown as { duty_date: string; business: Business | null }[];
+  const pick = (d: string) => rows.filter((r) => r.duty_date === d && r.business).map((r) => r.business!);
+  return { today: pick(days[0]), tomorrow: pick(days[1]) };
+}
+
+export async function getMyPharmacies(): Promise<{ id: string; name: string }[]> {
+  const mine = await getMyBusinesses();
+  if (mine.length === 0) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.from("businesses").select("id, name, category:categories(slug)").in("id", mine.map((m) => m.id));
+  return ((data ?? []) as unknown as { id: string; name: string; category: { slug: string } | null }[])
+    .filter((b) => b.category?.slug === "pharmacies").map(({ id, name }) => ({ id, name }));
 }

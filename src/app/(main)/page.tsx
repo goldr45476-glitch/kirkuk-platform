@@ -1,4 +1,4 @@
-import { Database, Search } from "lucide-react";
+import { Briefcase, Building2, Car, Database, Droplets, Fuel, Pill, Search } from "lucide-react";
 import Link from "next/link";
 import { BusinessCard } from "@/components/business-card";
 import { DynamicIcon } from "@/components/icon";
@@ -9,6 +9,7 @@ import { StoriesRow } from "@/features/feed/stories";
 import { FEED_PAGE, getCategories, getCurrentProfile, getDistricts, getDutyPharmacies, getFeed, getMyBusinesses, getStoryRings } from "@/lib/data";
 import { supabaseConfigured } from "@/lib/env";
 import { getI18n, localized } from "@/lib/i18n/server";
+import { categoryHref } from "@/lib/category-href";
 
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ feed?: string }> }) {
   const mode = (await searchParams).feed === "following" ? "following" : "all";
@@ -46,7 +47,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-5">
             {top.map((c) => (
               <li key={c.id}>
-                <Link href={`/categories/${c.slug}`} className="flex h-full flex-col items-center gap-2 rounded-xl border bg-card p-3 text-center transition hover:-translate-y-0.5 hover:shadow-md">
+                <Link href={categoryHref(c.slug)} className="flex h-full flex-col items-center gap-2 rounded-xl border bg-card p-3 text-center transition hover:-translate-y-0.5 hover:shadow-md">
                   <span className="grid size-12 place-items-center rounded-xl text-white" style={{ background: c.color ?? "hsl(var(--primary))" }}>
                     <DynamicIcon icon={c.icon} className="size-6" aria-hidden />
                   </span>
@@ -55,6 +56,19 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
               </li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {supabaseConfigured && (
+        <section aria-label={t.home2.classifieds} className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+          {([
+            ["/real-estate", Building2, t.listings.kinds.property], ["/cars", Car, t.listings.kinds.vehicle], ["/jobs", Briefcase, t.listings.kinds.job],
+            ["/live/pharmacies", Pill, t.live.pharmacies], ["/live/fuel", Fuel, t.live.fuel], ["/live/water", Droplets, t.live.water],
+          ] as const).map(([href, Icon, label]) => (
+            <Link key={href} href={href} className="flex flex-col items-center gap-1.5 rounded-xl border bg-card p-3 text-center text-xs font-bold hover:bg-muted">
+              <Icon className="size-6 text-primary" aria-hidden />{label}
+            </Link>
+          ))}
         </section>
       )}
 
@@ -80,7 +94,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
       {supabaseConfigured && (
         <section aria-labelledby="duty">
           <h2 id="duty" className="mb-3 flex items-center gap-2 text-lg font-extrabold">
-            {t.home.duty} <Badge tone="success">{duty.length}</Badge>
+            <Link href="/live/pharmacies" className="hover:underline">{t.home.duty}</Link> <Badge tone="success">{duty.length}</Badge>
           </h2>
           {duty.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t.home.dutyEmpty}</p>

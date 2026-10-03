@@ -99,8 +99,8 @@ export async function deleteCommentAction(commentId: string, postId: string): Pr
 }
 
 const REASONS = ["spam", "fake", "inappropriate", "scam", "wrong_info", "other"] as const;
-export async function reportAction(targetType: "post" | "comment" | "business", targetId: string, reason: string): Promise<ActionResult> {
-  const parsed = z.object({ t: z.enum(["post", "comment", "business"]), id: uuid, r: z.enum(REASONS) }).safeParse({ t: targetType, id: targetId, r: reason });
+export async function reportAction(targetType: "post" | "comment" | "business" | "review" | "listing", targetId: string, reason: string): Promise<ActionResult> {
+  const parsed = z.object({ t: z.enum(["post", "comment", "business", "review", "listing"]), id: uuid, r: z.enum(REASONS) }).safeParse({ t: targetType, id: targetId, r: reason });
   if (!parsed.success) return { ok: false, error: "invalid" };
   const { supabase, user } = await authed();
   if (!user) return { ok: false, error: "auth" };

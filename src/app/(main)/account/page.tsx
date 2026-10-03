@@ -4,7 +4,9 @@ import { Badge, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ProfileForm } from "@/features/auth/profile-form";
 import { PostCard } from "@/features/feed/post-card";
-import { getCurrentProfile, getFeed, getFollowedBusinesses } from "@/lib/data";
+import { ListingCard } from "@/components/listing-card";
+import { OwnerControls } from "@/features/listings/listing-actions";
+import { getCurrentProfile, getFeed, getFollowedBusinesses, getMyListings } from "@/lib/data";
 import Link from "next/link";
 import { getI18n } from "@/lib/i18n/server";
 import { signOutAction } from "./actions";
@@ -18,7 +20,7 @@ export default async function AccountPage() {
   const profile = await getCurrentProfile();
   if (!profile) redirect("/login?next=/account");
   const { t, locale } = await getI18n();
-  const [mine, followed] = await Promise.all([getFeed({ author: profile.id, limit: 20 }), getFollowedBusinesses()]);
+  const [mine, followed, myListings] = await Promise.all([getFeed({ author: profile.id, limit: 20 }), getFollowedBusinesses(), getMyListings()]);
 
   return (
     <div className="mx-auto max-w-lg space-y-5">
@@ -33,6 +35,15 @@ export default async function AccountPage() {
         {followed.length === 0 ? <p className="text-sm text-muted-foreground">{t.profile.noFollowing}</p> : (
           <ul className="flex flex-wrap gap-2">{followed.map((b) => <li key={b.slug}><Link href={`/business/${b.slug}`} className="inline-block rounded-full border bg-card px-3 py-1.5 text-sm font-semibold hover:bg-muted">{b.name}</Link></li>)}</ul>
         )}
+      </section>
+      <section aria-labelledby="ads-h" className="space-y-3">
+        <h2 id="ads-h" className="font-extrabold">{t.listings.mine}</h2>
+        {myListings.length === 0 ? <p className="text-sm text-muted-foreground">{t.listings.noMine}</p> : myListings.map((l) => (
+          <div key={l.id} className="space-y-2">
+            <ListingCard l={l} t={t} locale={locale} />
+            <OwnerControls id={l.id} status={(l as { status?: string }).status ?? "active"} t={t} />
+          </div>
+        ))}
       </section>
       <section aria-labelledby="mine-h" className="space-y-3">
         <h2 id="mine-h" className="font-extrabold">{t.profile.myPosts}</h2>

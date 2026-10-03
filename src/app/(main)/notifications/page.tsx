@@ -1,4 +1,4 @@
-import { Bell, Heart, MessageCircle, Megaphone, Tag, UserPlus } from "lucide-react";
+import { Bell, Heart, MessageCircle, Megaphone, Reply, Star, Tag, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Card } from "@/components/ui/card";
@@ -13,7 +13,7 @@ export async function generateMetadata() {
   return { title: t.notifications.title, robots: { index: false } };
 }
 
-const ICONS = { follow: UserPlus, like: Heart, comment: MessageCircle, offer: Tag, post: Megaphone } as const;
+const ICONS = { follow: UserPlus, like: Heart, comment: MessageCircle, offer: Tag, post: Megaphone, review: Star, review_reply: Reply } as const;
 
 export default async function NotificationsPage() {
   const profile = await getCurrentProfile();
@@ -36,7 +36,7 @@ export default async function NotificationsPage() {
         <ul className="space-y-2">
           {items.map((i) => {
             const Icon = ICONS[i.type as keyof typeof ICONS] ?? Bell;
-            const href = i.post_id ? `/post/${i.post_id}` : i.business ? `/business/${i.business.slug}` : "#";
+            const href = i.post_id ? `/post/${i.post_id}` : i.business ? `/business/${i.business.slug}${i.type.startsWith("review") ? "#reviews" : ""}` : "#";
             return (
               <li key={i.id}>
                 <Link href={href}>
