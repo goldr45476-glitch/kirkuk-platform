@@ -3,13 +3,19 @@ import Link from "next/link";
 import { BusinessCard } from "@/components/business-card";
 import { DynamicIcon } from "@/components/icon";
 import { Badge, Card } from "@/components/ui/card";
-import { getCategories, getDistricts, getDutyPharmacies } from "@/lib/data";
+import { Composer } from "@/features/feed/composer";
+import { FeedList } from "@/features/feed/feed-list";
+import { StoriesRow } from "@/features/feed/stories";
+import { FEED_PAGE, getCategories, getCurrentProfile, getDistricts, getDutyPharmacies, getFeed, getMyBusinesses, getStoryRings } from "@/lib/data";
 import { supabaseConfigured } from "@/lib/env";
 import { getI18n, localized } from "@/lib/i18n/server";
 
-export default async function HomePage() {
+export default async function HomePage({ searchParams }: { searchParams: Promise<{ feed?: string }> }) {
+  const mode = (await searchParams).feed === "following" ? "following" : "all";
   const { t, locale } = await getI18n();
-  const [categories, districts, duty] = await Promise.all([getCategories(), getDistricts(), getDutyPharmacies()]);
+  const [categories, districts, duty, profile, rings, myBiz, posts] = await Promise.all([
+    getCategories(), getDistricts(), getDutyPharmacies(), getCurrentProfile(), getStoryRings(), getMyBusinesses(), getFeed({ mode }),
+  ]);
   const top = categories.filter((c) => c.parent_id === null);
 
   return (
@@ -52,6 +58,25 @@ export default async function HomePage() {
         </section>
       )}
 
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="space-y-4">
+          <StoriesRow rings={rings} t={t} myBusinesses={myBiz} />
+          {profile ? (
+            <Composer t={t} userName={profile.full_name} avatar={profile.avatar_url} businesses={myBiz} />
+          ) : supabaseConfigured && (
+            <Card className="p-4 text-center text-sm"><Link href="/login" className="font-bold text-primary underline">{t.composer.loginPrompt}</Link></Card>
+          )}
+          {supabaseConfigured && (
+            <>
+              <div role="tablist" aria-label={t.feed.title} className="grid grid-cols-2 rounded-xl bg-muted p-1 text-center text-sm font-bold">
+                <Link role="tab" aria-selected={mode === "all"} href="/" className={mode === "all" ? "rounded-lg bg-card py-2 shadow-sm" : "py-2 text-muted-foreground"}>{t.feed.tabAll}</Link>
+                <Link role="tab" aria-selected={mode === "following"} href={profile ? "/?feed=following" : "/login?next=/%3Ffeed=following"} className={mode === "following" ? "rounded-lg bg-card py-2 shadow-sm" : "py-2 text-muted-foreground"}>{t.feed.tabFollowing}</Link>
+              </div>
+              <FeedList key={mode} initial={posts} mode={mode} t={t} locale={locale} userId={profile?.id ?? null} pageSize={FEED_PAGE} emptyText={mode === "following" ? t.feed.followingEmpty : t.feed.empty} />
+            </>
+          )}
+        </div>
+        <aside className="space-y-8">
       {supabaseConfigured && (
         <section aria-labelledby="duty">
           <h2 id="duty" className="mb-3 flex items-center gap-2 text-lg font-extrabold">
@@ -60,7 +85,7 @@ export default async function HomePage() {
           {duty.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t.home.dutyEmpty}</p>
           ) : (
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="grid gap-3">
               {duty.map((b) => <BusinessCard key={b.id} b={b} t={t} locale={locale} />)}
             </div>
           )}
@@ -77,6 +102,8 @@ export default async function HomePage() {
           </ul>
         </section>
       )}
+        </aside>
+      </div>
     </div>
   );
 }

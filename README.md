@@ -2,7 +2,14 @@
 
 منصة اجتماعية + دليل أعمال لمحافظة كركوك. Next.js 15 (App Router) · TypeScript · Tailwind · Supabase.
 
-## الحالة: المرحلتان 1 و2 ✅
+## الحالة: المراحل 1 و2 و3 ✅
+**المرحلة 3:** الخلاصة الاجتماعية على الرئيسية (الكل / من أتابعهم) مع تحميل المزيد، منشورات المستخدمين والأنشطة والعروض (مع تاريخ انتهاء)،
+رفع صور (ضغط تلقائي إلى WebP في المتصفح، حتى 4)، إعجاب (تفاعل فوري) وتعليقات في `/post/[id]`، إبلاغ وحذف المنشور، قصص 24 ساعة بعارض ملء الشاشة،
+إشعارات تُنتَج تلقائياً من قاعدة البيانات (متابعة، إعجاب، تعليق، عرض/منشور جديد) مع جرس وعدّاد مباشر عبر Realtime وصفحة `/notifications`،
+ومنشورات الصفحة داخل صفحة النشاط، و«منشوراتي» و«الأنشطة التي أتابعها» في حسابي.
+> نفّذ `0003_social.sql` بعد `0002`. **مهم:** يتضمن إصلاحاً لحراس الصلاحيات حتى تعمل العدّادات (المتابعون/التقييم/المشاهدات)؛ ينفَّذ على أي قاعدة طُبِّق عليها 0001.
+
+### المرحلة 2
 **المرحلة 2:** البحث المتقدم (`/search`) بدالة SQL تتحمل الأخطاء الإملائية والتشكيل مع فلاتر (قسم، حي، تقييم، مفتوح الآن، موثّق، الأقرب، الأحدث)،
 صفحة النشاط الكاملة (`/business/[slug]`) مع ساعات العمل وحالة «مفتوح الآن» والمنتجات والاتصال/واتساب والمتابعة والمشاركة وبيانات Schema.org،
 الخريطة التفاعلية (`/map`) Leaflet + OpenStreetMap مع فلترة وزر «الأقرب إليّ»، و`sitemap.xml` و`robots.txt`.
@@ -22,7 +29,7 @@ npm run dev                    # http://localhost:3000
 
 ### 1) إنشاء مشروع Supabase
 1. أنشئ مشروعاً على supabase.com، وانسخ `Project URL` و`anon key` إلى `.env.local`.
-2. في **SQL Editor** نفّذ بالترتيب: `0001_schema.sql` ثم `0002_search.sql` (من `supabase/migrations/`) ثم `supabase/seed.sql`
+2. في **SQL Editor** نفّذ بالترتيب: `0001_schema.sql` ثم `0002_search.sql` ثم `0003_social.sql` (من `supabase/migrations/`) ثم `supabase/seed.sql`
    (أو `supabase db push` عبر Supabase CLI).
 3. **Authentication → Providers**:
    - *Phone*: فعّله واربطه بمزوّد SMS (Twilio / MessageBird / Vonage). الـ OTP يتطلب مزوّداً مدفوعاً؛ استخدم *Test phone numbers* أثناء التطوير.
@@ -37,6 +44,7 @@ update public.profiles set role = 'admin' where id = '<UUID-من-auth.users>';
 ```bash
 node scripts/check-migration.mjs   # يشغّل migrations + seed على Postgres داخل الذاكرة (PGlite)
 node scripts/test-search.mjs       # يختبر دالة البحث (إملاء، تشكيل، فلاتر، الأقرب، مفتوح الآن)
+node scripts/test-social.mjs       # يختبر RLS والتدفق الاجتماعي بدور authenticated (إشعارات، صلاحيات، حدود معدّل)
 npm test                           # اختبارات الوحدة
 npm run typecheck && npm run lint
 ```
@@ -60,3 +68,8 @@ supabase/           migrations/ و seed.sql
 
 ## النشر (Vercel)
 استورد المستودع، أضف متغيرات `.env.example` في إعدادات المشروع ثم Deploy. لا أسرار في الكود؛ `SUPABASE_SERVICE_ROLE_KEY` للخادم فقط.
+
+## ملاحظات المرحلة 3
+- **Realtime:** جدول `notifications` مضاف إلى publication `supabase_realtime` (في 0001)؛ تأكد أن Realtime مفعّل للمشروع.
+- **التخزين:** الصور تُرفع إلى `post-media/<uid>/…`؛ الخادم يرفض أي رابط صورة خارج مجلد المستخدم.
+- **القصص** تنتهي تلقائياً بعد 24 ساعة (تُخفى بالاستعلام؛ يمكن جدولة حذفها لاحقاً بـ pg_cron).

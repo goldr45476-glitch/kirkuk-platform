@@ -2,7 +2,7 @@
 const ar = {
   appName: "دليل كركوك",
   tagline: "كل ما تحتاجه في كركوك، في مكان واحد",
-  nav: { home: "الرئيسية", categories: "الأقسام", account: "حسابي", login: "دخول", search: "بحث", map: "الخريطة" },
+  nav: { home: "الرئيسية", categories: "الأقسام", account: "حسابي", login: "دخول", search: "بحث", map: "الخريطة", notifications: "الإشعارات" },
   common: {
     call: "اتصال", whatsapp: "واتساب", verified: "موثّق", featured: "مميز", openNow: "مفتوح الآن",
     all: "الكل", empty: "لا توجد نتائج بعد", back: "رجوع", save: "حفظ", saving: "جارٍ الحفظ…",
@@ -53,6 +53,27 @@ const ar = {
     title: "الخريطة", all: "الكل", nearMe: "الأقرب إليّ", locating: "جارٍ تحديد موقعك…", locationDenied: "تعذّر تحديد موقعك",
     youAreHere: "موقعك", viewPage: "عرض الصفحة", nearest: "الأقرب إليك", places: "نشاط",
   },
+
+  feed: { title: "الخلاصة", tabAll: "الكل", tabFollowing: "من أتابعهم", empty: "لا توجد منشورات بعد", followingEmpty: "تابع بعض الأنشطة لتظهر منشوراتها هنا", loadMore: "عرض المزيد" },
+  post: {
+    like: "إعجاب", comment: "تعليق", comments: "التعليقات", share: "مشاركة", copied: "تم نسخ الرابط", delete: "حذف", report: "إبلاغ", reported: "تم إرسال البلاغ، شكراً لك",
+    confirmDelete: "حذف هذا المنشور نهائياً؟", offer: "عرض", offerEnds: "ينتهي", offerExpired: "انتهى العرض", writeComment: "اكتب تعليقاً…", send: "إرسال",
+    loginToInteract: "سجّل الدخول للتفاعل", noComments: "لا توجد تعليقات بعد", cancel: "إلغاء", more: "المزيد", notFound: "المنشور غير موجود",
+    reasons: { spam: "إعلان مزعج", fake: "محتوى مزيف", inappropriate: "محتوى غير لائق", scam: "احتيال", wrong_info: "معلومات خاطئة", other: "سبب آخر" },
+    errors: { rate_limited: "أنت تنشر بسرعة كبيرة، حاول لاحقاً", account_banned: "حسابك محظور", generic: "تعذّر تنفيذ العملية" },
+  },
+  composer: {
+    placeholder: "بماذا تفكّر؟", postAs: "النشر باسم", me: "حسابي الشخصي", isOffer: "هذا عرض", offerEnds: "ينتهي العرض في", addPhotos: "صور",
+    publish: "نشر", publishing: "جارٍ النشر…", maxPhotos: "حتى 4 صور", uploadError: "فشل رفع الصورة", addStory: "إضافة قصة", storyCaption: "وصف (اختياري)",
+    storyShare: "نشر القصة", loginPrompt: "سجّل الدخول لتنشر وتتفاعل", remove: "إزالة", emptyPost: "اكتب نصاً أو أضف صورة",
+  },
+  notifications: {
+    title: "الإشعارات", empty: "لا توجد إشعارات", markAll: "تعليم الكل كمقروء",
+    follow: "{actor} بدأ بمتابعة {business}", like: "{actor} أعجبه منشورك", comment: "{actor} علّق على منشورك", offer: "{business} نشر عرضاً جديداً",
+    post: "{business} نشر منشوراً جديداً", system: "إشعار جديد", someone: "أحد المستخدمين",
+  },
+  stories: { title: "القصص", close: "إغلاق", next: "التالي", prev: "السابق" },
+  profile: { myPosts: "منشوراتي", following: "الأنشطة التي أتابعها", noPosts: "لم تنشر شيئاً بعد", noFollowing: "لا تتابع أي نشاط بعد" },
 };
 
 export type Dictionary = typeof ar;
@@ -60,7 +81,7 @@ export type Dictionary = typeof ar;
 const ku: Dictionary = {
   appName: "ڕێنمای کەرکووک",
   tagline: "هەموو پێداویستییەکانت لە کەرکووک، لە یەک شوێن",
-  nav: { home: "سەرەکی", categories: "بەشەکان", account: "هەژمارەکەم", login: "چوونەژوورەوە", search: "گەڕان", map: "نەخشە" },
+  nav: { home: "سەرەکی", categories: "بەشەکان", account: "هەژمارەکەم", login: "چوونەژوورەوە", search: "گەڕان", map: "نەخشە", notifications: "ئاگادارکردنەوە" },
   common: {
     call: "پەیوەندی", whatsapp: "واتساپ", verified: "پشتڕاستکراوە", featured: "تایبەت", openNow: "ئێستا کراوەیە",
     all: "هەموو", empty: "هێشتا هیچ ئەنجامێک نییە", back: "گەڕانەوە", save: "پاشەکەوتکردن", saving: "پاشەکەوت دەکرێت…",
@@ -111,12 +132,33 @@ const ku: Dictionary = {
     title: "نەخشە", all: "هەموو", nearMe: "نزیکترین بە من", locating: "شوێنەکەت دیاری دەکرێت…", locationDenied: "نەتوانرا شوێنەکەت دیاری بکرێت",
     youAreHere: "شوێنی تۆ", viewPage: "بینینی پەڕە", nearest: "نزیکترینەکان", places: "چالاکی",
   },
+
+  feed: { title: "ڕووداوەکان", tabAll: "هەموو", tabFollowing: "ئەوانەی فۆڵۆم کردوون", empty: "هێشتا هیچ پۆستێک نییە", followingEmpty: "هەندێک چالاکی فۆڵۆ بکە بۆ ئەوەی پۆستەکانیان لێرە دەربکەون", loadMore: "زیاتر پیشان بدە" },
+  post: {
+    like: "بەدڵبوون", comment: "کۆمێنت", comments: "کۆمێنتەکان", share: "هاوبەشکردن", copied: "بەستەر کۆپی کرا", delete: "سڕینەوە", report: "ڕاپۆرت", reported: "ڕاپۆرتەکە نێردرا، سوپاس",
+    confirmDelete: "ئەم پۆستە بە تەواوی بسڕدرێتەوە؟", offer: "ئۆفەر", offerEnds: "تەواو دەبێت", offerExpired: "ئۆفەرەکە تەواو بوو", writeComment: "کۆمێنتێک بنووسە…", send: "ناردن",
+    loginToInteract: "بچۆ ژوورەوە بۆ کارلێککردن", noComments: "هێشتا هیچ کۆمێنتێک نییە", cancel: "هەڵوەشاندنەوە", more: "زیاتر", notFound: "پۆست نەدۆزرایەوە",
+    reasons: { spam: "ڕیکلامی بێزارکەر", fake: "ناوەڕۆکی ساختە", inappropriate: "ناوەڕۆکی نەشیاو", scam: "فێڵ", wrong_info: "زانیاری هەڵە", other: "هۆکارێکی تر" },
+    errors: { rate_limited: "زۆر بە خێرایی بڵاو دەکەیتەوە، دواتر هەوڵبدەرەوە", account_banned: "هەژمارەکەت بلۆک کراوە", generic: "نەتوانرا کارەکە ئەنجام بدرێت" },
+  },
+  composer: {
+    placeholder: "بیر لە چی دەکەیتەوە؟", postAs: "بڵاوکردنەوە بە ناوی", me: "هەژماری کەسیم", isOffer: "ئەمە ئۆفەرە", offerEnds: "ئۆفەرەکە تەواو دەبێت لە", addPhotos: "وێنە",
+    publish: "بڵاوکردنەوە", publishing: "بڵاو دەکرێتەوە…", maxPhotos: "تا ٤ وێنە", uploadError: "بارکردنی وێنە سەرکەوتوو نەبوو", addStory: "زیادکردنی ستۆری", storyCaption: "وەسف (ئارەزوومەندانە)",
+    storyShare: "بڵاوکردنەوەی ستۆری", loginPrompt: "بچۆ ژوورەوە بۆ بڵاوکردنەوە و کارلێککردن", remove: "لابردن", emptyPost: "دەقێک بنووسە یان وێنەیەک زیاد بکە",
+  },
+  notifications: {
+    title: "ئاگادارکردنەوەکان", empty: "هیچ ئاگادارکردنەوەیەک نییە", markAll: "هەموو وەک خوێندراوە دیاری بکە",
+    follow: "{actor} دەستی کرد بە فۆڵۆکردنی {business}", like: "{actor} پۆستەکەتی بەدڵ بوو", comment: "{actor} کۆمێنتی لەسەر پۆستەکەت کرد", offer: "{business} ئۆفەرێکی نوێی بڵاوکردەوە",
+    post: "{business} پۆستێکی نوێی بڵاوکردەوە", system: "ئاگادارکردنەوەی نوێ", someone: "بەکارهێنەرێک",
+  },
+  stories: { title: "ستۆرییەکان", close: "داخستن", next: "دواتر", prev: "پێشوو" },
+  profile: { myPosts: "پۆستەکانم", following: "ئەو چالاکییانەی فۆڵۆم کردوون", noPosts: "هێشتا هیچت بڵاو نەکردووەتەوە", noFollowing: "هێشتا هیچ چالاکییەکت فۆڵۆ نەکردووە" },
 };
 
 const tr: Dictionary = {
   appName: "Kerkük Rehberi",
   tagline: "Kerkük'te ihtiyacınız olan her şey, tek yerde",
-  nav: { home: "Ana Sayfa", categories: "Kategoriler", account: "Hesabım", login: "Giriş", search: "Ara", map: "Harita" },
+  nav: { home: "Ana Sayfa", categories: "Kategoriler", account: "Hesabım", login: "Giriş", search: "Ara", map: "Harita", notifications: "Bildirimler" },
   common: {
     call: "Ara", whatsapp: "WhatsApp", verified: "Onaylı", featured: "Öne çıkan", openNow: "Şimdi açık",
     all: "Tümü", empty: "Henüz sonuç yok", back: "Geri", save: "Kaydet", saving: "Kaydediliyor…",
@@ -167,12 +209,33 @@ const tr: Dictionary = {
     title: "Harita", all: "Tümü", nearMe: "Bana en yakın", locating: "Konumunuz belirleniyor…", locationDenied: "Konum alınamadı",
     youAreHere: "Konumunuz", viewPage: "Sayfayı gör", nearest: "Size en yakın", places: "işletme",
   },
+
+  feed: { title: "Akış", tabAll: "Tümü", tabFollowing: "Takip ettiklerim", empty: "Henüz gönderi yok", followingEmpty: "Gönderilerini burada görmek için işletmeleri takip edin", loadMore: "Daha fazla göster" },
+  post: {
+    like: "Beğen", comment: "Yorum", comments: "Yorumlar", share: "Paylaş", copied: "Bağlantı kopyalandı", delete: "Sil", report: "Şikayet et", reported: "Şikayetiniz alındı, teşekkürler",
+    confirmDelete: "Bu gönderi kalıcı olarak silinsin mi?", offer: "Fırsat", offerEnds: "Bitiş", offerExpired: "Fırsat sona erdi", writeComment: "Yorum yazın…", send: "Gönder",
+    loginToInteract: "Etkileşim için giriş yapın", noComments: "Henüz yorum yok", cancel: "İptal", more: "Daha fazla", notFound: "Gönderi bulunamadı",
+    reasons: { spam: "Spam", fake: "Sahte içerik", inappropriate: "Uygunsuz içerik", scam: "Dolandırıcılık", wrong_info: "Yanlış bilgi", other: "Diğer" },
+    errors: { rate_limited: "Çok hızlı paylaşım yapıyorsunuz, sonra tekrar deneyin", account_banned: "Hesabınız engellendi", generic: "İşlem gerçekleştirilemedi" },
+  },
+  composer: {
+    placeholder: "Ne düşünüyorsunuz?", postAs: "Şu adla paylaş", me: "Kişisel hesabım", isOffer: "Bu bir fırsat", offerEnds: "Fırsat bitişi", addPhotos: "Fotoğraf",
+    publish: "Paylaş", publishing: "Paylaşılıyor…", maxPhotos: "En fazla 4 fotoğraf", uploadError: "Fotoğraf yüklenemedi", addStory: "Hikâye ekle", storyCaption: "Açıklama (isteğe bağlı)",
+    storyShare: "Hikâyeyi paylaş", loginPrompt: "Paylaşmak ve etkileşmek için giriş yapın", remove: "Kaldır", emptyPost: "Bir metin yazın veya fotoğraf ekleyin",
+  },
+  notifications: {
+    title: "Bildirimler", empty: "Bildirim yok", markAll: "Tümünü okundu say",
+    follow: "{actor}, {business} işletmesini takip etmeye başladı", like: "{actor} gönderinizi beğendi", comment: "{actor} gönderinize yorum yaptı", offer: "{business} yeni bir fırsat paylaştı",
+    post: "{business} yeni bir gönderi paylaştı", system: "Yeni bildirim", someone: "Bir kullanıcı",
+  },
+  stories: { title: "Hikâyeler", close: "Kapat", next: "Sonraki", prev: "Önceki" },
+  profile: { myPosts: "Gönderilerim", following: "Takip ettiğim işletmeler", noPosts: "Henüz paylaşım yapmadınız", noFollowing: "Henüz hiçbir işletmeyi takip etmiyorsunuz" },
 };
 
 const en: Dictionary = {
   appName: "Kirkuk Guide",
   tagline: "Everything you need in Kirkuk, in one place",
-  nav: { home: "Home", categories: "Categories", account: "Account", login: "Log in", search: "Search", map: "Map" },
+  nav: { home: "Home", categories: "Categories", account: "Account", login: "Log in", search: "Search", map: "Map", notifications: "Notifications" },
   common: {
     call: "Call", whatsapp: "WhatsApp", verified: "Verified", featured: "Featured", openNow: "Open now",
     all: "All", empty: "Nothing here yet", back: "Back", save: "Save", saving: "Saving…",
@@ -223,6 +286,27 @@ const en: Dictionary = {
     title: "Map", all: "All", nearMe: "Near me", locating: "Finding your location…", locationDenied: "Couldn't get your location",
     youAreHere: "You are here", viewPage: "View page", nearest: "Nearest to you", places: "places",
   },
+
+  feed: { title: "Feed", tabAll: "All", tabFollowing: "Following", empty: "No posts yet", followingEmpty: "Follow some businesses to see their posts here", loadMore: "Show more" },
+  post: {
+    like: "Like", comment: "Comment", comments: "Comments", share: "Share", copied: "Link copied", delete: "Delete", report: "Report", reported: "Report sent, thank you",
+    confirmDelete: "Delete this post permanently?", offer: "Offer", offerEnds: "Ends", offerExpired: "Offer ended", writeComment: "Write a comment…", send: "Send",
+    loginToInteract: "Log in to interact", noComments: "No comments yet", cancel: "Cancel", more: "More", notFound: "Post not found",
+    reasons: { spam: "Spam", fake: "Fake content", inappropriate: "Inappropriate", scam: "Scam", wrong_info: "Wrong information", other: "Other" },
+    errors: { rate_limited: "You're posting too fast, try again later", account_banned: "Your account is banned", generic: "Couldn't complete the action" },
+  },
+  composer: {
+    placeholder: "What's on your mind?", postAs: "Post as", me: "My personal account", isOffer: "This is an offer", offerEnds: "Offer ends on", addPhotos: "Photos",
+    publish: "Post", publishing: "Posting…", maxPhotos: "Up to 4 photos", uploadError: "Photo upload failed", addStory: "Add story", storyCaption: "Caption (optional)",
+    storyShare: "Share story", loginPrompt: "Log in to post and interact", remove: "Remove", emptyPost: "Write something or add a photo",
+  },
+  notifications: {
+    title: "Notifications", empty: "No notifications", markAll: "Mark all as read",
+    follow: "{actor} started following {business}", like: "{actor} liked your post", comment: "{actor} commented on your post", offer: "{business} posted a new offer",
+    post: "{business} shared a new post", system: "New notification", someone: "Someone",
+  },
+  stories: { title: "Stories", close: "Close", next: "Next", prev: "Previous" },
+  profile: { myPosts: "My posts", following: "Businesses I follow", noPosts: "You haven't posted yet", noFollowing: "You don't follow any business yet" },
 };
 
 export const dictionaries: Record<"ar" | "ku" | "tr" | "en", Dictionary> = { ar, ku, tr, en };

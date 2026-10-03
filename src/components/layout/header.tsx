@@ -2,13 +2,15 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getI18n } from "@/lib/i18n/server";
-import { getCurrentProfile } from "@/lib/data";
+import { NotificationBell } from "@/features/notifications/bell";
+import { getCurrentProfile, getUnreadCount } from "@/lib/data";
 import { LocaleSwitcher } from "./locale-switcher";
 import { ThemeToggle } from "./theme-toggle";
 
 export async function Header() {
   const { t, locale } = await getI18n();
   const profile = await getCurrentProfile();
+  const unread = profile ? await getUnreadCount() : 0;
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
       <div className="container flex h-14 items-center gap-2">
@@ -25,6 +27,7 @@ export async function Header() {
         <div className="ms-auto flex items-center gap-1">
           <LocaleSwitcher current={locale} label={t.common.language} />
           <ThemeToggle label={t.common.theme} />
+          {profile && <NotificationBell userId={profile.id} initial={unread} label={t.nav.notifications} />}
           {profile ? (
             <Link href="/account" className="ms-1 grid size-9 place-items-center rounded-full bg-primary/15 text-sm font-bold text-primary" aria-label={t.nav.account}>
               {(profile.full_name || "؟").trim().charAt(0)}

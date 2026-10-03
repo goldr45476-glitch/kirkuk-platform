@@ -5,7 +5,8 @@ import { notFound } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge, Card } from "@/components/ui/card";
 import { FollowShare, TrackView, TrackedLink } from "@/features/business/business-actions";
-import { getBusinessBySlug, isFollowing } from "@/lib/data";
+import { PostCard } from "@/features/feed/post-card";
+import { getBusinessBySlug, getCurrentProfile, getFeed, isFollowing } from "@/lib/data";
 import { SITE_URL } from "@/lib/env";
 import { WEEK_ORDER, dayState, todayBaghdad } from "@/lib/hours";
 import { getI18n, localized } from "@/lib/i18n/server";
@@ -36,7 +37,7 @@ export default async function BusinessPage({ params }: Props) {
   const b = await getBusinessBySlug(slug);
   if (!b) notFound();
   const { t, locale } = await getI18n();
-  const following = await isFollowing(b.id);
+  const [following, posts, profile] = await Promise.all([isFollowing(b.id), getFeed({ business: b.id, limit: 5 }), getCurrentProfile()]);
   const today = todayBaghdad();
   const hoursByDay = new Map(b.hours.map((h) => [h.day_of_week, h]));
   const bt = t.business;
@@ -134,6 +135,13 @@ export default async function BusinessPage({ params }: Props) {
             ))}
           </ul>
         </Card>
+      )}
+
+      {posts.length > 0 && (
+        <section aria-labelledby="posts-h" className="space-y-3">
+          <h2 id="posts-h" className="font-extrabold">{t.feed.title}</h2>
+          {posts.map((p) => <PostCard key={p.id} post={p} t={t} locale={locale} userId={profile?.id ?? null} />)}
+        </section>
       )}
 
       <Card className="p-4">

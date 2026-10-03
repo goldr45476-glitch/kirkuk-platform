@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { supabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
-import type { Business, BusinessDetail, BusinessHour, Category, District, MapBusiness, Product, Profile, SearchParams } from "@/lib/types";
+import type { Business, BusinessDetail, BusinessHour, Category, CommentRow, District, FeedPost, MapBusiness, NotificationRow, Product, Profile, SearchParams, StoryRing } from "@/lib/types";
 
 /** Current auth user's profile, or null (guest / not configured). */
 export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
@@ -131,4 +131,70 @@ export async function getMapBusinesses(): Promise<MapBusiness[]> {
     const r = root(b.category_id);
     return { ...b, root_slug: r?.slug ?? "other", color: r?.color ?? "#64748b" };
   });
+}
+
+// ---------------------------------------------------------------------
+// Social
+// ---------------------------------------------------------------------
+export const FEED_PAGE = 8;
+
+export async function getFeed(opts: { mode?: "all" | "following"; before?: string | null; business?: string; author?: string; post?: string; limit?: number } = {}) {
+  if (!supabaseConfigured) return [] as FeedPost[];
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("get_feed", {
+    p_mode: opts.mode ?? "all", p_before: opts.before ?? null, p_limit: opts.limit ?? FEED_PAGE,
+    p_business: opts.business ?? null, p_author: opts.author ?? null, p_post: opts.post ?? null,
+  });
+  return (data ?? []) as FeedPost[];
+}
+
+export async function getStoryRings(): Promise<StoryRing[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("get_story_rings");
+  return (data ?? []) as StoryRing[];
+}
+
+export async function getComments(postId: string): Promise<CommentRow[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("comments")
+    .select("id, body, created_at, author:profiles(id, full_name, username, avatar_url)")
+    .eq("post_id", postId).order("created_at").limit(200);
+  return (data ?? []) as unknown as CommentRow[];
+}
+
+export const getUnreadCount = cache(async (): Promise<number> => {
+  if (!supabaseConfigured) return 0;
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("unread_notifications");
+  return typeof data === "number" ? data : 0;
+});
+
+export async function getNotifications(limit = 50): Promise<NotificationRow[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("notifications")
+    .select("id, type, created_at, read_at, post_id, business_id, data, actor:profiles!notifications_actor_id_fkey(full_name), business:businesses(name, slug)")
+    .order("created_at", { ascending: false }).limit(limit);
+  return (data ?? []) as unknown as NotificationRow[];
+}
+
+/** Businesses the signed-in user owns (for "post as" and stories). */
+export const getMyBusinesses = cache(async (): Promise<{ id: string; name: string; status: string }[]> => {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return [];
+  const { data } = await supabase.from("businesses").select("id, name, status").eq("owner_id", auth.user.id).eq("status", "active");
+  return data ?? [];
+});
+
+export async function getFollowedBusinesses(): Promise<{ slug: string; name: string }[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.from("follows").select("business:businesses(slug, name)").order("created_at", { ascending: false }).limit(50);
+  return ((data ?? []) as unknown as { business: { slug: string; name: string } | null }[]).flatMap((r) => (r.business ? [r.business] : []));
 }

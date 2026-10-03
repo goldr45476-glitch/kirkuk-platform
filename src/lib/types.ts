@@ -80,3 +80,26 @@ export interface SearchParams {
   q?: string; category?: string; district?: number; minRating?: number; open?: boolean; verified?: boolean;
   lat?: number; lng?: number; sort?: "relevance" | "nearest" | "rating" | "newest"; page?: number;
 }
+
+export interface FeedMedia { url: string; width: number | null; height: number | null }
+export interface FeedPost {
+  id: string; body: string; is_offer: boolean; offer_ends_at: string | null;
+  likes_count: number; comments_count: number; created_at: string; liked: boolean;
+  author: { id: string; full_name: string; username: string | null; avatar_url: string | null };
+  business: { id: string; slug: string; name: string; logo_url: string | null; is_verified: boolean } | null;
+  media: FeedMedia[];
+}
+export interface CommentRow {
+  id: string; body: string; created_at: string;
+  author: { id: string; full_name: string; username: string | null; avatar_url: string | null };
+}
+export interface StoryRing {
+  business_id: string; slug: string; name: string; logo_url: string | null; is_verified: boolean; followed: boolean;
+  stories: { id: string; media_url: string; caption: string | null; created_at: string }[];
+}
+export interface NotificationRow {
+  id: string; type: string; created_at: string; read_at: string | null; post_id: string | null; business_id: string | null;
+  data: { excerpt?: string };
+  actor: { full_name: string } | null;
+  business: { name: string; slug: string } | null;
+}
