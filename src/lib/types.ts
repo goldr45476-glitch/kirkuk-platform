@@ -127,3 +127,25 @@ export interface ListingFilters {
   q?: string; deal?: string; type?: string; district?: number; currency?: string; minPrice?: number; maxPrice?: number;
   minArea?: number; minRooms?: number; minYear?: number; employment?: string; sort?: "newest" | "price_asc" | "price_desc"; page?: number;
 }
+
+export interface OpenNowRow {
+  id: string; slug: string; name: string; address: string | null; phone: string | null; whatsapp: string | null; district_id: number | null; category_id: number;
+  rating_avg: number; rating_count: number; is_verified: boolean; price_level: number | null; distance_km: number | null; closes_at: string | null; last_verified_at: string | null;
+}
+export interface NewPlaceRow {
+  id: string; slug: string; name: string; address: string | null; phone: string | null; whatsapp: string | null; district_id: number | null; category_id: number;
+  rating_avg: number; rating_count: number; is_verified: boolean; created_at: string;
+}
+export interface OfferRow {
+  id: string; title: string; details: string | null; image_url: string | null; starts_at: string; ends_at: string;
+  business_id: string; business_slug: string; business_name: string; logo_url: string | null; phone: string | null; district_id: number | null;
+}
+export interface EventRow {
+  id: string; title: string; details: string | null; category: string | null; starts_at: string; ends_at: string | null;
+  venue_name: string | null; venue_slug: string | null; lat: number | null; lng: number | null; image_url: string | null;
+}
+export interface Recommendation {
+  id: string; slug: string; name: string; address: string | null; phone: string | null; whatsapp: string | null; district: string | null;
+  rating_avg: number; rating_count: number; price_level: number | null; distance_km: number | null; closes_at: string | null;
+  audience: string | null; amenities: string[]; last_verified_at: string | null;
+}

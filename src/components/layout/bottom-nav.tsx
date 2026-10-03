@@ -1,15 +1,15 @@
 "use client";
 
-import { Grid2x2, Home, Map, Search, User } from "lucide-react";
+import { Compass, Home, Map, Search, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-export function BottomNav({ labels }: { labels: { home: string; categories: string; search: string; map: string; account: string } }) {
+export function BottomNav({ labels }: { labels: { home: string; where: string; search: string; map: string; account: string } }) {
   const path = usePathname();
   const items = [
     { href: "/", label: labels.home, Icon: Home, active: path === "/" },
-    { href: "/categories", label: labels.categories, Icon: Grid2x2, active: path.startsWith("/categories") },
+    { href: "/where", label: labels.where, Icon: Compass, active: path.startsWith("/where") },
     { href: "/search", label: labels.search, Icon: Search, active: path.startsWith("/search") },
     { href: "/map", label: labels.map, Icon: Map, active: path.startsWith("/map") },
     { href: "/account", label: labels.account, Icon: User, active: path.startsWith("/account") || path.startsWith("/login") },

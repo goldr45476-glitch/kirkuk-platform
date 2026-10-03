@@ -1,4 +1,4 @@
-import { Briefcase, Building2, Car, Database, Droplets, Fuel, Pill, Search } from "lucide-react";
+import { Briefcase, Building2, Car, Compass, Database, Droplets, Fuel, Pill, Search } from "lucide-react";
 import Link from "next/link";
 import { BusinessCard } from "@/components/business-card";
 import { DynamicIcon } from "@/components/icon";
@@ -6,7 +6,10 @@ import { Badge, Card } from "@/components/ui/card";
 import { Composer } from "@/features/feed/composer";
 import { FeedList } from "@/features/feed/feed-list";
 import { StoriesRow } from "@/features/feed/stories";
-import { FEED_PAGE, getCategories, getCurrentProfile, getDistricts, getDutyPharmacies, getFeed, getMyBusinesses, getStoryRings } from "@/lib/data";
+import { EventCard, NewPlaceCard, OfferCard, OpenNowCard, Row } from "@/components/now-cards";
+import { cityName, getCity } from "@/lib/city";
+import { dayPart } from "@/lib/format-time";
+import { FEED_PAGE, getCategories, getCurrentProfile, getDistricts, getDutyPharmacies, getFeed, getLiveOffers, getMyBusinesses, getNewPlaces, getOpenNow, getStoryRings, getUpcomingEvents } from "@/lib/data";
 import { supabaseConfigured } from "@/lib/env";
 import { getI18n, localized } from "@/lib/i18n/server";
 import { categoryHref } from "@/lib/category-href";
@@ -14,16 +17,23 @@ import { categoryHref } from "@/lib/category-href";
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ feed?: string }> }) {
   const mode = (await searchParams).feed === "following" ? "following" : "all";
   const { t, locale } = await getI18n();
-  const [categories, districts, duty, profile, rings, myBiz, posts] = await Promise.all([
+  const [categories, districts, duty, profile, rings, myBiz, posts, city, openNow, offers, events, fresh] = await Promise.all([
     getCategories(), getDistricts(), getDutyPharmacies(), getCurrentProfile(), getStoryRings(), getMyBusinesses(), getFeed({ mode }),
+    getCity(), getOpenNow(10), getLiveOffers(8), getUpcomingEvents(7, 8), getNewPlaces(8),
   ]);
+  const dName = new Map(districts.map((d) => [d.id, localized(d, locale)]));
+  const cname = cityName(city, locale) || t.appName;
+  const intents = [
+    ["eat", "/search?category=food&open=1", "🍽️"], ["coffee", "/search?category=cafes&open=1", "☕"], ["shop", "/search?category=shops", "🛍️"],
+    ["pharmacy", "/live/pharmacies", "💊"], ["doctor", "/search?category=health&open=1", "🩺"], ["kids", "/search?q=%D8%A3%D8%B7%D9%81%D8%A7%D9%84", "🧒"],
+  ] as const;
   const top = categories.filter((c) => c.parent_id === null);
 
   return (
     <div className="space-y-8">
       <section className="rounded-2xl bg-gradient-to-br from-primary to-primary/70 p-6 text-primary-foreground md:p-10">
-        <h1 className="text-2xl font-extrabold md:text-4xl">{t.appName}</h1>
-        <p className="mt-2 max-w-xl text-primary-foreground/90 md:text-lg">{t.tagline}</p>
+        <p className="text-sm font-semibold text-primary-foreground/85">{t.now.greet[dayPart()]} 👋</p>
+        <h1 className="mt-1 text-2xl font-extrabold md:text-4xl">{t.now.headline.replace("{city}", cname)}</h1>
         <form action="/search" className="relative mt-5 max-w-xl" role="search">
           <Search className="pointer-events-none absolute start-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden />
           <input name="q" type="search" placeholder={t.search.placeholder} aria-label={t.search.title} enterKeyHint="search"
@@ -39,6 +49,33 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
             <p className="text-sm text-muted-foreground">{t.home.setupBody}</p>
           </div>
         </Card>
+      )}
+
+      {supabaseConfigured && (
+        <>
+          <section aria-label={t.now.whatToDo} className="space-y-3">
+            <h2 className="text-lg font-extrabold">{t.now.whatToDo}</h2>
+            <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+              {intents.map(([k, href, emoji]) => (
+                <li key={k} className="shrink-0">
+                  <Link href={href} className="flex items-center gap-2 rounded-full border bg-card px-4 py-2.5 text-sm font-bold hover:bg-muted"><span aria-hidden>{emoji}</span>{t.now.intents[k]}</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <Link href="/where" className="flex items-center gap-4 rounded-2xl bg-gradient-to-br from-accent to-accent/70 p-5 text-accent-foreground shadow-md transition hover:-translate-y-0.5">
+            <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-black/10"><Compass className="size-8" aria-hidden /></span>
+            <span><span className="block text-xl font-extrabold">{t.now.whereCard}</span><span className="block text-sm font-medium opacity-80">{t.now.whereSub}</span></span>
+          </Link>
+
+          <Row title={t.now.openNow} href="/search?open=1" seeAll={t.now.seeAll}>
+            {openNow.length === 0 ? <p className="text-sm text-muted-foreground">{t.now.noOpen}</p> : openNow.map((p) => <OpenNowCard key={p.id} p={p} t={t} locale={locale} district={p.district_id ? dName.get(p.district_id) : undefined} />)}
+          </Row>
+          {offers.length > 0 && <Row title={`🔥 ${t.now.offersToday}`} href="/offers" seeAll={t.now.seeAll}>{offers.map((o) => <OfferCard key={o.id} o={o} t={t} locale={locale} />)}</Row>}
+          {events.length > 0 && <Row title={`📅 ${t.now.events}`} href="/events" seeAll={t.now.seeAll}>{events.map((e) => <EventCard key={e.id} e={e} t={t} locale={locale} />)}</Row>}
+          {fresh.length > 0 && <Row title={`🆕 ${t.now.newPlaces.replace("{city}", cname)}`}>{fresh.map((p) => <NewPlaceCard key={p.id} p={p} t={t} locale={locale} district={p.district_id ? dName.get(p.district_id) : undefined} />)}</Row>}
+        </>
       )}
 
       {top.length > 0 && (

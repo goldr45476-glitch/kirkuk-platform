@@ -18,15 +18,18 @@ export async function Header() {
           <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground"><MapPin className="size-4" aria-hidden /></span>
           <span className="text-lg">{t.appName}</span>
         </Link>
-        <nav className="ms-6 hidden items-center gap-1 md:flex" aria-label="main">
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/">{t.nav.home}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/categories">{t.nav.categories}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/search">{t.nav.search}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/map">{t.nav.map}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/real-estate">{t.listings.kinds.property}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/cars">{t.listings.kinds.vehicle}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/jobs">{t.listings.kinds.job}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/live/pharmacies">{t.live.title}</Link>
+        <nav className="ms-4 hidden min-w-0 items-center gap-1 md:flex" aria-label="main">
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/">{t.nav.home}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/categories">{t.nav.categories}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/where">{t.nav.where}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/search">{t.nav.search}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/map">{t.nav.map}</Link>
+          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/offers">{t.nav.offers}</Link>
+          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/events">{t.nav.events}</Link>
+          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/real-estate">{t.listings.kinds.property}</Link>
+          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/cars">{t.listings.kinds.vehicle}</Link>
+          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/jobs">{t.listings.kinds.job}</Link>
+          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/live/pharmacies">{t.live.title}</Link>
         </nav>
         <div className="ms-auto flex items-center gap-1">
           <LocaleSwitcher current={locale} label={t.common.language} />

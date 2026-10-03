@@ -269,3 +269,9 @@ from (values
  ('يوم الطفل المفتوح','ألعاب ومسابقات ورسم للأطفال.','family', interval '3 days','azadi-mall','آزادي مول'),
  ('ورشة مهارات المقابلات الوظيفية','مجانية للخريجين، المقاعد محدودة.','education', interval '2 days','institute-lang','معهد اللغات الحديثة')
 ) as v(title, details, cat, st, slug, venue) left join public.businesses b on b.slug = v.slug;
+
+-- "New in the city": most places are older; a few are recent.
+update public.businesses set created_at = now() - make_interval(days => 60 + (abs(hashtext(slug)) % 300));
+update public.businesses set created_at = now() - make_interval(days => v.d)
+from (values ('cafe-asri', 6), ('kabab-shorja', 12), ('dental-smile', 20), ('ac-cool', 25), ('water-safa', 9), ('carwash-pearl', 3)) as v(slug, d)
+where businesses.slug = v.slug;

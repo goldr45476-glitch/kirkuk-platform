@@ -6,7 +6,7 @@ export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const entries: MetadataRoute.Sitemap = ["", "/categories", "/search", "/map"].map((p) => ({ url: `${SITE_URL}${p}`, lastModified: now }));
+  const entries: MetadataRoute.Sitemap = ["", "/categories", "/search", "/map", "/where", "/offers", "/events", "/real-estate", "/cars", "/jobs", "/live/pharmacies", "/live/fuel", "/live/water"].map((p) => ({ url: `${SITE_URL}${p}`, lastModified: now }));
   if (!supabaseConfigured) return entries;
   const sb = createPublicClient();
   const [{ data: cats }, { data: biz }] = await Promise.all([

@@ -2,7 +2,7 @@
 const ar = {
   appName: "دليل كركوك",
   tagline: "كل ما تحتاجه في كركوك، في مكان واحد",
-  nav: { home: "الرئيسية", categories: "الأقسام", account: "حسابي", login: "دخول", search: "بحث", map: "الخريطة", notifications: "الإشعارات" },
+  nav: { where: "وين نروح؟", offers: "العروض", events: "الفعاليات",  home: "الرئيسية", categories: "الأقسام", account: "حسابي", login: "دخول", search: "بحث", map: "الخريطة", notifications: "الإشعارات" },
   common: {
     call: "اتصال", whatsapp: "واتساب", verified: "موثّق", featured: "مميز", openNow: "مفتوح الآن",
     all: "الكل", empty: "لا توجد نتائج بعد", back: "رجوع", save: "حفظ", saving: "جارٍ الحفظ…",
@@ -108,6 +108,35 @@ const ar = {
     loginToReport: "سجّل الدخول لتبلّغ", hint: "الحالة مبنية على بلاغات المستخدمين خلال آخر 6 ساعات", queueLevel: "حجم الطابور", send: "إرسال", today: "اليوم", tomorrow: "غداً",
   },
   home2: { classifieds: "الإعلانات المبوّبة", live: "خدمات مباشرة" },
+  now: {
+    greet: { morning: "صباح الخير", afternoon: "نهارك سعيد", evening: "مساء الخير", night: "ليلة سعيدة" },
+    headline: "شنو أكو اليوم في {city}؟", whatToDo: "ماذا تريد أن تفعل؟",
+    intents: { eat: "أكل", coffee: "قهوة", shop: "تسوق", pharmacy: "صيدلية", doctor: "طبيب", kids: "للأطفال" },
+    whereCard: "وين نروح؟", whereSub: "قلّنا مين وياك وميزانيتك، ونقترح لك مكاناً مفتوحاً الآن",
+    openNow: "مفتوح الآن", offersToday: "عروض اليوم", events: "شنو أكو اليوم؟", newPlaces: "جديد في {city}", seeAll: "عرض الكل",
+    closesAt: "يغلق {time}", endsIn: "ينتهي {when}", noOffers: "لا توجد عروض فعّالة الآن", noEvents: "لا توجد فعاليات قادمة", noOpen: "لا يوجد ما هو مفتوح الآن",
+    today: "اليوم", tomorrow: "غداً", verified: "تحقق قبل {when}",
+  },
+  where: {
+    title: "وين نروح؟", q1: "مع مين؟", q2: "شكد ميزانيتك؟", q3: "شكد المسافة؟",
+    audiences: { family: "عائلة", couple: "شخصين", friends: "أصدقاء", kids: "أطفال", solo: "لحالي" },
+    budgets: { "1": "اقتصادي", "2": "متوسط", "3": "مرتفع", "4": "فاخر" },
+    distances: { "2": "قريب (2 كم)", "5": "5 كم", "10": "10 كم", any: "أي مسافة" },
+    useLocation: "استخدم موقعي", cityCenter: "المسافة محسوبة من مركز المدينة", locating: "جارٍ تحديد موقعك…", denied: "تعذّر تحديد موقعك، سنستخدم مركز المدينة",
+    suggest: "اقترح لي", surprise: "فاجئني", again: "ابدأ من جديد", another: "اقتراح آخر", back: "رجوع", next: "التالي",
+    noResults: "ما لقينا شي مفتوح الآن بهالمواصفات — جرّب مسافة أبعد أو ميزانية أعلى", why: "ليش هذا؟", results: "اقتراحاتنا لك",
+    reasonOpenUntil: "مفتوح حتى {time}", reasonOpen: "مفتوح الآن", reasonKm: "{km} كم", reasonFrom: "من مركز المدينة", reasonBest: "تقييم {rating}",
+    reasonAudience: { family: "مناسب للعوائل", couple: "مناسب لشخصين", friends: "مناسب للأصدقاء", kids: "مناسب للأطفال", solo: "مناسب لوحدك" },
+  },
+  offers: {
+    title: "العروض", empty: "لا توجد عروض فعّالة الآن", add: "أضف عرضاً", titleF: "عنوان العرض", detailsF: "التفاصيل (اختياري)", endsF: "ينتهي في",
+    business: "النشاط", published: "تم نشر العرض", note: "تختفي العروض تلقائياً عند انتهائها", ends: "ينتهي", loginOwner: "سجّل الدخول بحساب صاحب نشاط لتضيف عرضاً",
+  },
+  events: {
+    title: "الفعاليات", empty: "لا توجد فعاليات قادمة", suggest: "اقترح فعالية", name: "اسم الفعالية", details: "التفاصيل", category: "النوع", starts: "تبدأ في",
+    venue: "المكان", submitted: "وصلتنا فعاليتك وستظهر بعد المراجعة", loginToSuggest: "سجّل الدخول لتقترح فعالية", location: "الموقع",
+    cats: { music: "موسيقى", family: "عائلية", sports: "رياضة", culture: "ثقافة", food: "طعام", education: "تعليم", charity: "خيرية", other: "أخرى" },
+  },
   trust: { verifiedAgo: "تحققنا من المعلومات {when}", neverVerified: "لم نتحقق من المعلومات بعد", wrongInfo: "المعلومة غلط؟", wrongThanks: "شكراً، سنراجعها", hoursUnknown: "الساعات غير معروفة", priceLevel: "مستوى السعر" },
 };
 
@@ -116,7 +145,7 @@ export type Dictionary = typeof ar;
 const ku: Dictionary = {
   appName: "ڕێنمای کەرکووک",
   tagline: "هەموو پێداویستییەکانت لە کەرکووک، لە یەک شوێن",
-  nav: { home: "سەرەکی", categories: "بەشەکان", account: "هەژمارەکەم", login: "چوونەژوورەوە", search: "گەڕان", map: "نەخشە", notifications: "ئاگادارکردنەوە" },
+  nav: { where: "بۆ کوێ بچین؟", offers: "ئۆفەرەکان", events: "بۆنەکان",  home: "سەرەکی", categories: "بەشەکان", account: "هەژمارەکەم", login: "چوونەژوورەوە", search: "گەڕان", map: "نەخشە", notifications: "ئاگادارکردنەوە" },
   common: {
     call: "پەیوەندی", whatsapp: "واتساپ", verified: "پشتڕاستکراوە", featured: "تایبەت", openNow: "ئێستا کراوەیە",
     all: "هەموو", empty: "هێشتا هیچ ئەنجامێک نییە", back: "گەڕانەوە", save: "پاشەکەوتکردن", saving: "پاشەکەوت دەکرێت…",
@@ -222,13 +251,42 @@ const ku: Dictionary = {
     loginToReport: "بچۆ ژوورەوە بۆ ڕاپۆرتدان", hint: "دۆخەکە لەسەر ڕاپۆرتی بەکارهێنەران دامەزراوە لە ٦ کاتژمێری ڕابردوودا", queueLevel: "قەبارەی ڕیز", send: "ناردن", today: "ئەمڕۆ", tomorrow: "سبەینێ",
   },
   home2: { classifieds: "ڕیکلامە پۆلێنکراوەکان", live: "خزمەتگوزاری ڕاستەوخۆ" },
+  now: {
+    greet: { morning: "بەیانیت باش", afternoon: "ڕۆژت باش", evening: "ئێوارەت باش", night: "شەوت باش" },
+    headline: "ئەمڕۆ لە {city} چی هەیە؟", whatToDo: "دەتەوێت چی بکەیت؟",
+    intents: { eat: "خواردن", coffee: "قاوە", shop: "بازاڕ", pharmacy: "دەرمانخانە", doctor: "دکتۆر", kids: "بۆ منداڵان" },
+    whereCard: "بۆ کوێ بچین؟", whereSub: "پێمان بڵێ لەگەڵ کێیت و بودجەکەت، شوێنێکی کراوەت بۆ پێشنیار دەکەین",
+    openNow: "ئێستا کراوەیە", offersToday: "ئۆفەرەکانی ئەمڕۆ", events: "ئەمڕۆ چی هەیە؟", newPlaces: "نوێ لە {city}", seeAll: "بینینی هەمووی",
+    closesAt: "دادەخرێت {time}", endsIn: "تەواو دەبێت {when}", noOffers: "ئێستا هیچ ئۆفەرێک نییە", noEvents: "هیچ بۆنەیەکی داهاتوو نییە", noOpen: "ئێستا هیچ شتێک کراوە نییە",
+    today: "ئەمڕۆ", tomorrow: "سبەینێ", verified: "پشتڕاستکراوەتەوە {when}",
+  },
+  where: {
+    title: "بۆ کوێ بچین؟", q1: "لەگەڵ کێ؟", q2: "بودجەت چەندە؟", q3: "مەودا چەند بێت؟",
+    audiences: { family: "خێزان", couple: "دوو کەس", friends: "هاوڕێیان", kids: "منداڵان", solo: "تەنیا" },
+    budgets: { "1": "ئابووری", "2": "مامناوەند", "3": "بەرز", "4": "لوکس" },
+    distances: { "2": "نزیک (٢ کم)", "5": "٥ کم", "10": "١٠ کم", any: "هەر مەودایەک" },
+    useLocation: "شوێنەکەم بەکاربهێنە", cityCenter: "مەودا لە ناوەندی شار حیساب کراوە", locating: "شوێنەکەت دیاری دەکرێت…", denied: "شوێنەکەت دیاری نەکرا، ناوەندی شار بەکاردێنین",
+    suggest: "پێشنیارم بۆ بکە", surprise: "سەرم سوڕبهێنە", again: "لە سەرەتاوە", another: "پێشنیاری تر", back: "گەڕانەوە", next: "دواتر",
+    noResults: "هیچ شوێنێکی کراوە بەم مەرجانە نەدۆزرایەوە — مەودای زیاتر یان بودجەی بەرزتر تاقی بکەرەوە", why: "بۆچی ئەمە؟", results: "پێشنیارەکانمان بۆ تۆ",
+    reasonOpenUntil: "کراوەیە تا {time}", reasonOpen: "ئێستا کراوەیە", reasonKm: "{km} کم", reasonFrom: "لە ناوەندی شار", reasonBest: "هەڵسەنگاندن {rating}",
+    reasonAudience: { family: "گونجاوە بۆ خێزان", couple: "گونجاوە بۆ دوو کەس", friends: "گونجاوە بۆ هاوڕێیان", kids: "گونجاوە بۆ منداڵان", solo: "گونجاوە بۆ تەنیا" },
+  },
+  offers: {
+    title: "ئۆفەرەکان", empty: "ئێستا هیچ ئۆفەرێکی چالاک نییە", add: "ئۆفەرێک زیاد بکە", titleF: "ناونیشانی ئۆفەر", detailsF: "وردەکاری (ئارەزوومەندانە)", endsF: "تەواو دەبێت لە",
+    business: "چالاکی", published: "ئۆفەرەکە بڵاوکرایەوە", note: "ئۆفەرەکان بە خۆکاری لە کاتی تەواوبوون دەسڕێنەوە", ends: "تەواو دەبێت", loginOwner: "بە هەژماری خاوەن چالاکی بچۆ ژوورەوە بۆ زیادکردنی ئۆفەر",
+  },
+  events: {
+    title: "بۆنەکان", empty: "هیچ بۆنەیەکی داهاتوو نییە", suggest: "بۆنەیەک پێشنیار بکە", name: "ناوی بۆنە", details: "وردەکاری", category: "جۆر", starts: "دەست پێدەکات لە",
+    venue: "شوێن", submitted: "بۆنەکەت گەیشت و دوای پێداچوونەوە دەردەکەوێت", loginToSuggest: "بچۆ ژوورەوە بۆ پێشنیارکردنی بۆنە", location: "شوێن",
+    cats: { music: "مۆسیقا", family: "خێزانی", sports: "وەرزش", culture: "کولتووری", food: "خواردن", education: "خوێندن", charity: "خێرخوازی", other: "هی تر" },
+  },
   trust: { verifiedAgo: "زانیارییەکانمان پشتڕاست کردەوە {when}", neverVerified: "هێشتا زانیارییەکان پشتڕاست نەکراونەتەوە", wrongInfo: "زانیارییەکە هەڵەیە؟", wrongThanks: "سوپاس، پێداچوونەوەی بۆ دەکەین", hoursUnknown: "کاتژمێرەکان نەزانراون", priceLevel: "ئاستی نرخ" },
 };
 
 const tr: Dictionary = {
   appName: "Kerkük Rehberi",
   tagline: "Kerkük'te ihtiyacınız olan her şey, tek yerde",
-  nav: { home: "Ana Sayfa", categories: "Kategoriler", account: "Hesabım", login: "Giriş", search: "Ara", map: "Harita", notifications: "Bildirimler" },
+  nav: { where: "Nereye?", offers: "Fırsatlar", events: "Etkinlikler",  home: "Ana Sayfa", categories: "Kategoriler", account: "Hesabım", login: "Giriş", search: "Ara", map: "Harita", notifications: "Bildirimler" },
   common: {
     call: "Ara", whatsapp: "WhatsApp", verified: "Onaylı", featured: "Öne çıkan", openNow: "Şimdi açık",
     all: "Tümü", empty: "Henüz sonuç yok", back: "Geri", save: "Kaydet", saving: "Kaydediliyor…",
@@ -334,13 +392,42 @@ const tr: Dictionary = {
     loginToReport: "Bildirmek için giriş yapın", hint: "Durum, son 6 saatteki kullanıcı bildirimlerine dayanır", queueLevel: "Kuyruk yoğunluğu", send: "Gönder", today: "Bugün", tomorrow: "Yarın",
   },
   home2: { classifieds: "İlanlar", live: "Canlı hizmetler" },
+  now: {
+    greet: { morning: "Günaydın", afternoon: "İyi günler", evening: "İyi akşamlar", night: "İyi geceler" },
+    headline: "Bugün {city}'de neler var?", whatToDo: "Ne yapmak istersin?",
+    intents: { eat: "Yemek", coffee: "Kahve", shop: "Alışveriş", pharmacy: "Eczane", doctor: "Doktor", kids: "Çocuklar" },
+    whereCard: "Nereye gidelim?", whereSub: "Kiminle olduğunu ve bütçeni söyle, şu an açık bir yer önerelim",
+    openNow: "Şimdi açık", offersToday: "Bugünün fırsatları", events: "Bugün neler var?", newPlaces: "{city}'de yeni", seeAll: "Tümünü gör",
+    closesAt: "{time} kapanır", endsIn: "Bitiş: {when}", noOffers: "Şu an aktif fırsat yok", noEvents: "Yaklaşan etkinlik yok", noOpen: "Şu an açık yer yok",
+    today: "Bugün", tomorrow: "Yarın", verified: "Doğrulandı: {when}",
+  },
+  where: {
+    title: "Nereye gidelim?", q1: "Kiminle?", q2: "Bütçen ne kadar?", q3: "Ne kadar uzaklık?",
+    audiences: { family: "Aile", couple: "İki kişi", friends: "Arkadaşlar", kids: "Çocuklar", solo: "Tek başıma" },
+    budgets: { "1": "Ekonomik", "2": "Orta", "3": "Yüksek", "4": "Lüks" },
+    distances: { "2": "Yakın (2 km)", "5": "5 km", "10": "10 km", any: "Fark etmez" },
+    useLocation: "Konumumu kullan", cityCenter: "Mesafe şehir merkezinden hesaplanır", locating: "Konumunuz belirleniyor…", denied: "Konum alınamadı, şehir merkezi kullanılacak",
+    suggest: "Öner", surprise: "Şaşırt beni", again: "Baştan başla", another: "Başka öneri", back: "Geri", next: "İleri",
+    noResults: "Bu kriterlere uyan açık yer bulunamadı — daha uzak mesafe veya yüksek bütçe deneyin", why: "Neden bu?", results: "Sana önerilerimiz",
+    reasonOpenUntil: "{time}'e kadar açık", reasonOpen: "Şimdi açık", reasonKm: "{km} km", reasonFrom: "şehir merkezinden", reasonBest: "Puan {rating}",
+    reasonAudience: { family: "Aileye uygun", couple: "İki kişiye uygun", friends: "Arkadaşlara uygun", kids: "Çocuklara uygun", solo: "Tek başına uygun" },
+  },
+  offers: {
+    title: "Fırsatlar", empty: "Şu an aktif fırsat yok", add: "Fırsat ekle", titleF: "Fırsat başlığı", detailsF: "Ayrıntılar (isteğe bağlı)", endsF: "Bitiş tarihi",
+    business: "İşletme", published: "Fırsat yayınlandı", note: "Fırsatlar bitince otomatik olarak kaldırılır", ends: "Bitiş", loginOwner: "Fırsat eklemek için işletme hesabıyla giriş yapın",
+  },
+  events: {
+    title: "Etkinlikler", empty: "Yaklaşan etkinlik yok", suggest: "Etkinlik öner", name: "Etkinlik adı", details: "Ayrıntılar", category: "Tür", starts: "Başlangıç",
+    venue: "Mekân", submitted: "Etkinliğiniz alındı, incelemeden sonra yayınlanacak", loginToSuggest: "Etkinlik önermek için giriş yapın", location: "Konum",
+    cats: { music: "Müzik", family: "Aile", sports: "Spor", culture: "Kültür", food: "Yemek", education: "Eğitim", charity: "Hayır", other: "Diğer" },
+  },
   trust: { verifiedAgo: "Bilgileri doğruladık: {when}", neverVerified: "Bilgiler henüz doğrulanmadı", wrongInfo: "Bilgi yanlış mı?", wrongThanks: "Teşekkürler, inceleyeceğiz", hoursUnknown: "Saatler bilinmiyor", priceLevel: "Fiyat düzeyi" },
 };
 
 const en: Dictionary = {
   appName: "Kirkuk Guide",
   tagline: "Everything you need in Kirkuk, in one place",
-  nav: { home: "Home", categories: "Categories", account: "Account", login: "Log in", search: "Search", map: "Map", notifications: "Notifications" },
+  nav: { where: "Where to?", offers: "Offers", events: "Events",  home: "Home", categories: "Categories", account: "Account", login: "Log in", search: "Search", map: "Map", notifications: "Notifications" },
   common: {
     call: "Call", whatsapp: "WhatsApp", verified: "Verified", featured: "Featured", openNow: "Open now",
     all: "All", empty: "Nothing here yet", back: "Back", save: "Save", saving: "Saving…",
@@ -446,6 +533,35 @@ const en: Dictionary = {
     loginToReport: "Log in to report", hint: "Status is based on user reports from the last 6 hours", queueLevel: "Queue size", send: "Send", today: "Today", tomorrow: "Tomorrow",
   },
   home2: { classifieds: "Classifieds", live: "Live services" },
+  now: {
+    greet: { morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", night: "Good night" },
+    headline: "What's on in {city} today?", whatToDo: "What do you want to do?",
+    intents: { eat: "Eat", coffee: "Coffee", shop: "Shop", pharmacy: "Pharmacy", doctor: "Doctor", kids: "Kids" },
+    whereCard: "Where to go?", whereSub: "Tell us who's with you and your budget, and we'll suggest a place that's open now",
+    openNow: "Open now", offersToday: "Today's offers", events: "What's on today?", newPlaces: "New in {city}", seeAll: "See all",
+    closesAt: "Closes {time}", endsIn: "Ends {when}", noOffers: "No active offers right now", noEvents: "No upcoming events", noOpen: "Nothing is open right now",
+    today: "Today", tomorrow: "Tomorrow", verified: "Verified {when}",
+  },
+  where: {
+    title: "Where to go?", q1: "Who's with you?", q2: "What's your budget?", q3: "How far?",
+    audiences: { family: "Family", couple: "Two of us", friends: "Friends", kids: "Kids", solo: "Just me" },
+    budgets: { "1": "Budget", "2": "Mid-range", "3": "High", "4": "Luxury" },
+    distances: { "2": "Close (2 km)", "5": "5 km", "10": "10 km", any: "Any distance" },
+    useLocation: "Use my location", cityCenter: "Distances are measured from the city centre", locating: "Finding your location…", denied: "Couldn't get your location, using the city centre",
+    suggest: "Suggest", surprise: "Surprise me", again: "Start over", another: "Another suggestion", back: "Back", next: "Next",
+    noResults: "Nothing open right now matches that — try a longer distance or a higher budget", why: "Why this?", results: "Our suggestions for you",
+    reasonOpenUntil: "Open until {time}", reasonOpen: "Open now", reasonKm: "{km} km", reasonFrom: "from the city centre", reasonBest: "Rated {rating}",
+    reasonAudience: { family: "Family friendly", couple: "Good for two", friends: "Good for friends", kids: "Good for kids", solo: "Good on your own" },
+  },
+  offers: {
+    title: "Offers", empty: "No active offers right now", add: "Add an offer", titleF: "Offer title", detailsF: "Details (optional)", endsF: "Ends on",
+    business: "Business", published: "Offer published", note: "Offers disappear automatically when they end", ends: "Ends", loginOwner: "Log in with a business account to add an offer",
+  },
+  events: {
+    title: "Events", empty: "No upcoming events", suggest: "Suggest an event", name: "Event name", details: "Details", category: "Type", starts: "Starts at",
+    venue: "Venue", submitted: "Thanks! Your event will appear after review", loginToSuggest: "Log in to suggest an event", location: "Location",
+    cats: { music: "Music", family: "Family", sports: "Sports", culture: "Culture", food: "Food", education: "Education", charity: "Charity", other: "Other" },
+  },
   trust: { verifiedAgo: "We verified this info {when}", neverVerified: "Not verified yet", wrongInfo: "Wrong info?", wrongThanks: "Thanks, we will review it", hoursUnknown: "Hours unknown", priceLevel: "Price level" },
 };
 

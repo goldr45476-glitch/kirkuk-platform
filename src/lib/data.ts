@@ -2,7 +2,7 @@ import { cache } from "react";
 import { getCity } from "@/lib/city";
 import { supabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
-import type { ListingCardRow, ListingDetail, ListingFilters, ReviewRow, ServiceStatusRow, Business, BusinessDetail, BusinessHour, Category, CommentRow, District, FeedPost, MapBusiness, NotificationRow, Product, Profile, SearchParams, StoryRing } from "@/lib/types";
+import type { EventRow, NewPlaceRow, OfferRow, OpenNowRow, ListingCardRow, ListingDetail, ListingFilters, ReviewRow, ServiceStatusRow, Business, BusinessDetail, BusinessHour, Category, CommentRow, District, FeedPost, MapBusiness, NotificationRow, Product, Profile, SearchParams, StoryRing } from "@/lib/types";
 
 /** Current auth user's profile, or null (guest / not configured). */
 export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
@@ -286,3 +286,45 @@ export async function getMyPharmacies(): Promise<{ id: string; name: string }[]>
   return ((data ?? []) as unknown as { id: string; name: string; category: { slug: string } | null }[])
     .filter((b) => b.category?.slug === "pharmacies").map(({ id, name }) => ({ id, name }));
 }
+
+// ---------------------------------------------------------------------
+// "Now" discovery (migration 0006)
+// ---------------------------------------------------------------------
+export async function getOpenNow(limit = 10): Promise<OpenNowRow[]> {
+  if (!supabaseConfigured) return [];
+  const [supabase, city] = [await createClient(), await getCity()];
+  if (!city) return [];
+  const { data } = await supabase.rpc("get_open_now", { p_city: city.id, p_lat: null, p_lng: null, p_limit: limit });
+  return (data ?? []) as OpenNowRow[];
+}
+
+export async function getLiveOffers(limit = 20, business?: string): Promise<OfferRow[]> {
+  if (!supabaseConfigured) return [];
+  const [supabase, city] = [await createClient(), await getCity()];
+  if (!city) return [];
+  const { data } = await supabase.rpc("get_offers_live", { p_city: city.id, p_limit: limit, p_business: business ?? null });
+  return (data ?? []) as OfferRow[];
+}
+
+export async function getUpcomingEvents(days = 14, limit = 20): Promise<EventRow[]> {
+  if (!supabaseConfigured) return [];
+  const [supabase, city] = [await createClient(), await getCity()];
+  if (!city) return [];
+  const { data } = await supabase.rpc("get_events_upcoming", { p_city: city.id, p_days: days, p_limit: limit });
+  return (data ?? []) as EventRow[];
+}
+
+export async function getNewPlaces(limit = 8): Promise<NewPlaceRow[]> {
+  if (!supabaseConfigured) return [];
+  const [supabase, city] = [await createClient(), await getCity()];
+  if (!city) return [];
+  const { data } = await supabase.rpc("get_new_places", { p_city: city.id, p_days: 45, p_limit: limit });
+  return (data ?? []) as NewPlaceRow[];
+}
+
+export const getAmenities = cache(async (): Promise<{ key: string; name: Record<string, string> }[]> => {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.from("amenities").select("key, name");
+  return (data ?? []) as { key: string; name: Record<string, string> }[];
+});
