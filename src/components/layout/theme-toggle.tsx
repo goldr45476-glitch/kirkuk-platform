@@ -9,7 +9,7 @@ export function ThemeToggle({ label }: { label: string }) {
     try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch {}
   };
   return (
-    <button onClick={toggle} title={label} aria-label={label} className="inline-flex size-10 items-center justify-center rounded-lg hover:bg-muted">
+    <button onClick={toggle} title={label} aria-label={label} className="inline-flex size-9 items-center justify-center rounded-lg hover:bg-muted sm:size-10">
       <Sun className="size-5 hidden dark:block" aria-hidden />
       <Moon className="size-5 dark:hidden" aria-hidden />
     </button>

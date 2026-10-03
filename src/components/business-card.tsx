@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SaveButton } from "@/features/saved/saved-context";
 import { BadgeCheck, MapPin, MessageCircle, Phone, Star } from "lucide-react";
 import { Badge, Card } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
@@ -37,6 +38,7 @@ export function BusinessCard({ b, t, locale }: { b: Business; t: Dictionary; loc
           </div>
         </div>
         {b.is_featured && <Badge tone="accent">{t.common.featured}</Badge>}
+        <SaveButton kind="business" id={b.id} labels={{ save: t.misc.saved.save, saved: t.misc.saved.isSaved, login: t.misc.saved.loginToSave }} className="-me-1 -mt-1" />
       </div>
       {b.description && <p className="line-clamp-2 text-sm text-muted-foreground">{b.description}</p>}
       {(b.phone || b.whatsapp) && (

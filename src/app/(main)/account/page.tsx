@@ -70,6 +70,7 @@ export default async function AccountPage() {
         <h2 id="mine-h" className="font-extrabold">{t.profile.myPosts}</h2>
         {mine.length === 0 ? <p className="text-sm text-muted-foreground">{t.profile.noPosts}</p> : mine.map((p) => <PostCard key={p.id} post={p} t={t} locale={locale} userId={profile.id} />)}
       </section>
+      <p className="text-center text-xs"><Link href="/account/delete" className="font-semibold text-muted-foreground underline hover:text-destructive">{t.misc.del.link}</Link></p>
       <form action={signOutAction}>
         <Button variant="outline" className="w-full"><LogOut aria-hidden />{t.auth.logout}</Button>
       </form>

@@ -1,6 +1,7 @@
 import { BadgeCheck, CalendarDays, Clock, MapPin, Phone, Star, Tag } from "lucide-react";
 import Link from "next/link";
 import { Avatar } from "@/components/avatar";
+import { SaveButton } from "@/features/saved/saved-context";
 import { Badge } from "@/components/ui/card";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { dayOffset, formatClock, formatDateTime } from "@/lib/format-time";
@@ -67,7 +68,7 @@ export function NewPlaceCard({ p, t, locale, district }: { p: NewPlaceRow; t: Di
 export function OfferCard({ o, t, locale, wide }: { o: OfferRow; t: Dictionary; locale: Locale; wide?: boolean }) {
   return (
     <article className={cn(card, "border-accent/40 bg-gradient-to-br from-accent/10 to-card", wide && "w-full")}>
-      <Badge tone="accent" className="self-start"><Tag className="size-3" aria-hidden />{t.offers.title}</Badge>
+      <div className="flex items-center justify-between"><Badge tone="accent"><Tag className="size-3" aria-hidden />{t.offers.title}</Badge><SaveButton kind="offer" id={o.id} labels={{ save: t.misc.saved.save, saved: t.misc.saved.isSaved, login: t.misc.saved.loginToSave }} className="-me-1 -mt-1" /></div>
       <h3 className="font-extrabold leading-snug">{o.title}</h3>
       {o.details && <p className="line-clamp-2 text-sm text-muted-foreground">{o.details}</p>}
       <p className="text-xs font-semibold text-muted-foreground">
@@ -84,7 +85,7 @@ export function EventCard({ e, t, locale, wide }: { e: EventRow; t: Dictionary; 
   const clock = new Intl.DateTimeFormat(locale === "ar" ? "ar-IQ" : locale === "ku" ? "ckb-IQ" : locale === "tr" ? "tr-TR" : "en-US", { hour: "numeric", minute: "2-digit", timeZone: "Asia/Baghdad" }).format(new Date(e.starts_at));
   return (
     <article className={cn(card, wide && "w-full")}>
-      <div className="flex items-center gap-2 text-xs font-bold text-primary"><CalendarDays className="size-4" aria-hidden />{off <= 1 ? `${when} · ${clock}` : when}</div>
+      <div className="flex items-center justify-between"><div className="flex items-center gap-2 text-xs font-bold text-primary"><CalendarDays className="size-4" aria-hidden />{off <= 1 ? `${when} · ${clock}` : when}</div><SaveButton kind="event" id={e.id} labels={{ save: t.misc.saved.save, saved: t.misc.saved.isSaved, login: t.misc.saved.loginToSave }} className="-me-1 -mt-1" /></div>
       <h3 className="font-extrabold leading-snug">{e.title}</h3>
       {e.details && <p className="line-clamp-2 text-sm text-muted-foreground">{e.details}</p>}
       <div className="mt-auto flex flex-wrap items-center gap-2 text-xs text-muted-foreground">

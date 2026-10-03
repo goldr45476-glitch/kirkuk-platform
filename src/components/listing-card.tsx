@@ -1,6 +1,7 @@
 import { Building2, Car, Briefcase, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { SaveButton } from "@/features/saved/saved-context";
 import { Badge, Card } from "@/components/ui/card";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { listingFacts, formatPrice } from "@/lib/listing-facts";
@@ -17,7 +18,8 @@ export function ListingCard({ l, t, locale, district }: { l: ListingCardRow & { 
         {l.image ? <Image src={l.image} alt="" fill sizes="112px" className="object-cover" /> : <Icon className="size-8" aria-hidden />}
       </div>
       <div className="min-w-0 flex-1 space-y-1">
-        <h3 className="line-clamp-2 font-bold leading-snug">
+        <SaveButton kind="listing" id={l.id} labels={{ save: t.misc.saved.save, saved: t.misc.saved.isSaved, login: t.misc.saved.loginToSave }} className="absolute end-1 top-1" />
+        <h3 className="line-clamp-2 pe-8 font-bold leading-snug">
           <Link href={`/listings/${l.id}`} className="after:absolute after:inset-0 hover:underline">{l.title}</Link>
         </h3>
         <p className="font-extrabold text-primary">{formatPrice(l.price, l.currency, t, locale)}</p>

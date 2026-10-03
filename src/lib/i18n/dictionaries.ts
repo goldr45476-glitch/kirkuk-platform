@@ -2,7 +2,7 @@
 const ar = {
   appName: "دليل كركوك",
   tagline: "كل ما تحتاجه في كركوك، في مكان واحد",
-  nav: { where: "وين نروح؟", offers: "العروض", events: "الفعاليات",  home: "الرئيسية", categories: "الأقسام", account: "حسابي", login: "دخول", search: "بحث", map: "الخريطة", notifications: "الإشعارات" },
+  nav: { saved: "المحفوظات", where: "وين نروح؟", offers: "العروض", events: "الفعاليات",  home: "الرئيسية", categories: "الأقسام", account: "حسابي", login: "دخول", search: "بحث", map: "الخريطة", notifications: "الإشعارات" },
   common: {
     call: "اتصال", whatsapp: "واتساب", verified: "موثّق", featured: "مميز", openNow: "مفتوح الآن",
     all: "الكل", empty: "لا توجد نتائج بعد", back: "رجوع", save: "حفظ", saving: "جارٍ الحفظ…",
@@ -159,6 +159,14 @@ const ar = {
     whatsapp: "واتساب", location: "الموقع على الخريطة", budgetFor: "الميزانية", noOffers: "لا توجد عروض فعّالة", upload: "رفع صورة", verifyHint: "تحقّق فريقنا من معلوماتك يرفع ثقة الزوار — تواصل معنا لطلب زيارة تحقق.",
     wip: "قيد المراجعة: لن تظهر صفحتك للعامة قبل موافقة الفريق.", suspended: "هذه الصفحة موقوفة، تواصل مع الإدارة.", dayNames: "الأحد,الاثنين,الثلاثاء,الأربعاء,الخميس,الجمعة,السبت",
   },
+  misc: {
+    saved: { title: "المحفوظات", places: "أماكن", offers: "عروض", events: "فعاليات", listings: "إعلانات", empty: "لم تحفظ شيئاً بعد", hint: "احفظ الأماكن والعروض والفعاليات لتجدها هنا", save: "حفظ", isSaved: "محفوظ", loginToSave: "سجّل الدخول للحفظ", endsSoon: "ينتهي قريباً", past: "انتهت" },
+    collections: { title: "قوائم منسّقة", empty: "لا توجد قوائم بعد", places: "مكان", shareWa: "شارك القائمة عبر واتساب", back: "كل القوائم" },
+    share: { whatsapp: "واتساب" },
+    legal: { privacy: "الخصوصية", terms: "شروط الاستخدام", content: "سياسة المحتوى", suggest: "اقترح مكاناً", rights: "جميع الحقوق محفوظة", updated: "آخر تحديث" },
+    del: { link: "حذف حسابي", title: "حذف الحساب", warn: "سيتم حذف حسابك وكل منشوراتك وتقييماتك ومحفوظاتك نهائياً ولا يمكن التراجع. الأنشطة التي تملكها تبقى منشورة بدون مالك.", confirm: "اكتب كلمة «{word}» للتأكيد", word: "حذف", button: "حذف حسابي نهائياً", lastAdmin: "أنت المدير الوحيد، عيّن مديراً آخر أولاً", error: "تعذّر حذف الحساب", done: "تم حذف حسابك" },
+    err: { title: "حدث خطأ غير متوقع", retry: "حاول مجدداً", home: "الرئيسية", offline: "أنت غير متصل بالإنترنت", offlineHint: "الصفحات التي زرتها سابقاً قد تبقى متاحة. تحقق من اتصالك ثم حاول مجدداً." },
+  },
   trust: { verifiedAgo: "تحققنا من المعلومات {when}", neverVerified: "لم نتحقق من المعلومات بعد", wrongInfo: "المعلومة غلط؟", wrongThanks: "شكراً، سنراجعها", hoursUnknown: "الساعات غير معروفة", priceLevel: "مستوى السعر" },
 };
 
@@ -167,7 +175,7 @@ export type Dictionary = typeof ar;
 const ku: Dictionary = {
   appName: "ڕێنمای کەرکووک",
   tagline: "هەموو پێداویستییەکانت لە کەرکووک، لە یەک شوێن",
-  nav: { where: "بۆ کوێ بچین؟", offers: "ئۆفەرەکان", events: "بۆنەکان",  home: "سەرەکی", categories: "بەشەکان", account: "هەژمارەکەم", login: "چوونەژوورەوە", search: "گەڕان", map: "نەخشە", notifications: "ئاگادارکردنەوە" },
+  nav: { saved: "پاشەکەوتکراو", where: "بۆ کوێ بچین؟", offers: "ئۆفەرەکان", events: "بۆنەکان",  home: "سەرەکی", categories: "بەشەکان", account: "هەژمارەکەم", login: "چوونەژوورەوە", search: "گەڕان", map: "نەخشە", notifications: "ئاگادارکردنەوە" },
   common: {
     call: "پەیوەندی", whatsapp: "واتساپ", verified: "پشتڕاستکراوە", featured: "تایبەت", openNow: "ئێستا کراوەیە",
     all: "هەموو", empty: "هێشتا هیچ ئەنجامێک نییە", back: "گەڕانەوە", save: "پاشەکەوتکردن", saving: "پاشەکەوت دەکرێت…",
@@ -324,13 +332,21 @@ const ku: Dictionary = {
     whatsapp: "واتساپ", location: "شوێن لەسەر نەخشە", budgetFor: "بودجە", noOffers: "هیچ ئۆفەرێکی چالاک نییە", upload: "بارکردنی وێنە", verifyHint: "پشتڕاستکردنەوەی زانیارییەکانت باوەڕی بینەران زیاد دەکات — پەیوەندیمان پێوە بکە.",
     wip: "لە پێداچوونەوەدایە: پەڕەکەت بۆ گشتی دەرناکەوێت تا تیمەکەمان پەسەندی بکات.", suspended: "ئەم پەڕەیە ڕاگیراوە، پەیوەندی بە بەڕێوەبردنەوە بکە.", dayNames: "یەکشەممە,دووشەممە,سێشەممە,چوارشەممە,پێنجشەممە,هەینی,شەممە",
   },
+  misc: {
+    saved: { title: "پاشەکەوتکراوەکان", places: "شوێنەکان", offers: "ئۆفەرەکان", events: "بۆنەکان", listings: "ڕیکلامەکان", empty: "هێشتا هیچت پاشەکەوت نەکردووە", hint: "شوێن و ئۆفەر و بۆنەکان پاشەکەوت بکە بۆ ئەوەی لێرە بیانبینیتەوە", save: "پاشەکەوتکردن", isSaved: "پاشەکەوتکراوە", loginToSave: "بچۆ ژوورەوە بۆ پاشەکەوتکردن", endsSoon: "بەم زووانە تەواو دەبێت", past: "تەواو بوو" },
+    collections: { title: "لیستی هەڵبژێردراو", empty: "هێشتا هیچ لیستێک نییە", places: "شوێن", shareWa: "لیستەکە بە واتساپ هاوبەش بکە", back: "هەموو لیستەکان" },
+    share: { whatsapp: "واتساپ" },
+    legal: { privacy: "تایبەتمەندی", terms: "مەرجەکانی بەکارهێنان", content: "سیاسەتی ناوەڕۆک", suggest: "شوێنێک پێشنیار بکە", rights: "هەموو مافەکان پارێزراون", updated: "دوایین نوێکردنەوە" },
+    del: { link: "سڕینەوەی هەژمارەکەم", title: "سڕینەوەی هەژمار", warn: "هەژمار و هەموو پۆست و هەڵسەنگاندن و پاشەکەوتکراوەکانت بە یەکجاری دەسڕدرێنەوە و ناگەڕێتەوە. ئەو چالاکییانەی خاوەنیانیت بێ خاوەن دەمێننەوە.", confirm: "وشەی «{word}» بنووسە بۆ دڵنیابوون", word: "سڕینەوە", button: "هەژمارەکەم بە یەکجاری بسڕەوە", lastAdmin: "تۆ تاکە بەڕێوەبەریت، سەرەتا بەڕێوەبەرێکی تر دابنێ", error: "نەتوانرا هەژمار بسڕدرێتەوە", done: "هەژمارەکەت سڕایەوە" },
+    err: { title: "هەڵەیەکی چاوەڕواننەکراو ڕوویدا", retry: "دووبارە هەوڵبدەرەوە", home: "سەرەکی", offline: "پەیوەندیت بە ئینتەرنێتەوە نییە", offlineHint: "ئەو لاپەڕانەی پێشتر بینیوتن لەوانەیە بەردەست بن. پەیوەندیەکەت بپشکنە و دووبارە هەوڵبدەرەوە." },
+  },
   trust: { verifiedAgo: "زانیارییەکانمان پشتڕاست کردەوە {when}", neverVerified: "هێشتا زانیارییەکان پشتڕاست نەکراونەتەوە", wrongInfo: "زانیارییەکە هەڵەیە؟", wrongThanks: "سوپاس، پێداچوونەوەی بۆ دەکەین", hoursUnknown: "کاتژمێرەکان نەزانراون", priceLevel: "ئاستی نرخ" },
 };
 
 const tr: Dictionary = {
   appName: "Kerkük Rehberi",
   tagline: "Kerkük'te ihtiyacınız olan her şey, tek yerde",
-  nav: { where: "Nereye?", offers: "Fırsatlar", events: "Etkinlikler",  home: "Ana Sayfa", categories: "Kategoriler", account: "Hesabım", login: "Giriş", search: "Ara", map: "Harita", notifications: "Bildirimler" },
+  nav: { saved: "Kaydedilenler", where: "Nereye?", offers: "Fırsatlar", events: "Etkinlikler",  home: "Ana Sayfa", categories: "Kategoriler", account: "Hesabım", login: "Giriş", search: "Ara", map: "Harita", notifications: "Bildirimler" },
   common: {
     call: "Ara", whatsapp: "WhatsApp", verified: "Onaylı", featured: "Öne çıkan", openNow: "Şimdi açık",
     all: "Tümü", empty: "Henüz sonuç yok", back: "Geri", save: "Kaydet", saving: "Kaydediliyor…",
@@ -487,13 +503,21 @@ const tr: Dictionary = {
     whatsapp: "WhatsApp", location: "Haritadaki konum", budgetFor: "Bütçe", noOffers: "Aktif fırsat yok", upload: "Fotoğraf yükle", verifyHint: "Bilgilerinizin ekibimizce doğrulanması ziyaretçi güvenini artırır — bize ulaşın.",
     wip: "İnceleniyor: ekibimiz onaylayana kadar sayfanız herkese açık olmaz.", suspended: "Bu sayfa askıda, yönetimle iletişime geçin.", dayNames: "Pazar,Pazartesi,Salı,Çarşamba,Perşembe,Cuma,Cumartesi",
   },
+  misc: {
+    saved: { title: "Kaydedilenler", places: "Mekânlar", offers: "Fırsatlar", events: "Etkinlikler", listings: "İlanlar", empty: "Henüz bir şey kaydetmediniz", hint: "Mekân, fırsat ve etkinlikleri kaydedin, burada bulun", save: "Kaydet", isSaved: "Kaydedildi", loginToSave: "Kaydetmek için giriş yapın", endsSoon: "Yakında bitiyor", past: "Bitti" },
+    collections: { title: "Küratörlü listeler", empty: "Henüz liste yok", places: "mekân", shareWa: "Listeyi WhatsApp'ta paylaş", back: "Tüm listeler" },
+    share: { whatsapp: "WhatsApp" },
+    legal: { privacy: "Gizlilik", terms: "Kullanım şartları", content: "İçerik politikası", suggest: "Mekân öner", rights: "Tüm hakları saklıdır", updated: "Son güncelleme" },
+    del: { link: "Hesabımı sil", title: "Hesabı sil", warn: "Hesabınız, tüm gönderileriniz, değerlendirmeleriniz ve kayıtlarınız kalıcı olarak silinir, geri alınamaz. Sahibi olduğunuz işletmeler sahipsiz olarak yayında kalır.", confirm: "Onaylamak için «{word}» yazın", word: "SİL", button: "Hesabımı kalıcı olarak sil", lastAdmin: "Tek yöneticisiniz, önce başka bir yönetici atayın", error: "Hesap silinemedi", done: "Hesabınız silindi" },
+    err: { title: "Beklenmedik bir hata oluştu", retry: "Tekrar dene", home: "Ana sayfa", offline: "İnternet bağlantınız yok", offlineHint: "Daha önce ziyaret ettiğiniz sayfalar açılabilir. Bağlantınızı kontrol edip tekrar deneyin." },
+  },
   trust: { verifiedAgo: "Bilgileri doğruladık: {when}", neverVerified: "Bilgiler henüz doğrulanmadı", wrongInfo: "Bilgi yanlış mı?", wrongThanks: "Teşekkürler, inceleyeceğiz", hoursUnknown: "Saatler bilinmiyor", priceLevel: "Fiyat düzeyi" },
 };
 
 const en: Dictionary = {
   appName: "Kirkuk Guide",
   tagline: "Everything you need in Kirkuk, in one place",
-  nav: { where: "Where to?", offers: "Offers", events: "Events",  home: "Home", categories: "Categories", account: "Account", login: "Log in", search: "Search", map: "Map", notifications: "Notifications" },
+  nav: { saved: "Saved", where: "Where to?", offers: "Offers", events: "Events",  home: "Home", categories: "Categories", account: "Account", login: "Log in", search: "Search", map: "Map", notifications: "Notifications" },
   common: {
     call: "Call", whatsapp: "WhatsApp", verified: "Verified", featured: "Featured", openNow: "Open now",
     all: "All", empty: "Nothing here yet", back: "Back", save: "Save", saving: "Saving…",
@@ -649,6 +673,14 @@ const en: Dictionary = {
     label: "Occasion", from: "From date", to: "To date", productName: "Name", price: "Price (IQD)", viewPage: "View page", priceLevel: "Price level", website: "Website",
     whatsapp: "WhatsApp", location: "Location on the map", budgetFor: "Budget", noOffers: "No active offers", upload: "Upload photo", verifyHint: "Having our team verify your info raises visitor trust — contact us to request a visit.",
     wip: "Under review: your page stays hidden from the public until our team approves it.", suspended: "This page is suspended — contact the admins.", dayNames: "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday",
+  },
+  misc: {
+    saved: { title: "Saved", places: "Places", offers: "Offers", events: "Events", listings: "Ads", empty: "You haven't saved anything yet", hint: "Save places, offers and events to find them here", save: "Save", isSaved: "Saved", loginToSave: "Log in to save", endsSoon: "Ends soon", past: "Ended" },
+    collections: { title: "Curated lists", empty: "No lists yet", places: "places", shareWa: "Share this list on WhatsApp", back: "All lists" },
+    share: { whatsapp: "WhatsApp" },
+    legal: { privacy: "Privacy", terms: "Terms of use", content: "Content policy", suggest: "Suggest a place", rights: "All rights reserved", updated: "Last updated" },
+    del: { link: "Delete my account", title: "Delete account", warn: "Your account, posts, reviews and saved items will be permanently deleted. This cannot be undone. Businesses you own stay published without an owner.", confirm: "Type “{word}” to confirm", word: "DELETE", button: "Permanently delete my account", lastAdmin: "You are the only admin — assign another admin first", error: "Couldn't delete the account", done: "Your account was deleted" },
+    err: { title: "Something unexpected happened", retry: "Try again", home: "Home", offline: "You're offline", offlineHint: "Pages you visited before may still work. Check your connection and try again." },
   },
   trust: { verifiedAgo: "We verified this info {when}", neverVerified: "Not verified yet", wrongInfo: "Wrong info?", wrongThanks: "Thanks, we will review it", hoursUnknown: "Hours unknown", priceLevel: "Price level" },
 };

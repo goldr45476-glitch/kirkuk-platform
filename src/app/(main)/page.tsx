@@ -9,7 +9,7 @@ import { StoriesRow } from "@/features/feed/stories";
 import { EventCard, NewPlaceCard, OfferCard, OpenNowCard, Row } from "@/components/now-cards";
 import { cityName, getCity } from "@/lib/city";
 import { dayPart } from "@/lib/format-time";
-import { FEED_PAGE, getCategories, getCurrentProfile, getDistricts, getDutyPharmacies, getFeed, getLiveOffers, getMyBusinesses, getNewPlaces, getOpenNow, getStoryRings, getUpcomingEvents } from "@/lib/data";
+import { FEED_PAGE, listCollections, getCategories, getCurrentProfile, getDistricts, getDutyPharmacies, getFeed, getLiveOffers, getMyBusinesses, getNewPlaces, getOpenNow, getStoryRings, getUpcomingEvents } from "@/lib/data";
 import { supabaseConfigured } from "@/lib/env";
 import { getI18n, localized } from "@/lib/i18n/server";
 import { categoryHref } from "@/lib/category-href";
@@ -17,9 +17,9 @@ import { categoryHref } from "@/lib/category-href";
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ feed?: string }> }) {
   const mode = (await searchParams).feed === "following" ? "following" : "all";
   const { t, locale } = await getI18n();
-  const [categories, districts, duty, profile, rings, myBiz, posts, city, openNow, offers, events, fresh] = await Promise.all([
+  const [categories, districts, duty, profile, rings, myBiz, posts, city, openNow, offers, events, fresh, collections] = await Promise.all([
     getCategories(), getDistricts(), getDutyPharmacies(), getCurrentProfile(), getStoryRings(), getMyBusinesses(), getFeed({ mode }),
-    getCity(), getOpenNow(10), getLiveOffers(8), getUpcomingEvents(7, 8), getNewPlaces(8),
+    getCity(), getOpenNow(10), getLiveOffers(8), getUpcomingEvents(7, 8), getNewPlaces(8), listCollections(6),
   ]);
   const dName = new Map(districts.map((d) => [d.id, localized(d, locale)]));
   const cname = cityName(city, locale) || t.appName;
@@ -74,6 +74,17 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           </Row>
           {offers.length > 0 && <Row title={`🔥 ${t.now.offersToday}`} href="/offers" seeAll={t.now.seeAll}>{offers.map((o) => <OfferCard key={o.id} o={o} t={t} locale={locale} />)}</Row>}
           {events.length > 0 && <Row title={`📅 ${t.now.events}`} href="/events" seeAll={t.now.seeAll}>{events.map((e) => <EventCard key={e.id} e={e} t={t} locale={locale} />)}</Row>}
+          {collections.length > 0 && (
+            <Row title={`✨ ${t.misc.collections.title}`} href="/collections" seeAll={t.now.seeAll}>
+              {collections.map((c) => (
+                <Link key={c.id} href={`/collections/${c.slug}`} className="flex w-60 shrink-0 snap-start flex-col gap-1.5 rounded-2xl border bg-gradient-to-br from-primary/10 to-card p-4 shadow-sm">
+                  <h3 className="font-extrabold leading-snug">{c.title}</h3>
+                  <p className="text-xs font-semibold text-primary">{c.item_count} {t.misc.collections.places}</p>
+                  {c.preview?.length ? <p className="line-clamp-2 text-xs text-muted-foreground">{c.preview.join("، ")}</p> : null}
+                </Link>
+              ))}
+            </Row>
+          )}
           {fresh.length > 0 && <Row title={`🆕 ${t.now.newPlaces.replace("{city}", cname)}`}>{fresh.map((p) => <NewPlaceCard key={p.id} p={p} t={t} locale={locale} district={p.district_id ? dName.get(p.district_id) : undefined} />)}</Row>}
         </>
       )}

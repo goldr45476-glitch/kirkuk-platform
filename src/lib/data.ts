@@ -328,3 +328,48 @@ export const getAmenities = cache(async (): Promise<{ key: string; name: Record<
   const { data } = await supabase.from("amenities").select("key, name");
   return (data ?? []) as { key: string; name: Record<string, string> }[];
 });
+
+
+// ---------------------------------------------------------------------
+// Saved + collections (migration 0008)
+// ---------------------------------------------------------------------
+const EMPTY_SAVED = { business: [], offer: [], event: [], listing: [] } as Record<"business" | "offer" | "event" | "listing", string[]>;
+export const getSavedIds = cache(async () => {
+  if (!supabaseConfigured) return { ids: EMPTY_SAVED, loggedIn: false };
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return { ids: EMPTY_SAVED, loggedIn: false };
+  const { data } = await supabase.rpc("saved_ids");
+  return { ids: { ...EMPTY_SAVED, ...((data ?? {}) as object) } as typeof EMPTY_SAVED, loggedIn: true };
+});
+
+export interface SavedBundle {
+  places: { id: string; slug: string; name: string; address: string | null; phone: string | null; district_id: number | null; rating_avg: number; rating_count: number; is_open: boolean | null; closes_at: string | null }[];
+  offers: { id: string; title: string; details: string | null; ends_at: string; business_slug: string; business_name: string }[];
+  events: { id: string; title: string; details: string | null; starts_at: string; ends_at: string | null; category: string | null; venue_name: string | null; venue_slug: string | null; past: boolean }[];
+  listings: { id: string; kind: "property" | "vehicle" | "job"; title: string; price: number | null; currency: "IQD" | "USD"; details: Record<string, string | number | undefined>; district_id: number | null; status: string; created_at: string; image: string | null }[];
+}
+export async function getSaved(): Promise<SavedBundle> {
+  const empty: SavedBundle = { places: [], offers: [], events: [], listings: [] };
+  if (!supabaseConfigured) return empty;
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("get_saved");
+  return { ...empty, ...((data ?? {}) as Partial<SavedBundle>) };
+}
+
+export interface CollectionItem { id: string; slug: string; name: string; address: string | null; phone: string | null; whatsapp: string | null; district_id: number | null; rating_avg: number; rating_count: number; is_verified: boolean; price_level: number | null; is_open: boolean | null; closes_at: string | null; note: string | null; logo_url: string | null }
+export interface CollectionDetail { id: string; slug: string; title: string; description: string | null; status: string; items: CollectionItem[] }
+export async function getCollection(slug: string): Promise<CollectionDetail | null> {
+  if (!supabaseConfigured) return null;
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("get_collection", { p_slug: slug });
+  return (data as CollectionDetail | null) ?? null;
+}
+export interface CollectionSummary { id: string; slug: string; title: string; description: string | null; item_count: number; preview: string[] | null }
+export async function listCollections(limit = 20): Promise<CollectionSummary[]> {
+  if (!supabaseConfigured) return [];
+  const [supabase, city] = [await createClient(), await getCity()];
+  if (!city) return [];
+  const { data } = await supabase.rpc("list_collections", { p_city: city.id, p_limit: limit });
+  return ((data ?? []) as CollectionSummary[]).map((c) => ({ ...c, item_count: Number(c.item_count) }));
+}

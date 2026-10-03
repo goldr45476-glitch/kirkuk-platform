@@ -8,7 +8,7 @@ import { LOCALES } from "@/lib/i18n/config";
 export function LocaleSwitcher({ current, label }: { current: string; label: string }) {
   const [pending, start] = useTransition();
   return (
-    <label className="relative inline-flex size-10 items-center justify-center rounded-lg hover:bg-muted" title={label}>
+    <label className="relative inline-flex size-9 items-center justify-center rounded-lg hover:bg-muted sm:size-10" title={label}>
       <Languages className="size-5" aria-hidden />
       <span className="sr-only">{label}</span>
       <select

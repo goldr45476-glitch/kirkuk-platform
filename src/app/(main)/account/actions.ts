@@ -43,3 +43,15 @@ export async function signOutAction() {
   revalidatePath("/", "layout");
   redirect("/");
 }
+
+/** Permanently deletes the caller's account (SQL: delete_my_account). Returns an error code or redirects home. */
+export async function deleteAccountAction(): Promise<"last_admin" | "error" | void> {
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) redirect("/login");
+  const { error } = await supabase.rpc("delete_my_account");
+  if (error) return error.message.includes("last_admin") ? "last_admin" : "error";
+  await supabase.auth.signOut();
+  revalidatePath("/", "layout");
+  redirect("/");
+}

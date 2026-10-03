@@ -275,3 +275,21 @@ update public.businesses set created_at = now() - make_interval(days => 60 + (ab
 update public.businesses set created_at = now() - make_interval(days => v.d)
 from (values ('cafe-asri', 6), ('kabab-shorja', 12), ('dental-smile', 20), ('ac-cool', 25), ('water-safa', 9), ('carwash-pearl', 3)) as v(slug, d)
 where businesses.slug = v.slug;
+
+-- Curated collections ---------------------------------------------------
+insert into public.collections (slug, title, description, status, sort_order) values
+ ('breakfast-spots',  'أماكن الفطور في كركوك',        'مخابز ومطاعم وكافيهات تبدأ يومك بطعم أصيل.', 'published', 1),
+ ('quiet-study',      'كافيهات هادئة للدراسة',        'واي فاي وجلسة مريحة ومناسبة للطلبة.', 'published', 2),
+ ('open-late',        'مفتوح بعد 12 ليلاً',            'لأن السهر يحتاج مكاناً مفتوحاً.', 'published', 3),
+ ('family-weekend',   'نهاية أسبوع مع العائلة',        'مولات ومطاعم وأماكن مناسبة للأطفال.', 'published', 4),
+ ('draft-example',    'قائمة قيد الإعداد',             'مسودة غير منشورة.', 'draft', 9);
+insert into public.collection_items (collection_id, business_id, position, note)
+select c.id, b.id, v.pos, v.note
+from (values
+ ('breakfast-spots','afran-kirkuk',1,'صمّون حجري طازج من الفجر'), ('breakfast-spots','mutaam-al-qala',2,null), ('breakfast-spots','cafe-asri',3,'فطور خفيف وقهوة مختصة'), ('breakfast-spots','kabab-shorja',4,null),
+ ('quiet-study','cafe-asri',1,'واي فاي وهدوء'), ('quiet-study','institute-lang',2,'قاعات دراسة'), ('quiet-study','cafe-citadel',3,null),
+ ('open-late','cafe-citadel',1,'حتى 1 بعد منتصف الليل'), ('open-late','burger-wasiti',2,'حتى 2 فجراً'), ('open-late','pharm-shifa24',3,'24 ساعة'), ('open-late','hospital-azadi',4,'طوارئ 24 ساعة'),
+ ('family-weekend','azadi-mall',1,'ألعاب أطفال'), ('family-weekend','kirkuk-mall',2,'سينما ومنطقة طعام'), ('family-weekend','mutaam-al-qala',3,'جلسات عائلية'),
+ ('draft-example','cafe-asri',1,null)
+) as v(col, slug, pos, note)
+join public.collections c on c.slug = v.col join public.businesses b on b.slug = v.slug;

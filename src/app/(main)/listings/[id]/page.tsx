@@ -7,6 +7,7 @@ import { z } from "zod";
 import { Badge, Card } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { OwnerControls, ReportListing, TrackListingView } from "@/features/listings/listing-actions";
+import { SaveButton } from "@/features/saved/saved-context";
 import { getCurrentProfile, getDistricts, getListing } from "@/lib/data";
 import { SITE_URL } from "@/lib/env";
 import { getI18n, localized } from "@/lib/i18n/server";
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const l = valid(id) ? await getListing(id) : null;
   if (!l) return {};
   const desc = (l.description ?? "").slice(0, 160);
-  return { title: l.title, description: desc, alternates: { canonical: `/listings/${l.id}` }, openGraph: { title: l.title, description: desc, images: l.images[0] ? [{ url: l.images[0].url }] : undefined } };
+  return { title: l.title, description: desc, alternates: { canonical: `/listings/${l.id}` }, openGraph: { title: l.title, description: desc, images: [{ url: l.images[0]?.url ?? "/og-default.png" }] } };
 }
 
 export default async function ListingPage({ params }: Props) {
@@ -100,6 +101,8 @@ export default async function ListingPage({ params }: Props) {
       )}
 
       <div className="flex flex-wrap items-center justify-between gap-2">
+        <SaveButton kind="listing" id={l.id} withLabel labels={{ save: t.misc.saved.save, saved: t.misc.saved.isSaved, login: t.misc.saved.loginToSave }} />
+        <a href={`https://wa.me/?text=${encodeURIComponent(`${l.title}\n${SITE_URL}/listings/${l.id}`)}`} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-primary">{t.misc.share.whatsapp}</a>
         {mine ? <OwnerControls id={l.id} status={l.status} t={t} redirectTo={KIND_ROUTE[l.kind]} /> : <ReportListing id={l.id} t={t} loggedIn={!!profile} />}
       </div>
     </article>

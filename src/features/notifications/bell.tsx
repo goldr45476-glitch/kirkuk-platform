@@ -20,7 +20,7 @@ export function NotificationBell({ userId, initial, label }: { userId: string; i
   }, [userId]);
 
   return (
-    <Link href="/notifications" aria-label={count ? `${label} (${count})` : label} className="relative inline-flex size-10 items-center justify-center rounded-lg hover:bg-muted">
+    <Link href="/notifications" aria-label={count ? `${label} (${count})` : label} className="relative inline-flex size-9 items-center justify-center rounded-lg hover:bg-muted sm:size-10">
       <Bell className="size-5" aria-hidden />
       {count > 0 && <span className="absolute end-1 top-1 grid min-w-4 place-items-center rounded-full bg-destructive px-1 text-[10px] font-bold leading-4 text-destructive-foreground">{count > 99 ? "99+" : count}</span>}
     </Link>

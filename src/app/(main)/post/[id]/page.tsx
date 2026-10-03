@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props) {
   const desc = post.body.trim().slice(0, 160);
   return {
     title: `${who}: ${desc.slice(0, 50)}`, description: desc,
-    openGraph: { title: who, description: desc, type: "article", images: post.media[0] ? [{ url: post.media[0].url }] : undefined },
+    openGraph: { title: who, description: desc, type: "article", images: [{ url: post.media[0]?.url ?? "/og-default.png" }] },
   };
 }
 

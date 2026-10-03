@@ -7,6 +7,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { Badge, Card } from "@/components/ui/card";
 import { FollowShare, ReportWrongInfo, TrackView, TrackedLink } from "@/features/business/business-actions";
 import { ReviewsSection } from "@/features/business/reviews";
+import { SaveButton } from "@/features/saved/saved-context";
+import { Share2 } from "lucide-react";
 import { PostCard } from "@/features/feed/post-card";
 import { getBusinessBySlug, getCurrentProfile, getFeed, getReviews, isFollowing } from "@/lib/data";
 import { SITE_URL } from "@/lib/env";
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: b.name,
     description: desc,
     alternates: { canonical: url },
-    openGraph: { title: b.name, description: desc, url, type: "website", images: b.cover_url ?? b.logo_url ? [{ url: (b.cover_url ?? b.logo_url)! }] : undefined },
+    openGraph: { title: b.name, description: desc, url, type: "website", images: [{ url: b.cover_url ?? b.logo_url ?? "/og-default.png" }] },
     twitter: { card: "summary_large_image", title: b.name, description: desc },
   };
 }
@@ -109,6 +111,10 @@ export default async function BusinessPage({ params }: Props) {
           <div className="mt-4 grid grid-cols-2 gap-2">
             {b.phone && <TrackedLink id={b.id} href={`tel:${b.phone}`} className={cn(buttonVariants({ size: "lg" }))}><Phone aria-hidden />{t.common.call}</TrackedLink>}
             {b.whatsapp && <TrackedLink id={b.id} event="whatsapp" href={waLink(b.whatsapp)} external className={cn(buttonVariants({ size: "lg", variant: "success" }))}><MessageCircle aria-hidden />{t.common.whatsapp}</TrackedLink>}
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <SaveButton kind="business" id={b.id} withLabel labels={{ save: t.misc.saved.save, saved: t.misc.saved.isSaved, login: t.misc.saved.loginToSave }} />
+            <a href={`https://wa.me/?text=${encodeURIComponent(`${b.name}\n${SITE_URL}/business/${b.slug}`)}`} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-2 rounded-full border bg-card px-4 text-sm font-semibold hover:bg-muted"><Share2 className="size-4" aria-hidden />{t.misc.share.whatsapp}</a>
           </div>
           <div className="mt-2">
             <FollowShare businessId={b.id} slug={b.slug} name={b.name} initialFollowing={following} t={bt} />

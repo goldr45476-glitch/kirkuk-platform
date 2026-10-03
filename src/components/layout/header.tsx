@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { MapPin, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getI18n } from "@/lib/i18n/server";
 import { NotificationBell } from "@/features/notifications/bell";
@@ -14,9 +14,9 @@ export async function Header() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
       <div className="container flex h-14 items-center gap-2">
-        <Link href="/" className="flex items-center gap-2 font-extrabold text-primary">
+        <Link href="/" className="flex shrink-0 items-center gap-2 whitespace-nowrap font-extrabold text-primary">
           <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground"><MapPin className="size-4" aria-hidden /></span>
-          <span className="text-lg">{t.appName}</span>
+          <span className="text-base sm:text-lg">{t.appName}</span>
         </Link>
         <nav className="ms-4 hidden min-w-0 items-center gap-1 md:flex" aria-label="main">
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/">{t.nav.home}</Link>
@@ -32,6 +32,7 @@ export async function Header() {
           <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/live/pharmacies">{t.live.title}</Link>
         </nav>
         <div className="ms-auto flex items-center gap-1">
+          <Link href="/search" aria-label={t.search.title} className="inline-flex size-9 items-center justify-center rounded-lg hover:bg-muted sm:size-10"><Search className="size-5" aria-hidden /></Link>
           <LocaleSwitcher current={locale} label={t.common.language} />
           <ThemeToggle label={t.common.theme} />
           {profile && <NotificationBell userId={profile.id} initial={unread} label={t.nav.notifications} />}
