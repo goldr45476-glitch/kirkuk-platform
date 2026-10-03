@@ -19,6 +19,8 @@ export async function Header() {
         <nav className="ms-6 hidden items-center gap-1 md:flex" aria-label="main">
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/">{t.nav.home}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/categories">{t.nav.categories}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/search">{t.nav.search}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted" href="/map">{t.nav.map}</Link>
         </nav>
         <div className="ms-auto flex items-center gap-1">
           <LocaleSwitcher current={locale} label={t.common.language} />

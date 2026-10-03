@@ -2,7 +2,13 @@
 
 منصة اجتماعية + دليل أعمال لمحافظة كركوك. Next.js 15 (App Router) · TypeScript · Tailwind · Supabase.
 
-## الحالة: المرحلة 1 ✅
+## الحالة: المرحلتان 1 و2 ✅
+**المرحلة 2:** البحث المتقدم (`/search`) بدالة SQL تتحمل الأخطاء الإملائية والتشكيل مع فلاتر (قسم، حي، تقييم، مفتوح الآن، موثّق، الأقرب، الأحدث)،
+صفحة النشاط الكاملة (`/business/[slug]`) مع ساعات العمل وحالة «مفتوح الآن» والمنتجات والاتصال/واتساب والمتابعة والمشاركة وبيانات Schema.org،
+الخريطة التفاعلية (`/map`) Leaflet + OpenStreetMap مع فلترة وزر «الأقرب إليّ»، و`sitemap.xml` و`robots.txt`.
+> نفّذ أيضاً `supabase/migrations/0002_search.sql` بعد `0001`.
+
+### المرحلة 1
 هيكل المشروع، نظام التصميم (RTL + وضع ليلي)، i18n (ar / ku / tr / en)، قاعدة البيانات الكاملة مع RLS،
 تسجيل الدخول (هاتف OTP + بريد + Google)، الصفحة الرئيسية والأقسام وحساب المستخدم.
 
@@ -16,7 +22,7 @@ npm run dev                    # http://localhost:3000
 
 ### 1) إنشاء مشروع Supabase
 1. أنشئ مشروعاً على supabase.com، وانسخ `Project URL` و`anon key` إلى `.env.local`.
-2. في **SQL Editor** نفّذ بالترتيب: `supabase/migrations/0001_schema.sql` ثم `supabase/seed.sql`
+2. في **SQL Editor** نفّذ بالترتيب: `0001_schema.sql` ثم `0002_search.sql` (من `supabase/migrations/`) ثم `supabase/seed.sql`
    (أو `supabase db push` عبر Supabase CLI).
 3. **Authentication → Providers**:
    - *Phone*: فعّله واربطه بمزوّد SMS (Twilio / MessageBird / Vonage). الـ OTP يتطلب مزوّداً مدفوعاً؛ استخدم *Test phone numbers* أثناء التطوير.
@@ -29,7 +35,8 @@ update public.profiles set role = 'admin' where id = '<UUID-من-auth.users>';
 
 ### الفحوصات
 ```bash
-node scripts/check-migration.mjs   # يشغّل migration + seed على Postgres داخل الذاكرة (PGlite)
+node scripts/check-migration.mjs   # يشغّل migrations + seed على Postgres داخل الذاكرة (PGlite)
+node scripts/test-search.mjs       # يختبر دالة البحث (إملاء، تشكيل، فلاتر، الأقرب، مفتوح الآن)
 npm test                           # اختبارات الوحدة
 npm run typecheck && npm run lint
 ```
@@ -48,7 +55,7 @@ supabase/           migrations/ و seed.sql
 - **التركمانية** بكود `tr` (لهجة تركمان العراق اللاتينية قريبة من التركية)؛ الترجمات تحتاج مراجعة متحدث أصلي.
 - **Tailwind v3 + مكونات على نمط shadcn** مكتوبة يدوياً (بدون CLI) لاستقرار البناء.
 - **حماية الامتيازات في قاعدة البيانات**: triggers تمنع المستخدم من ترقية دوره أو توثيق/تمييز نشاطه بنفسه، وحدود معدّل على المنشورات والتعليقات والتقييمات والرسائل والبلاغات.
-- **البحث**: عمود `search_norm` مُطبَّع (إزالة التشكيل وتوحيد الألف/الياء/التاء المربوطة) + فهرس `pg_trgm`؛ واجهة البحث في المرحلة 2.
+- **البحث**: عمود `search_norm` مُطبَّع (إزالة التشكيل وتوحيد الألف/الياء/التاء المربوطة) + فهرس `pg_trgm`؛ البحث عبر الدالة `search_businesses`.
 - **التوقيت**: «مفتوح الآن» والمناوبات بتوقيت `Asia/Baghdad`.
 
 ## النشر (Vercel)

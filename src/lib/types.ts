@@ -35,6 +35,10 @@ export interface Business {
   is_featured: boolean;
   rating_avg: number;
   rating_count: number;
+  lat?: number | null;
+  lng?: number | null;
+  is_open?: boolean;
+  distance_km?: number | null;
   district: { name_ar: string; name_ku: string | null; name_tr: string | null; name_en: string | null } | null;
 }
 
@@ -47,4 +51,32 @@ export interface Profile {
   phone: string | null;
   role: UserRole;
   locale: Locale;
+}
+
+export interface BusinessHour { day_of_week: number; open_time: string | null; close_time: string | null; is_closed: boolean }
+export interface Product { id: string; name: string; description: string | null; price: number | null; currency: "IQD" | "USD"; is_available: boolean }
+
+export interface BusinessDetail extends Business {
+  website: string | null;
+  lat: number | null;
+  lng: number | null;
+  logo_url: string | null;
+  cover_url: string | null;
+  followers_count: number;
+  views_count: number;
+  category_id: number;
+  hours: BusinessHour[];
+  images: { id: string; url: string; caption: string | null }[];
+  products: Product[];
+  is_open: boolean;
+}
+
+export interface MapBusiness {
+  id: string; slug: string; name: string; lat: number; lng: number;
+  is_verified: boolean; root_slug: string; color: string; address: string | null; phone: string | null;
+}
+
+export interface SearchParams {
+  q?: string; category?: string; district?: number; minRating?: number; open?: boolean; verified?: boolean;
+  lat?: number; lng?: number; sort?: "relevance" | "nearest" | "rating" | "newest"; page?: number;
 }

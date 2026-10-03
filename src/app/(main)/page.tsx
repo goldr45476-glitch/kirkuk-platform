@@ -1,4 +1,4 @@
-import { Database } from "lucide-react";
+import { Database, Search } from "lucide-react";
 import Link from "next/link";
 import { BusinessCard } from "@/components/business-card";
 import { DynamicIcon } from "@/components/icon";
@@ -17,6 +17,11 @@ export default async function HomePage() {
       <section className="rounded-2xl bg-gradient-to-br from-primary to-primary/70 p-6 text-primary-foreground md:p-10">
         <h1 className="text-2xl font-extrabold md:text-4xl">{t.appName}</h1>
         <p className="mt-2 max-w-xl text-primary-foreground/90 md:text-lg">{t.tagline}</p>
+        <form action="/search" className="relative mt-5 max-w-xl" role="search">
+          <Search className="pointer-events-none absolute start-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden />
+          <input name="q" type="search" placeholder={t.search.placeholder} aria-label={t.search.title} enterKeyHint="search"
+            className="h-12 w-full rounded-xl bg-card ps-10 pe-4 text-base text-card-foreground shadow-lg placeholder:text-muted-foreground" />
+        </form>
       </section>
 
       {!supabaseConfigured && (
