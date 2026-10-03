@@ -2,6 +2,13 @@
 
 منصة اجتماعية + دليل أعمال لمحافظة كركوك. Next.js 15 (App Router) · TypeScript · Tailwind · Supabase.
 
+## الاتجاه: «كركوك الآن» (تحويل تدريجي)
+اعتُمدت وثيقة المنتج «كركوك الآن» (اكتشاف المدينة: مفتوح الآن، عروض، فعاليات، «وين نروح؟»). التحويل تدريجي فوق ما بُني.
+**الخطوة 1 (الأساس) ✅ — `0005_city_foundation.sql`:** جدول `cities` و`city_id` على المحتوى (إضافة مدينة = صف جديد + `NEXT_PUBLIC_CITY`)،
+«آخر تحقق» + `mark_verified` للمراجعين، ساعات خاصة (رمضان/أعياد) و«مفتوح الآن» صحيح عبر منتصف الليل وبحالة **غير معروف** عند غياب الساعات،
+جداول المرافق والملاءمة (لـ«وين نروح؟») والعروض (تنتهي تلقائياً) والفعاليات (تمر بالمراجعة) والاقتراحات والمطالبات (`review_claim`) و`analytics_events` (`track_event`) و`audit_log`.
+**التالي:** «وين نروح؟» وشاشة «الآن» في الرئيسية (مفتوح الآن، عروض اليوم، شنو أكو اليوم، جديد)، ثم اقتراح مكان/مطالبة، ثم لوحتا صاحب النشاط والإدارة.
+
 ## الحالة: المراحل 1 و2 و3 و4 ✅
 **المرحلة 4:** التقييمات (تقييم واحد لكل مستخدم، توزيع النجوم، رد صاحب النشاط مع إشعارات للطرفين)،
 الإعلانات المبوّبة: العقارات `/real-estate` والسيارات والماطورات `/cars` والوظائف `/jobs` بفلاتر قوية (بيع/إيجار، النوع، السعر، المساحة، الغرف، السنة، الدوام…) وصفحة إعلان `/listings/[id]` ونشر إعلان مع صور `/listings/new` وإدارة «إعلاناتي»،
@@ -35,7 +42,7 @@ npm run dev                    # http://localhost:3000
 
 ### 1) إنشاء مشروع Supabase
 1. أنشئ مشروعاً على supabase.com، وانسخ `Project URL` و`anon key` إلى `.env.local`.
-2. في **SQL Editor** نفّذ بالترتيب: `0001_schema.sql` ثم `0002_search.sql` ثم `0003_social.sql` ثم `0004_reviews_listings_live.sql` (من `supabase/migrations/`) ثم `supabase/seed.sql`
+2. في **SQL Editor** نفّذ بالترتيب: `0001_schema.sql` ثم `0002_search.sql` ثم `0003_social.sql` ثم `0004_reviews_listings_live.sql` ثم `0005_city_foundation.sql` (من `supabase/migrations/`) ثم `supabase/seed.sql`
    (أو `supabase db push` عبر Supabase CLI).
 3. **Authentication → Providers**:
    - *Phone*: فعّله واربطه بمزوّد SMS (Twilio / MessageBird / Vonage). الـ OTP يتطلب مزوّداً مدفوعاً؛ استخدم *Test phone numbers* أثناء التطوير.
@@ -50,6 +57,7 @@ update public.profiles set role = 'admin' where id = '<UUID-من-auth.users>';
 ```bash
 node scripts/check-migration.mjs   # يشغّل migrations + seed على Postgres داخل الذاكرة (PGlite)
 node scripts/test-search.mjs       # يختبر دالة البحث (إملاء، تشكيل، فلاتر، الأقرب، مفتوح الآن)
+node scripts/test-city.mjs         # يختبر المدن، مفتوح الآن (منتصف الليل/خاص/غير معروف)، التحقق، العروض، الفعاليات، المطالبات، التحليلات
 node scripts/test-phase4.mjs       # يختبر التقييمات والإعلانات والخدمات المباشرة (RLS + دوال البحث)
 node scripts/test-social.mjs       # يختبر RLS والتدفق الاجتماعي بدور authenticated (إشعارات، صلاحيات، حدود معدّل)
 npm test                           # اختبارات الوحدة
@@ -73,8 +81,13 @@ supabase/           migrations/ و seed.sql
 - **البحث**: عمود `search_norm` مُطبَّع (إزالة التشكيل وتوحيد الألف/الياء/التاء المربوطة) + فهرس `pg_trgm`؛ البحث عبر الدالة `search_businesses`.
 - **التوقيت**: «مفتوح الآن» والمناوبات بتوقيت `Asia/Baghdad`.
 
-## النشر (Vercel)
-استورد المستودع، أضف متغيرات `.env.example` في إعدادات المشروع ثم Deploy. لا أسرار في الكود؛ `SUPABASE_SERVICE_ROLE_KEY` للخادم فقط.
+## النشر على Railway
+1. أنشئ مشروعاً في Railway من هذا المستودع (يستخدم `railway.json`: أمر التشغيل `npm run start` ومسار الصحة `/api/health`).
+2. أضف متغيرات الخدمة (Variables): `NEXT_PUBLIC_SUPABASE_URL` و`NEXT_PUBLIC_SUPABASE_ANON_KEY` و`NEXT_PUBLIC_SITE_URL` (رابط النطاق) و`NEXT_PUBLIC_CITY=kirkuk` و`SUPABASE_SERVICE_ROLE_KEY` (للخادم فقط).
+   متغيرات `NEXT_PUBLIC_*` تُدمج وقت البناء، لذا اضبطها **قبل** أول نشر وأعد النشر عند تغييرها.
+3. في Supabase → Authentication → URL Configuration أضف نطاق Railway إلى Site URL وRedirect URLs (`<site>/auth/callback`).
+4. Railway يمرّر `PORT` تلقائياً و`next start` يلتزم به. لا أسرار في الكود.
+> قاعدة البيانات والمصادقة والتخزين تبقى على Supabase؛ Railway يستضيف تطبيق Next.js فقط.
 
 ## ملاحظات المرحلة 3
 - **Realtime:** جدول `notifications` مضاف إلى publication `supabase_realtime` (في 0001)؛ تأكد أن Realtime مفعّل للمشروع.

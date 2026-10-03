@@ -108,6 +108,7 @@ const ar = {
     loginToReport: "سجّل الدخول لتبلّغ", hint: "الحالة مبنية على بلاغات المستخدمين خلال آخر 6 ساعات", queueLevel: "حجم الطابور", send: "إرسال", today: "اليوم", tomorrow: "غداً",
   },
   home2: { classifieds: "الإعلانات المبوّبة", live: "خدمات مباشرة" },
+  trust: { verifiedAgo: "تحققنا من المعلومات {when}", neverVerified: "لم نتحقق من المعلومات بعد", wrongInfo: "المعلومة غلط؟", wrongThanks: "شكراً، سنراجعها", hoursUnknown: "الساعات غير معروفة", priceLevel: "مستوى السعر" },
 };
 
 export type Dictionary = typeof ar;
@@ -221,6 +222,7 @@ const ku: Dictionary = {
     loginToReport: "بچۆ ژوورەوە بۆ ڕاپۆرتدان", hint: "دۆخەکە لەسەر ڕاپۆرتی بەکارهێنەران دامەزراوە لە ٦ کاتژمێری ڕابردوودا", queueLevel: "قەبارەی ڕیز", send: "ناردن", today: "ئەمڕۆ", tomorrow: "سبەینێ",
   },
   home2: { classifieds: "ڕیکلامە پۆلێنکراوەکان", live: "خزمەتگوزاری ڕاستەوخۆ" },
+  trust: { verifiedAgo: "زانیارییەکانمان پشتڕاست کردەوە {when}", neverVerified: "هێشتا زانیارییەکان پشتڕاست نەکراونەتەوە", wrongInfo: "زانیارییەکە هەڵەیە؟", wrongThanks: "سوپاس، پێداچوونەوەی بۆ دەکەین", hoursUnknown: "کاتژمێرەکان نەزانراون", priceLevel: "ئاستی نرخ" },
 };
 
 const tr: Dictionary = {
@@ -332,6 +334,7 @@ const tr: Dictionary = {
     loginToReport: "Bildirmek için giriş yapın", hint: "Durum, son 6 saatteki kullanıcı bildirimlerine dayanır", queueLevel: "Kuyruk yoğunluğu", send: "Gönder", today: "Bugün", tomorrow: "Yarın",
   },
   home2: { classifieds: "İlanlar", live: "Canlı hizmetler" },
+  trust: { verifiedAgo: "Bilgileri doğruladık: {when}", neverVerified: "Bilgiler henüz doğrulanmadı", wrongInfo: "Bilgi yanlış mı?", wrongThanks: "Teşekkürler, inceleyeceğiz", hoursUnknown: "Saatler bilinmiyor", priceLevel: "Fiyat düzeyi" },
 };
 
 const en: Dictionary = {
@@ -443,6 +446,7 @@ const en: Dictionary = {
     loginToReport: "Log in to report", hint: "Status is based on user reports from the last 6 hours", queueLevel: "Queue size", send: "Send", today: "Today", tomorrow: "Tomorrow",
   },
   home2: { classifieds: "Classifieds", live: "Live services" },
+  trust: { verifiedAgo: "We verified this info {when}", neverVerified: "Not verified yet", wrongInfo: "Wrong info?", wrongThanks: "Thanks, we will review it", hoursUnknown: "Hours unknown", priceLevel: "Price level" },
 };
 
 export const dictionaries: Record<"ar" | "ku" | "tr" | "en", Dictionary> = { ar, ku, tr, en };

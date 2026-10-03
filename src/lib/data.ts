@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { getCity } from "@/lib/city";
 import { supabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 import type { ListingCardRow, ListingDetail, ListingFilters, ReviewRow, ServiceStatusRow, Business, BusinessDetail, BusinessHour, Category, CommentRow, District, FeedPost, MapBusiness, NotificationRow, Product, Profile, SearchParams, StoryRing } from "@/lib/types";
@@ -62,9 +63,10 @@ export const PAGE_SIZE = 18;
 export async function searchBusinesses(p: SearchParams): Promise<{ rows: Business[]; total: number }> {
   if (!supabaseConfigured) return { rows: [], total: 0 };
   const supabase = await createClient();
-  const [districts, { data }] = await Promise.all([
-    getDistricts(),
+  const [districts, city] = await Promise.all([getDistricts(), getCity()]);
+  const { data } = await (
     supabase.rpc("search_businesses", {
+      p_city: city?.id ?? null,
       p_q: p.q?.trim() || null,
       p_category: p.category || null,
       p_district: p.district ?? null,
@@ -76,8 +78,8 @@ export async function searchBusinesses(p: SearchParams): Promise<{ rows: Busines
       p_sort: p.sort ?? (p.lat != null && p.lng != null ? "nearest" : "relevance"),
       p_limit: PAGE_SIZE,
       p_offset: ((p.page ?? 1) - 1) * PAGE_SIZE,
-    }),
-  ]);
+    })
+  );
   const byId = new Map(districts.map((d) => [d.id, d]));
   type Row = Business & { district_id: number | null; total_count: number };
   const rows = ((data ?? []) as Row[]).map((r) => ({ ...r, district: byId.get(r.district_id ?? -1) ?? null }));
@@ -91,7 +93,7 @@ export async function getBusinessBySlug(slug: string): Promise<BusinessDetail | 
     .from("businesses")
     .select(
       `id, slug, name, description, phone, whatsapp, website, address, lat, lng, logo_url, cover_url, category_id, owner_id,
-       is_verified, is_featured, rating_avg, rating_count, followers_count, views_count,
+       is_verified, is_featured, rating_avg, rating_count, followers_count, views_count, price_level, last_verified_at,
        district:districts(name_ar,name_ku,name_tr,name_en),
        hours:business_hours(day_of_week, open_time, close_time, is_closed),
        images:business_images(id, url, caption),
@@ -104,7 +106,7 @@ export async function getBusinessBySlug(slug: string): Promise<BusinessDetail | 
   const { data: open } = await supabase.rpc("is_open_now", { p_business: (data as { id: string }).id });
   const b = data as unknown as BusinessDetail & { products: (Product & { sort_order: number })[]; hours: BusinessHour[] };
   b.products = [...b.products].sort((x, y) => x.sort_order - y.sort_order);
-  return { ...b, is_open: !!open };
+  return { ...b, is_open: typeof open === "boolean" ? open : null };
 }
 
 export async function isFollowing(businessId: string): Promise<boolean | null> {
@@ -120,10 +122,11 @@ export async function isFollowing(businessId: string): Promise<boolean | null> {
 export async function getMapBusinesses(): Promise<MapBusiness[]> {
   if (!supabaseConfigured) return [];
   const supabase = await createClient();
+  const city = await getCity();
   const [cats, { data }] = await Promise.all([
     getCategories(),
     supabase.from("businesses").select("id, slug, name, lat, lng, is_verified, category_id, address, phone")
-      .eq("status", "active").not("lat", "is", null).not("lng", "is", null).limit(1000),
+      .eq("status", "active").eq("city_id", city?.id ?? 1).not("lat", "is", null).not("lng", "is", null).limit(1000),
   ]);
   const byId = new Map(cats.map((c) => [c.id, c]));
   const root = (id: number) => { let c = byId.get(id); while (c?.parent_id) c = byId.get(c.parent_id); return c; };

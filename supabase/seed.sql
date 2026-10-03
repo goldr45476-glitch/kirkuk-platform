@@ -218,3 +218,54 @@ from (values
  ('job','musalla','مطلوب سائق توصيل بدراجة نارية','دراجة من الشركة، دوام مسائي، راتب شهري ثابت.', null,'IQD','{"type":"offer","employment":"contract","salary":"600,000"}','07704000004')
 ) as v(kind, dist, title, descr, price, cur, details, phone)
 join public.districts d on d.slug = v.dist;
+
+-- =====================================================================
+-- "Kirkuk Now" demo data: price levels, amenities, suitability, offers, events
+-- =====================================================================
+update public.businesses set price_level = case
+  when slug in ('gold-qaysariya','azadi-mall','kirkuk-mall','motors-kirkuk') then 3
+  when slug in ('mutaam-al-qala','cafe-asri','bayt-athath','lc-electronics','school-future') then 2
+  else 1 end;
+
+-- verification freshness: a few places verified at different times
+update public.businesses set last_verified_at = now() - interval '3 days'  where slug in ('mutaam-al-qala','cafe-asri','azadi-mall');
+update public.businesses set last_verified_at = now() - interval '12 days' where slug in ('pharm-amal','pharm-noor','lab-shifa');
+update public.businesses set last_verified_at = null where slug in ('kabab-shorja','burger-wasiti');
+
+insert into public.business_amenities (business_id, amenity_key)
+select b.id, a.k from (values
+ ('mutaam-al-qala','family'),('mutaam-al-qala','parking'),('mutaam-al-qala','delivery'),('mutaam-al-qala','e_payment'),
+ ('cafe-asri','wifi'),('cafe-asri','quiet'),('cafe-asri','outdoor'),('cafe-asri','e_payment'),
+ ('cafe-citadel','outdoor'),('cafe-citadel','family'),
+ ('burger-wasiti','delivery'),('azadi-mall','parking'),('azadi-mall','family'),('azadi-mall','kids'),('azadi-mall','e_payment'),
+ ('kirkuk-mall','parking'),('kirkuk-mall','family'),('kirkuk-mall','kids'),('institute-lang','wifi'),('pharm-amal','delivery'),
+ ('ac-cool','home_service'),('electrician-ali','home_service'),('plumber-hawre','home_service')
+) as a(slug, k) join public.businesses b on b.slug = a.slug;
+
+insert into public.suitability (business_id, audience, budget_band)
+select b.id, s.aud, s.band from (values
+ ('mutaam-al-qala','family',2),('mutaam-al-qala','friends',2),('cafe-asri','friends',2),('cafe-asri','solo',1),('cafe-asri','couple',2),
+ ('cafe-citadel','friends',1),('cafe-citadel','couple',1),('azadi-mall','family',3),('azadi-mall','kids',3),('kirkuk-mall','family',3),
+ ('kabab-shorja','friends',1),('kabab-shorja','family',1),('burger-wasiti','friends',1),('burger-wasiti','solo',1)
+) as s(slug, aud, band) join public.businesses b on b.slug = s.slug;
+
+-- Ramadan-style special hours example (a closed Eid day)
+insert into public.special_hours (business_id, date_from, date_to, label, is_closed)
+select id, current_date + 40, current_date + 42, 'عطلة العيد', true from public.businesses where slug in ('civil-status','school-future');
+
+insert into public.offers (business_id, title, details, starts_at, ends_at)
+select b.id, v.title, v.details, now() - interval '1 hour', now() + v.dur
+from (values
+ ('mutaam-al-qala','خصم 20% على المشويات للعوائل','من 12 ظهراً إلى 4 عصراً، يوم الجمعة فقط.', interval '2 days'),
+ ('cafe-asri','قهوة + حلى بسعر واحد','عرض الطلبة: أبرز بطاقتك الجامعية.', interval '5 days'),
+ ('azadi-mall','يوم العائلة: ألعاب أطفال مجانية','لكل من يتسوق بأكثر من 50 ألف دينار.', interval '1 day'),
+ ('carwash-pearl','غسيل كامل + تلميع بـ 15 ألف','لفترة محدودة.', interval '3 days')
+) as v(slug, title, details, dur) join public.businesses b on b.slug = v.slug;
+
+insert into public.events (title, details, category, starts_at, ends_at, venue_business_id, venue_name, status)
+select v.title, v.details, v.cat, now() + v.st, now() + v.st + interval '3 hours', b.id, coalesce(b.name, v.venue), 'published'
+from (values
+ ('أمسية موسيقى تراثية كركوكية','عزف حي وأغاني تراثية بإشراف فرقة محلية.','music', interval '1 day 4 hours','cafe-citadel','أسفل القلعة'),
+ ('يوم الطفل المفتوح','ألعاب ومسابقات ورسم للأطفال.','family', interval '3 days','azadi-mall','آزادي مول'),
+ ('ورشة مهارات المقابلات الوظيفية','مجانية للخريجين، المقاعد محدودة.','education', interval '2 days','institute-lang','معهد اللغات الحديثة')
+) as v(title, details, cat, st, slug, venue) left join public.businesses b on b.slug = v.slug;

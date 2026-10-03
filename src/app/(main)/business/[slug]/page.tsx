@@ -4,13 +4,14 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge, Card } from "@/components/ui/card";
-import { FollowShare, TrackView, TrackedLink } from "@/features/business/business-actions";
+import { FollowShare, ReportWrongInfo, TrackView, TrackedLink } from "@/features/business/business-actions";
 import { ReviewsSection } from "@/features/business/reviews";
 import { PostCard } from "@/features/feed/post-card";
 import { getBusinessBySlug, getCurrentProfile, getFeed, getReviews, isFollowing } from "@/lib/data";
 import { SITE_URL } from "@/lib/env";
 import { WEEK_ORDER, dayState, todayBaghdad } from "@/lib/hours";
 import { getI18n, localized } from "@/lib/i18n/server";
+import { timeAgo } from "@/lib/time";
 import { cn } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -80,7 +81,7 @@ export default async function BusinessPage({ params }: Props) {
             </div>
             <div className="mb-1 flex flex-wrap gap-1">
               {b.is_featured && <Badge tone="accent">{t.common.featured}</Badge>}
-              <Badge tone={b.is_open ? "success" : "muted"}><Clock className="size-3" aria-hidden />{b.is_open ? bt.open : bt.closedNow}</Badge>
+              <Badge tone={b.is_open ? "success" : "muted"}><Clock className="size-3" aria-hidden />{b.is_open === null ? t.trust.hoursUnknown : b.is_open ? bt.open : bt.closedNow}</Badge>
             </div>
           </div>
           <h1 className="mt-3 flex items-center gap-2 text-2xl font-extrabold">
@@ -94,9 +95,17 @@ export default async function BusinessPage({ params }: Props) {
             <span>{b.views_count} {bt.views}</span>
           </div>
 
+          <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+            <span className={b.last_verified_at ? "font-semibold text-success" : undefined}>
+              {b.last_verified_at ? t.trust.verifiedAgo.replace("{when}", timeAgo(b.last_verified_at, locale)) : t.trust.neverVerified}
+            </span>
+            {b.price_level && <span aria-label={t.trust.priceLevel}>{"$".repeat(b.price_level)}<span className="opacity-30">{"$".repeat(4 - b.price_level)}</span></span>}
+            <ReportWrongInfo businessId={b.id} loggedIn={!!profile} t={t} />
+          </p>
+
           <div className="mt-4 grid grid-cols-2 gap-2">
             {b.phone && <TrackedLink id={b.id} href={`tel:${b.phone}`} className={cn(buttonVariants({ size: "lg" }))}><Phone aria-hidden />{t.common.call}</TrackedLink>}
-            {b.whatsapp && <TrackedLink id={b.id} href={waLink(b.whatsapp)} external className={cn(buttonVariants({ size: "lg", variant: "success" }))}><MessageCircle aria-hidden />{t.common.whatsapp}</TrackedLink>}
+            {b.whatsapp && <TrackedLink id={b.id} event="whatsapp" href={waLink(b.whatsapp)} external className={cn(buttonVariants({ size: "lg", variant: "success" }))}><MessageCircle aria-hidden />{t.common.whatsapp}</TrackedLink>}
           </div>
           <div className="mt-2">
             <FollowShare businessId={b.id} slug={b.slug} name={b.name} initialFollowing={following} t={bt} />
@@ -171,10 +180,10 @@ export default async function BusinessPage({ params }: Props) {
           {b.address && <p className="text-muted-foreground">{b.address}</p>}
           <div className="flex flex-wrap gap-2">
             {b.lat != null && b.lng != null && (
-              <a className={buttonVariants({ variant: "outline", size: "sm" })} target="_blank" rel="noopener noreferrer"
-                href={`https://www.openstreetmap.org/?mlat=${b.lat}&mlon=${b.lng}#map=17/${b.lat}/${b.lng}`}>
+              <TrackedLink id={b.id} event="directions" external className={buttonVariants({ variant: "outline", size: "sm" })}
+                href={`https://www.openstreetmap.org/directions?to=${b.lat}%2C${b.lng}#map=17/${b.lat}/${b.lng}`}>
                 <MapPin aria-hidden />{bt.openInMaps}
-              </a>
+              </TrackedLink>
             )}
             {b.website && /^https?:\/\//.test(b.website) && (
               <a className={buttonVariants({ variant: "outline", size: "sm" })} target="_blank" rel="noopener noreferrer nofollow" href={b.website}>

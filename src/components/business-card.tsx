@@ -25,8 +25,10 @@ export function BusinessCard({ b, t, locale }: { b: Business; t: Dictionary; loc
             {b.rating_count > 0 && (
               <span className="inline-flex items-center gap-1"><Star className="size-3.5 fill-accent text-accent" aria-hidden />{Number(b.rating_avg).toFixed(1)} ({b.rating_count})</span>
             )}
-            {b.is_open != null && (
-              <span className={cn("font-semibold", b.is_open ? "text-success" : "text-muted-foreground")}>{b.is_open ? t.common.openNow : t.business.closedNow}</span>
+            {b.is_open !== undefined && (
+              <span className={cn("font-semibold", b.is_open ? "text-success" : "text-muted-foreground")}>
+                {b.is_open === null ? t.trust.hoursUnknown : b.is_open ? t.common.openNow : t.business.closedNow}
+              </span>
             )}
             {b.distance_km != null && <span>{b.distance_km.toFixed(1)} {t.search.km}</span>}
             {b.district && (

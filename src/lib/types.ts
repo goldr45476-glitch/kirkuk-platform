@@ -37,7 +37,8 @@ export interface Business {
   rating_count: number;
   lat?: number | null;
   lng?: number | null;
-  is_open?: boolean;
+  is_open?: boolean | null;
+  last_verified_at?: string | null;
   distance_km?: number | null;
   district: { name_ar: string; name_ku: string | null; name_tr: string | null; name_en: string | null } | null;
 }
@@ -64,12 +65,13 @@ export interface BusinessDetail extends Business {
   cover_url: string | null;
   followers_count: number;
   views_count: number;
+  price_level: number | null;
   category_id: number;
   owner_id: string | null;
   hours: BusinessHour[];
   images: { id: string; url: string; caption: string | null }[];
   products: Product[];
-  is_open: boolean;
+  is_open: boolean | null;
 }
 
 export interface MapBusiness {
