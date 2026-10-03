@@ -70,6 +70,7 @@ const ar = {
   notifications: {
     title: "الإشعارات", empty: "لا توجد إشعارات", markAll: "تعليم الكل كمقروء",
     follow: "{actor} بدأ بمتابعة {business}", like: "{actor} أعجبه منشورك", comment: "{actor} علّق على منشورك", offer: "{business} نشر عرضاً جديداً",
+ events: { submission_approved: "تمت الموافقة على اقتراحك «{name}»", submission_rejected: "لم نتمكن من قبول اقتراحك «{name}»", claim_approved: "تمت الموافقة على مطالبتك بصفحتك", claim_rejected: "تم رفض مطالبتك بالصفحة", event_published: "تم نشر فعاليتك «{name}»", event_hidden: "لم تُنشر فعاليتك «{name}»" },
     review: "{actor} قيّم {business}", review_reply: "{business} ردّ على تقييمك",
     post: "{business} نشر منشوراً جديداً", system: "إشعار جديد", someone: "أحد المستخدمين",
   },
@@ -136,6 +137,27 @@ const ar = {
     title: "الفعاليات", empty: "لا توجد فعاليات قادمة", suggest: "اقترح فعالية", name: "اسم الفعالية", details: "التفاصيل", category: "النوع", starts: "تبدأ في",
     venue: "المكان", submitted: "وصلتنا فعاليتك وستظهر بعد المراجعة", loginToSuggest: "سجّل الدخول لتقترح فعالية", location: "الموقع",
     cats: { music: "موسيقى", family: "عائلية", sports: "رياضة", culture: "ثقافة", food: "طعام", education: "تعليم", charity: "خيرية", other: "أخرى" },
+  },
+  suggest: {
+    title: "اقترح مكاناً", step1: "الأساسيات", step2: "التفاصيل (اختياري)", name: "اسم المكان", category: "التصنيف", pickLocation: "حدّد الموقع على الخريطة",
+    tapMap: "اضغط على الخريطة لتحديد الموقع", myLocation: "موقعي", district: "الحي", phone: "الهاتف", address: "العنوان / أقرب معلم", description: "وصف مختصر",
+    isOwner: "أنا صاحب هذا المكان", next: "التالي", back: "رجوع", submit: "إرسال للمراجعة", sent: "وصل اقتراحك وسيراجعه فريقنا قريباً", another: "اقترح مكاناً آخر",
+    needLocation: "حدّد موقع المكان على الخريطة", invalid: "تحقّق من الحقول المطلوبة", reviewNote: "كل الاقتراحات تمر بمراجعة قبل النشر", loginToSuggest: "سجّل الدخول لتقترح مكاناً",
+    mine: "مساهماتي", status: { pending: "قيد المراجعة", approved: "تمت الموافقة", rejected: "مرفوض" }, empty: "لم تقترح شيئاً بعد", typeNew: "مكان جديد", typeEdit: "تعديل", pickCategory: "اختر التصنيف",
+  },
+  claim: {
+    cta: "هل أنت صاحب النشاط؟", title: "المطالبة بصفحة النشاط", intro: "أرسل رقماً نتواصل معك عليه وصورة تثبت ملكيتك (هوية، إجازة، أو واجهة المحل).",
+    phone: "رقم التواصل", proof: "صورة الإثبات", submit: "إرسال المطالبة", sent: "وصلت مطالبتك وسنتواصل معك قريباً", already: "لديك مطالبة قيد المراجعة لهذه الصفحة", owned: "هذه الصفحة لها مالك بالفعل",
+    uploadError: "فشل رفع الصورة", loginToClaim: "سجّل الدخول للمطالبة بالصفحة", typeClaim: "مطالبة",
+  },
+  dash: {
+    title: "لوحة النشاط", myPlaces: "أنشطتي", none: "ليس لديك أنشطة بعد — اقترح مكاناً أو طالب بصفحة موجودة", status: { pending: "قيد المراجعة", active: "منشور", suspended: "موقوف" },
+    stats: "الإحصائيات", lastDays: "آخر {n} يوماً", views: "مشاهدات", contacts: "اتصال وواتساب", directions: "اتجاهات", followers: "متابعون", rating: "التقييم",
+    info: "معلومات الصفحة", hours: "ساعات العمل", special: "ساعات خاصة (رمضان / عطل)", amenities: "المرافق", suitability: "مناسب لـ", products: "المنتجات والخدمات", gallery: "معرض الصور", offers: "العروض",
+    save: "حفظ", saved: "تم الحفظ", logo: "الشعار", cover: "الغلاف", open: "من", close: "إلى", closedDay: "مغلق", allDay: "٢٤ ساعة", add: "إضافة", remove: "حذف",
+    label: "المناسبة", from: "من تاريخ", to: "إلى تاريخ", productName: "الاسم", price: "السعر (د.ع)", viewPage: "عرض الصفحة", priceLevel: "مستوى السعر", website: "الموقع الإلكتروني",
+    whatsapp: "واتساب", location: "الموقع على الخريطة", budgetFor: "الميزانية", noOffers: "لا توجد عروض فعّالة", upload: "رفع صورة", verifyHint: "تحقّق فريقنا من معلوماتك يرفع ثقة الزوار — تواصل معنا لطلب زيارة تحقق.",
+    wip: "قيد المراجعة: لن تظهر صفحتك للعامة قبل موافقة الفريق.", suspended: "هذه الصفحة موقوفة، تواصل مع الإدارة.", dayNames: "الأحد,الاثنين,الثلاثاء,الأربعاء,الخميس,الجمعة,السبت",
   },
   trust: { verifiedAgo: "تحققنا من المعلومات {when}", neverVerified: "لم نتحقق من المعلومات بعد", wrongInfo: "المعلومة غلط؟", wrongThanks: "شكراً، سنراجعها", hoursUnknown: "الساعات غير معروفة", priceLevel: "مستوى السعر" },
 };
@@ -213,6 +235,7 @@ const ku: Dictionary = {
   notifications: {
     title: "ئاگادارکردنەوەکان", empty: "هیچ ئاگادارکردنەوەیەک نییە", markAll: "هەموو وەک خوێندراوە دیاری بکە",
     follow: "{actor} دەستی کرد بە فۆڵۆکردنی {business}", like: "{actor} پۆستەکەتی بەدڵ بوو", comment: "{actor} کۆمێنتی لەسەر پۆستەکەت کرد", offer: "{business} ئۆفەرێکی نوێی بڵاوکردەوە",
+ events: { submission_approved: "پێشنیارەکەت «{name}» پەسەند کرا", submission_rejected: "نەمانتوانی پێشنیارەکەت «{name}» وەربگرین", claim_approved: "داواکارییەکەت بۆ پەڕەکە پەسەند کرا", claim_rejected: "داواکارییەکەت بۆ پەڕەکە ڕەتکرایەوە", event_published: "بۆنەکەت «{name}» بڵاوکرایەوە", event_hidden: "بۆنەکەت «{name}» بڵاو نەکرایەوە" },
     review: "{actor} {business}ی هەڵسەنگاند", review_reply: "{business} وەڵامی هەڵسەنگاندنەکەتی دایەوە",
     post: "{business} پۆستێکی نوێی بڵاوکردەوە", system: "ئاگادارکردنەوەی نوێ", someone: "بەکارهێنەرێک",
   },
@@ -279,6 +302,27 @@ const ku: Dictionary = {
     title: "بۆنەکان", empty: "هیچ بۆنەیەکی داهاتوو نییە", suggest: "بۆنەیەک پێشنیار بکە", name: "ناوی بۆنە", details: "وردەکاری", category: "جۆر", starts: "دەست پێدەکات لە",
     venue: "شوێن", submitted: "بۆنەکەت گەیشت و دوای پێداچوونەوە دەردەکەوێت", loginToSuggest: "بچۆ ژوورەوە بۆ پێشنیارکردنی بۆنە", location: "شوێن",
     cats: { music: "مۆسیقا", family: "خێزانی", sports: "وەرزش", culture: "کولتووری", food: "خواردن", education: "خوێندن", charity: "خێرخوازی", other: "هی تر" },
+  },
+  suggest: {
+    title: "شوێنێک پێشنیار بکە", step1: "بنەڕەتییەکان", step2: "وردەکاری (ئارەزوومەندانە)", name: "ناوی شوێن", category: "پۆل", pickLocation: "شوێن لەسەر نەخشە دیاری بکە",
+    tapMap: "لەسەر نەخشە کلیک بکە", myLocation: "شوێنی من", district: "گەڕەک", phone: "مۆبایل", address: "ناونیشان / نزیکترین نیشانە", description: "وەسفی کورت",
+    isOwner: "من خاوەنی ئەم شوێنەم", next: "دواتر", back: "گەڕانەوە", submit: "ناردن بۆ پێداچوونەوە", sent: "پێشنیارەکەت گەیشت و تیمەکەمان پێداچوونەوەی بۆ دەکات", another: "شوێنێکی تر پێشنیار بکە",
+    needLocation: "شوێن لەسەر نەخشە دیاری بکە", invalid: "خانە پێویستەکان بپشکنە", reviewNote: "هەموو پێشنیارەکان پێش بڵاوکردنەوە پێداچوونەوەیان بۆ دەکرێت", loginToSuggest: "بچۆ ژوورەوە بۆ پێشنیارکردن",
+    mine: "بەشدارییەکانم", status: { pending: "لە پێداچوونەوەدایە", approved: "پەسەند کرا", rejected: "ڕەتکرایەوە" }, empty: "هێشتا هیچت پێشنیار نەکردووە", typeNew: "شوێنی نوێ", typeEdit: "دەستکاری", pickCategory: "پۆل هەڵبژێرە",
+  },
+  claim: {
+    cta: "تۆ خاوەنی چالاکییەکەیت؟", title: "داواکردنی پەڕەی چالاکی", intro: "ژمارەیەک بنێرە پەیوەندیت پێوە بکەین و وێنەیەک کە خاوەندارێتیت بسەلمێنێت (ناسنامە، مۆڵەت، یان بەرەوڕووی دوکان).",
+    phone: "ژمارەی پەیوەندی", proof: "وێنەی بەڵگە", submit: "ناردنی داواکاری", sent: "داواکارییەکەت گەیشت، بەم زووانە پەیوەندیت پێوە دەکەین", already: "داواکارییەکی پێداچوونەوەت هەیە بۆ ئەم پەڕەیە", owned: "ئەم پەڕەیە پێشتر خاوەنی هەیە",
+    uploadError: "بارکردنی وێنە سەرکەوتوو نەبوو", loginToClaim: "بچۆ ژوورەوە بۆ داواکردنی پەڕە", typeClaim: "داواکاری",
+  },
+  dash: {
+    title: "داشبۆردی چالاکی", myPlaces: "چالاکییەکانم", none: "هێشتا هیچ چالاکییەکت نییە — شوێنێک پێشنیار بکە یان پەڕەیەک داوا بکە", status: { pending: "لە پێداچوونەوەدایە", active: "بڵاوکراوەتەوە", suspended: "ڕاگیراوە" },
+    stats: "ئامار", lastDays: "{n} ڕۆژی ڕابردوو", views: "بینین", contacts: "پەیوەندی و واتساپ", directions: "ڕێنمایی", followers: "فۆڵۆوەر", rating: "هەڵسەنگاندن",
+    info: "زانیاری پەڕە", hours: "کاتی کارکردن", special: "کاتی تایبەت (ڕەمەزان / پشووەکان)", amenities: "ڕەوشەکان", suitability: "گونجاوە بۆ", products: "کاڵا و خزمەتگوزارییەکان", gallery: "گەلەری وێنە", offers: "ئۆفەرەکان",
+    save: "پاشەکەوتکردن", saved: "پاشەکەوت کرا", logo: "لۆگۆ", cover: "بەرگ", open: "لە", close: "بۆ", closedDay: "داخراوە", allDay: "٢٤ کاتژمێر", add: "زیادکردن", remove: "سڕینەوە",
+    label: "بۆنە", from: "لە بەرواری", to: "بۆ بەرواری", productName: "ناو", price: "نرخ (د.ع)", viewPage: "بینینی پەڕە", priceLevel: "ئاستی نرخ", website: "ماڵپەڕ",
+    whatsapp: "واتساپ", location: "شوێن لەسەر نەخشە", budgetFor: "بودجە", noOffers: "هیچ ئۆفەرێکی چالاک نییە", upload: "بارکردنی وێنە", verifyHint: "پشتڕاستکردنەوەی زانیارییەکانت باوەڕی بینەران زیاد دەکات — پەیوەندیمان پێوە بکە.",
+    wip: "لە پێداچوونەوەدایە: پەڕەکەت بۆ گشتی دەرناکەوێت تا تیمەکەمان پەسەندی بکات.", suspended: "ئەم پەڕەیە ڕاگیراوە، پەیوەندی بە بەڕێوەبردنەوە بکە.", dayNames: "یەکشەممە,دووشەممە,سێشەممە,چوارشەممە,پێنجشەممە,هەینی,شەممە",
   },
   trust: { verifiedAgo: "زانیارییەکانمان پشتڕاست کردەوە {when}", neverVerified: "هێشتا زانیارییەکان پشتڕاست نەکراونەتەوە", wrongInfo: "زانیارییەکە هەڵەیە؟", wrongThanks: "سوپاس، پێداچوونەوەی بۆ دەکەین", hoursUnknown: "کاتژمێرەکان نەزانراون", priceLevel: "ئاستی نرخ" },
 };
@@ -354,6 +398,7 @@ const tr: Dictionary = {
   notifications: {
     title: "Bildirimler", empty: "Bildirim yok", markAll: "Tümünü okundu say",
     follow: "{actor}, {business} işletmesini takip etmeye başladı", like: "{actor} gönderinizi beğendi", comment: "{actor} gönderinize yorum yaptı", offer: "{business} yeni bir fırsat paylaştı",
+ events: { submission_approved: "«{name}» öneriniz onaylandı", submission_rejected: "«{name}» önerinizi kabul edemedik", claim_approved: "Sayfa talebiniz onaylandı", claim_rejected: "Sayfa talebiniz reddedildi", event_published: "«{name}» etkinliğiniz yayınlandı", event_hidden: "«{name}» etkinliğiniz yayınlanmadı" },
     review: "{actor}, {business} işletmesini değerlendirdi", review_reply: "{business} değerlendirmenize yanıt verdi",
     post: "{business} yeni bir gönderi paylaştı", system: "Yeni bildirim", someone: "Bir kullanıcı",
   },
@@ -420,6 +465,27 @@ const tr: Dictionary = {
     title: "Etkinlikler", empty: "Yaklaşan etkinlik yok", suggest: "Etkinlik öner", name: "Etkinlik adı", details: "Ayrıntılar", category: "Tür", starts: "Başlangıç",
     venue: "Mekân", submitted: "Etkinliğiniz alındı, incelemeden sonra yayınlanacak", loginToSuggest: "Etkinlik önermek için giriş yapın", location: "Konum",
     cats: { music: "Müzik", family: "Aile", sports: "Spor", culture: "Kültür", food: "Yemek", education: "Eğitim", charity: "Hayır", other: "Diğer" },
+  },
+  suggest: {
+    title: "Mekân öner", step1: "Temel bilgiler", step2: "Ayrıntılar (isteğe bağlı)", name: "Mekân adı", category: "Kategori", pickLocation: "Haritada konumu seçin",
+    tapMap: "Konum için haritaya dokunun", myLocation: "Konumum", district: "Mahalle", phone: "Telefon", address: "Adres / yakın nokta", description: "Kısa açıklama",
+    isOwner: "Bu mekânın sahibiyim", next: "İleri", back: "Geri", submit: "İncelemeye gönder", sent: "Öneriniz alındı, ekibimiz yakında inceleyecek", another: "Başka mekân öner",
+    needLocation: "Mekânın konumunu haritada seçin", invalid: "Zorunlu alanları kontrol edin", reviewNote: "Tüm öneriler yayınlanmadan önce incelenir", loginToSuggest: "Mekân önermek için giriş yapın",
+    mine: "Katkılarım", status: { pending: "İnceleniyor", approved: "Onaylandı", rejected: "Reddedildi" }, empty: "Henüz bir şey önermediniz", typeNew: "Yeni mekân", typeEdit: "Düzenleme", pickCategory: "Kategori seçin",
+  },
+  claim: {
+    cta: "İşletme sahibi misiniz?", title: "İşletme sayfasını talep et", intro: "Size ulaşabileceğimiz bir numara ve sahipliğinizi gösteren bir fotoğraf gönderin (kimlik, ruhsat veya dükkân cephesi).",
+    phone: "İletişim numarası", proof: "Kanıt fotoğrafı", submit: "Talebi gönder", sent: "Talebiniz alındı, sizinle iletişime geçeceğiz", already: "Bu sayfa için bekleyen bir talebiniz var", owned: "Bu sayfanın zaten bir sahibi var",
+    uploadError: "Fotoğraf yüklenemedi", loginToClaim: "Sayfayı talep etmek için giriş yapın", typeClaim: "Talep",
+  },
+  dash: {
+    title: "İşletme paneli", myPlaces: "İşletmelerim", none: "Henüz işletmeniz yok — bir mekân önerin veya mevcut bir sayfayı talep edin", status: { pending: "İnceleniyor", active: "Yayında", suspended: "Askıda" },
+    stats: "İstatistikler", lastDays: "Son {n} gün", views: "Görüntülenme", contacts: "Arama ve WhatsApp", directions: "Yol tarifi", followers: "Takipçi", rating: "Puan",
+    info: "Sayfa bilgileri", hours: "Çalışma saatleri", special: "Özel saatler (Ramazan / tatiller)", amenities: "Olanaklar", suitability: "Uygun", products: "Ürünler ve hizmetler", gallery: "Galeri", offers: "Fırsatlar",
+    save: "Kaydet", saved: "Kaydedildi", logo: "Logo", cover: "Kapak", open: "Açılış", close: "Kapanış", closedDay: "Kapalı", allDay: "24 saat", add: "Ekle", remove: "Sil",
+    label: "Etiket", from: "Başlangıç", to: "Bitiş", productName: "Ad", price: "Fiyat (IQD)", viewPage: "Sayfayı gör", priceLevel: "Fiyat düzeyi", website: "Web sitesi",
+    whatsapp: "WhatsApp", location: "Haritadaki konum", budgetFor: "Bütçe", noOffers: "Aktif fırsat yok", upload: "Fotoğraf yükle", verifyHint: "Bilgilerinizin ekibimizce doğrulanması ziyaretçi güvenini artırır — bize ulaşın.",
+    wip: "İnceleniyor: ekibimiz onaylayana kadar sayfanız herkese açık olmaz.", suspended: "Bu sayfa askıda, yönetimle iletişime geçin.", dayNames: "Pazar,Pazartesi,Salı,Çarşamba,Perşembe,Cuma,Cumartesi",
   },
   trust: { verifiedAgo: "Bilgileri doğruladık: {when}", neverVerified: "Bilgiler henüz doğrulanmadı", wrongInfo: "Bilgi yanlış mı?", wrongThanks: "Teşekkürler, inceleyeceğiz", hoursUnknown: "Saatler bilinmiyor", priceLevel: "Fiyat düzeyi" },
 };
@@ -495,6 +561,7 @@ const en: Dictionary = {
   notifications: {
     title: "Notifications", empty: "No notifications", markAll: "Mark all as read",
     follow: "{actor} started following {business}", like: "{actor} liked your post", comment: "{actor} commented on your post", offer: "{business} posted a new offer",
+ events: { submission_approved: "Your suggestion “{name}” was approved", submission_rejected: "We couldn't accept your suggestion “{name}”", claim_approved: "Your page claim was approved", claim_rejected: "Your page claim was declined", event_published: "Your event “{name}” was published", event_hidden: "Your event “{name}” wasn't published" },
     review: "{actor} reviewed {business}", review_reply: "{business} replied to your review",
     post: "{business} shared a new post", system: "New notification", someone: "Someone",
   },
@@ -561,6 +628,27 @@ const en: Dictionary = {
     title: "Events", empty: "No upcoming events", suggest: "Suggest an event", name: "Event name", details: "Details", category: "Type", starts: "Starts at",
     venue: "Venue", submitted: "Thanks! Your event will appear after review", loginToSuggest: "Log in to suggest an event", location: "Location",
     cats: { music: "Music", family: "Family", sports: "Sports", culture: "Culture", food: "Food", education: "Education", charity: "Charity", other: "Other" },
+  },
+  suggest: {
+    title: "Suggest a place", step1: "Basics", step2: "Details (optional)", name: "Place name", category: "Category", pickLocation: "Pick the location on the map",
+    tapMap: "Tap the map to set the location", myLocation: "My location", district: "Neighbourhood", phone: "Phone", address: "Address / nearest landmark", description: "Short description",
+    isOwner: "I own this place", next: "Next", back: "Back", submit: "Send for review", sent: "Thanks! Our team will review your suggestion soon", another: "Suggest another place",
+    needLocation: "Pick the place's location on the map", invalid: "Check the required fields", reviewNote: "Every suggestion is reviewed before it goes live", loginToSuggest: "Log in to suggest a place",
+    mine: "My contributions", status: { pending: "Under review", approved: "Approved", rejected: "Rejected" }, empty: "You haven't suggested anything yet", typeNew: "New place", typeEdit: "Edit", pickCategory: "Choose a category",
+  },
+  claim: {
+    cta: "Are you the owner?", title: "Claim this business page", intro: "Send a number we can reach you on and a photo that proves ownership (ID, licence or the shop front).",
+    phone: "Contact number", proof: "Proof photo", submit: "Send claim", sent: "Your claim was received — we'll be in touch soon", already: "You already have a pending claim for this page", owned: "This page already has an owner",
+    uploadError: "Photo upload failed", loginToClaim: "Log in to claim this page", typeClaim: "Claim",
+  },
+  dash: {
+    title: "Business dashboard", myPlaces: "My businesses", none: "You have no businesses yet — suggest a place or claim an existing page", status: { pending: "Under review", active: "Live", suspended: "Suspended" },
+    stats: "Statistics", lastDays: "Last {n} days", views: "Views", contacts: "Calls & WhatsApp", directions: "Directions", followers: "Followers", rating: "Rating",
+    info: "Page info", hours: "Opening hours", special: "Special hours (Ramadan / holidays)", amenities: "Amenities", suitability: "Good for", products: "Products & services", gallery: "Gallery", offers: "Offers",
+    save: "Save", saved: "Saved", logo: "Logo", cover: "Cover", open: "Opens", close: "Closes", closedDay: "Closed", allDay: "24 hours", add: "Add", remove: "Remove",
+    label: "Occasion", from: "From date", to: "To date", productName: "Name", price: "Price (IQD)", viewPage: "View page", priceLevel: "Price level", website: "Website",
+    whatsapp: "WhatsApp", location: "Location on the map", budgetFor: "Budget", noOffers: "No active offers", upload: "Upload photo", verifyHint: "Having our team verify your info raises visitor trust — contact us to request a visit.",
+    wip: "Under review: your page stays hidden from the public until our team approves it.", suspended: "This page is suspended — contact the admins.", dayNames: "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday",
   },
   trust: { verifiedAgo: "We verified this info {when}", neverVerified: "Not verified yet", wrongInfo: "Wrong info?", wrongThanks: "Thanks, we will review it", hoursUnknown: "Hours unknown", priceLevel: "Price level" },
 };

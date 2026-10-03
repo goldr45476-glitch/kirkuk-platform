@@ -13,7 +13,7 @@ export async function generateMetadata() {
   return { title: t.notifications.title, robots: { index: false } };
 }
 
-const ICONS = { follow: UserPlus, like: Heart, comment: MessageCircle, offer: Tag, post: Megaphone, review: Star, review_reply: Reply } as const;
+const ICONS = { system: Megaphone, follow: UserPlus, like: Heart, comment: MessageCircle, offer: Tag, post: Megaphone, review: Star, review_reply: Reply } as const;
 
 export default async function NotificationsPage() {
   const profile = await getCurrentProfile();
@@ -22,6 +22,11 @@ export default async function NotificationsPage() {
   const items = await getNotifications();
   const n = t.notifications;
   const text = (i: (typeof items)[number]) => {
+    if (i.type === "system") {
+      const ev = (i.data as { event?: string }).event;
+      const tpl = ev ? (n.events as Record<string, string>)[ev] : undefined;
+      if (tpl) return tpl.replace("{name}", i.data.excerpt ?? "");
+    }
     const tpl = (n as unknown as Record<string, string>)[i.type] ?? n.system;
     return tpl.replace("{actor}", i.actor?.full_name || n.someone).replace("{business}", i.business?.name ?? "");
   };
@@ -44,7 +49,7 @@ export default async function NotificationsPage() {
                     <span className="grid size-10 shrink-0 place-items-center rounded-full bg-primary/12 text-primary"><Icon className="size-5" aria-hidden /></span>
                     <div className="min-w-0">
                       <p className="font-semibold leading-snug">{text(i)}</p>
-                      {i.data?.excerpt && <p className="truncate text-sm text-muted-foreground">“{i.data.excerpt}”</p>}
+                      {i.data?.excerpt && i.type !== "system" && <p className="truncate text-sm text-muted-foreground">“{i.data.excerpt}”</p>}
                       <p className="text-xs text-muted-foreground">{timeAgo(i.created_at, locale)}</p>
                     </div>
                   </Card>

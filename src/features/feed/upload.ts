@@ -12,3 +12,15 @@ export async function uploadImage(file: File, bucket: "post-media" | "business-m
   if (error) throw error;
   return { url: supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl, width, height };
 }
+
+/** Private bucket (ownership proofs). Returns the storage path; only staff and the uploader can read it. */
+export async function uploadPrivate(file: File) {
+  const supabase = createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) throw new Error("not_authenticated");
+  const { blob } = await compressToWebp(file, 1800, 0.85);
+  const path = `${auth.user.id}/${crypto.randomUUID()}.webp`;
+  const { error } = await supabase.storage.from("verification").upload(path, blob, { contentType: "image/webp" });
+  if (error) throw error;
+  return path;
+}

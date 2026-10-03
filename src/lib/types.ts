@@ -102,7 +102,7 @@ export interface StoryRing {
 }
 export interface NotificationRow {
   id: string; type: string; created_at: string; read_at: string | null; post_id: string | null; business_id: string | null;
-  data: { excerpt?: string };
+  data: { excerpt?: string; event?: string };
   actor: { full_name: string } | null;
   business: { name: string; slug: string } | null;
 }

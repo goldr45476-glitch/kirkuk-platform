@@ -1,6 +1,7 @@
 import { BadgeCheck, Clock, Globe, MapPin, MessageCircle, Phone, Star } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge, Card } from "@/components/ui/card";
@@ -101,6 +102,8 @@ export default async function BusinessPage({ params }: Props) {
             </span>
             {b.price_level && <span aria-label={t.trust.priceLevel}>{"$".repeat(b.price_level)}<span className="opacity-30">{"$".repeat(4 - b.price_level)}</span></span>}
             <ReportWrongInfo businessId={b.id} loggedIn={!!profile} t={t} />
+            {!b.owner_id && <Link href={`/business/${b.slug}/claim`} className="font-bold text-primary hover:underline">{t.claim.cta}</Link>}
+            {profile && profile.id === b.owner_id && <Link href={`/dashboard/${b.id}`} className="font-bold text-primary hover:underline">{t.dash.title}</Link>}
           </p>
 
           <div className="mt-4 grid grid-cols-2 gap-2">
