@@ -85,4 +85,13 @@ assert.equal(st.pushed_24h, 0);
 await q(`update notifications set pushed_at = now() where user_id=$1`, [id(2)]);
 const st2 = (await as(3, () => q(`select admin_push_stats() s`)))[0].s;
 assert.equal(st2.pushed_24h, 1); assert.equal(st2.backlog, 0); assert.ok(st2.last_pushed_at);
+// KPI snapshot (staff only)
+await fails(() => as(1, () => db.query(`select admin_kpis()`)), "non-staff cannot read KPIs");
+await as(1, () => db.query(`select track_event('view','business',$1)`, [biz]));
+await as(1, () => db.query(`select track_event('call','business',$1)`, [biz]));
+const k = (await as(3, () => q(`select admin_kpis() k`)))[0].k;
+assert.ok(k.data.published >= 30 && "never_verified" in k.data);
+const wk = k.weekly.at(-1); assert.ok(wk.views >= 1 && wk.contact >= 1 && wk.wau >= 1);
+assert.equal(k.top_places[0].slug, "cafe-asri"); assert.ok(k.top_places[0].calls >= 1);
+assert.ok("claims_approved" in k.money && "reports" in k.queue && "returned" in k.returning);
 console.log("push tests passed");

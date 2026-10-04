@@ -84,3 +84,17 @@ export async function getPushStats(): Promise<PushStats | null> {
   const { data } = await supabase.rpc("admin_push_stats");
   return (data as PushStats) ?? null;
 }
+
+export type Kpis = {
+  weekly: { week: string; wau: number; views: number; contact: number }[];
+  returning: { last_week_users: number; returned: number };
+  data: { published: number; verified_60d: number; never_verified: number };
+  money: { claims_approved: number; claims_pending: number; payment_requests: number; paying_now: number };
+  queue: { submissions: number; claims: number; reports: number; events: number; oldest_open_report: string | null };
+  top_places: { slug: string; name: string; calls: number; directions: number; views: number }[];
+};
+export async function getKpis(): Promise<Kpis | null> {
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("admin_kpis");
+  return (data as Kpis) ?? null;
+}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { requireStaff } from "@/lib/staff";
 
-const TABS = [["/admin", "نظرة عامة"], ["/admin/review", "المراجعة"], ["/admin/businesses", "الأنشطة"], ["/admin/users", "المستخدمون"], ["/admin/subscriptions", "الاشتراكات"], ["/admin/ads", "الإعلانات"], ["/admin/collections", "القوائم"], ["/admin/quick-add", "إدخال سريع"], ["/admin/import", "استيراد CSV"], ["/admin/push", "Push"], ["/admin/audit", "السجل"]] as const;
+const TABS = [["/admin", "نظرة عامة"], ["/admin/kpis", "المؤشرات"], ["/admin/review", "المراجعة"], ["/admin/businesses", "الأنشطة"], ["/admin/users", "المستخدمون"], ["/admin/subscriptions", "الاشتراكات"], ["/admin/ads", "الإعلانات"], ["/admin/collections", "القوائم"], ["/admin/quick-add", "إدخال سريع"], ["/admin/import", "استيراد CSV"], ["/admin/push", "Push"], ["/admin/audit", "السجل"]] as const;
 
 export const metadata = { title: "الإدارة", robots: { index: false, follow: false } };
 
