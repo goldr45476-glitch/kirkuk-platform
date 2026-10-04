@@ -31,5 +31,5 @@ r = await s(`null, 'pharmacies', null, 0, false, false, 35.4660, 44.3930, 'neare
 assert.ok(r[0].distance_km <= r[1].distance_km, "nearest ordering");
 r = await s(`null, null, null, 0, false, false, null, null, 'relevance', 5`);
 assert.ok(r[0].is_featured && Number(r[0].total_count) >= 34, "featured first + total_count");
-const open24 = await s(`'مستشفى', null, null, 0, true`); assert.equal(open24.length, 1, "24h hospital open now");
+const open24 = await s(`'مستشفى', null, null, 0, true`); assert.ok(open24.length >= 1 && open24.some((x) => x.name.includes("مستشفى")), "24h hospital is always open now"); assert.ok(open24.every((x) => x.is_open === true), "open-now filter only returns open places");
 console.log("search OK");

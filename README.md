@@ -27,7 +27,14 @@
 - **إعلانات ممولة** `/admin/ads` (المدير فقط): تظهر دائماً بوسم «إعلان»، إعلان بعد كل 6 منشورات في الخلاصة وفي أعلى صفحة القسم؛ عدّ الظهور عند ظهور البطاقة على الشاشة، والنقر عبر `/ad/[id]` (يُحصى ثم يحوّل لرابط https أو صفحة النشاط)، ونسبة النقر في اللوحة.
 - **الأنشطة المميزة** لا تزدحم: نشاط مميز واحد كحدّ أقصى لكل 5 نتائج (البحث وصفحات الأقسام).
 - **لربط بوابة دفع لاحقاً:** يكفي أن يستدعي webhook الدالة `activate_subscription(sub, days, ref)` بعد تأكيد الدفع؛ لا تغيير في الواجهة.
-**التالي:** مراجعة الخصوصية قانونياً، إشعارات Push، اللغتان الكردية والتركمانية (مراجعة)، ثم الإطلاق التجريبي.
+**الخطوة 6 (الجاهزية للإطلاق التجريبي) ✅ — `0010_bulk_import.sql` + أدوات:**
+- **استيراد CSV** `/admin/import`: لإدخال مئات الأماكن (قالب في `public/templates/places-template.csv`، رؤوس عربية أو إنكليزية، فاصلة أو فاصلة منقوطة). يفحص أولاً دون حفظ ويعرض الأخطاء لكل صف (قسم/حي/إحداثيات/ساعات/سعر) والمكرر (نفس الاسم مع نفس الهاتف أو على بُعد < 150 م)، ثم يُدخل الصالح فقط **بدون توثيق**؛ إعادة استيراد الملف آمنة.
+- **`supabase/cleanup-demo.sql`**: يحذف البيانات التجريبية فقط ويُبقي المرجعية والبيانات الحقيقية (يتطلب `set app.confirm_cleanup='yes'`).
+- **`npm run audit`**: تدقيق أمني آلي (RLS على كل الجداول وسياسة لكل جدول، ثبات `search_path` للدوال الحساسة، عدم إتاحة دوال داخلية للعميل، تحقق الأدوار داخل دوال الإدارة، سياسات كتابة بلا شرط).
+- **`npm run smoke -- <url>`**: فحص دخان بعد النشر (صحة، صفحات أساسية، ترويسات أمان وHSTS، sitemap/robots/manifest/service worker، 404 حقيقي، تحويل الزوار من الصفحات الخاصة، حماية إعادة التوجيه).
+- **الترجمات:** اختبار يضمن تطابق المفاتيح والمتغيرات `{city}`… في اللغات الأربع، و`npm run export:i18n` يصدّر `docs/translations-review.csv` لمراجعة متحدثين أصليين (كردي/تركماني).
+- **`docs/LAUNCH.md`** (بوابات Go/No-Go، جدول 11 أسبوعاً، قائمة تقنية وتشغيلية، اختبار الأجهزة، خطة الطوارئ) و**`docs/kpi.sql`** (10 استعلامات لمؤشرات النجاح، مُختبرة).
+**التالي:** مراجعة الخصوصية قانونياً، جمع البيانات الميدانية، ثم البيتا المغلقة؛ ويمكن بعدها إشعارات Push.
 
 ## الحالة: المراحل 1 و2 و3 و4 ✅
 **المرحلة 4:** التقييمات (تقييم واحد لكل مستخدم، توزيع النجوم، رد صاحب النشاط مع إشعارات للطرفين)،
@@ -62,7 +69,7 @@ npm run dev                    # http://localhost:3000
 
 ### 1) إنشاء مشروع Supabase
 1. أنشئ مشروعاً على supabase.com، وانسخ `Project URL` و`anon key` إلى `.env.local`.
-2. في **SQL Editor** نفّذ بالترتيب: `0001_schema.sql` ثم `0002_search.sql` ثم `0003_social.sql` ثم `0004_reviews_listings_live.sql` ثم `0005_city_foundation.sql` ثم `0006_now_discovery.sql` ثم `0007_moderation_dashboard.sql` ثم `0008_saved_collections_privacy.sql` ثم `0009_monetization.sql` (من `supabase/migrations/`) ثم `supabase/seed.sql`
+2. في **SQL Editor** نفّذ بالترتيب: `0001_schema.sql` ثم `0002_search.sql` ثم `0003_social.sql` ثم `0004_reviews_listings_live.sql` ثم `0005_city_foundation.sql` ثم `0006_now_discovery.sql` ثم `0007_moderation_dashboard.sql` ثم `0008_saved_collections_privacy.sql` ثم `0009_monetization.sql` ثم `0010_bulk_import.sql` (من `supabase/migrations/`) ثم `supabase/seed.sql`
    (أو `supabase db push` عبر Supabase CLI).
 3. **Authentication → Providers**:
    - *Phone*: فعّله واربطه بمزوّد SMS (Twilio / MessageBird / Vonage). الـ OTP يتطلب مزوّداً مدفوعاً؛ استخدم *Test phone numbers* أثناء التطوير.
@@ -77,6 +84,10 @@ update public.profiles set role = 'admin' where id = '<UUID-من-auth.users>';
 ```bash
 node scripts/check-migration.mjs   # يشغّل migrations + seed على Postgres داخل الذاكرة (PGlite)
 node scripts/test-search.mjs       # يختبر دالة البحث (إملاء، تشكيل، فلاتر، الأقرب، مفتوح الآن)
+node scripts/test-import.mjs       # يختبر الاستيراد الجماعي (التحقق، التكرار، الجفاف، إعادة الاستيراد)
+node scripts/test-cleanup.mjs      # يختبر أن سكربت التنظيف يحذف التجريبي فقط
+node scripts/test-kpi.mjs          # يتأكد أن استعلامات docs/kpi.sql تعمل
+npm run audit                      # تدقيق أمني للمخطط (RLS/الدوال/السياسات)
 node scripts/test-money.mjs        # يختبر الباقات والاشتراكات (طلب/تفعيل/انتهاء/إلغاء)، حدود المجاني، الإعلانات وعدّاداتها
 node scripts/test-saved.mjs        # يختبر المحفوظات والقوائم المنسّقة وحذف الحساب (تسلسل الحذف)
 node scripts/test-admin.mjs        # يختبر الموافقة على الاقتراحات والمطالبات، الإشراف، صلاحيات الإدارة، الإدخال السريع، إحصائيات المالك

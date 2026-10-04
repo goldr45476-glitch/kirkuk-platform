@@ -62,3 +62,17 @@ export async function quickAddAction(input: z.input<typeof quick>): Promise<Acti
   revalidatePath("/admin", "layout");
   return { ok: true, data: { id: id as string, slug: (b?.slug as string) ?? "" } };
 }
+
+const importRows = z.array(z.record(z.string(), z.string().max(500))).min(1).max(1000);
+export interface ImportReport { total: number; valid: number; inserted: number; dry_run: boolean; errors: { row: number; code: string; name: string | null }[]; duplicates: { row: number; name: string; existing: string | null }[] }
+
+/** Staff-only bulk import. dryRun=true validates and reports; false inserts valid, non-duplicate rows (SQL re-checks the role). */
+export async function importPlacesAction(rows: Record<string, string>[], dryRun: boolean): Promise<{ ok: true; report: ImportReport } | { ok: false; error: string }> {
+  const p = importRows.safeParse(rows);
+  if (!p.success) return { ok: false, error: "invalid" };
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("import_businesses", { p_rows: p.data, p_dry_run: dryRun });
+  if (error) return { ok: false, error: error.message.includes("not_allowed") ? "not_allowed" : "generic" };
+  if (!dryRun) revalidatePath("/admin", "layout");
+  return { ok: true, report: data as ImportReport };
+}
