@@ -9,7 +9,7 @@ import { StoriesRow } from "@/features/feed/stories";
 import { EventCard, NewPlaceCard, OfferCard, OpenNowCard, Row } from "@/components/now-cards";
 import { cityName, getCity } from "@/lib/city";
 import { dayPart } from "@/lib/format-time";
-import { FEED_PAGE, listCollections, getCategories, getCurrentProfile, getDistricts, getDutyPharmacies, getFeed, getLiveOffers, getMyBusinesses, getNewPlaces, getOpenNow, getStoryRings, getUpcomingEvents } from "@/lib/data";
+import { FEED_PAGE, listCollections, getCategories, getCurrentProfile, getDistricts, getDutyPharmacies, getFeed, getLiveOffers, getMyBusinesses, getAds, getNewPlaces, getOpenNow, getStoryRings, getUpcomingEvents } from "@/lib/data";
 import { supabaseConfigured } from "@/lib/env";
 import { getI18n, localized } from "@/lib/i18n/server";
 import { categoryHref } from "@/lib/category-href";
@@ -17,9 +17,9 @@ import { categoryHref } from "@/lib/category-href";
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ feed?: string }> }) {
   const mode = (await searchParams).feed === "following" ? "following" : "all";
   const { t, locale } = await getI18n();
-  const [categories, districts, duty, profile, rings, myBiz, posts, city, openNow, offers, events, fresh, collections] = await Promise.all([
+  const [categories, districts, duty, profile, rings, myBiz, posts, city, openNow, offers, events, fresh, collections, feedAds] = await Promise.all([
     getCategories(), getDistricts(), getDutyPharmacies(), getCurrentProfile(), getStoryRings(), getMyBusinesses(), getFeed({ mode }),
-    getCity(), getOpenNow(10), getLiveOffers(8), getUpcomingEvents(7, 8), getNewPlaces(8), listCollections(6),
+    getCity(), getOpenNow(10), getLiveOffers(8), getUpcomingEvents(7, 8), getNewPlaces(8), listCollections(6), getAds("feed", null, 3),
   ]);
   const dName = new Map(districts.map((d) => [d.id, localized(d, locale)]));
   const cname = cityName(city, locale) || t.appName;
@@ -134,7 +134,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
                 <Link role="tab" aria-selected={mode === "all"} href="/" className={mode === "all" ? "rounded-lg bg-card py-2 shadow-sm" : "py-2 text-muted-foreground"}>{t.feed.tabAll}</Link>
                 <Link role="tab" aria-selected={mode === "following"} href={profile ? "/?feed=following" : "/login?next=/%3Ffeed=following"} className={mode === "following" ? "rounded-lg bg-card py-2 shadow-sm" : "py-2 text-muted-foreground"}>{t.feed.tabFollowing}</Link>
               </div>
-              <FeedList key={mode} initial={posts} mode={mode} t={t} locale={locale} userId={profile?.id ?? null} pageSize={FEED_PAGE} emptyText={mode === "following" ? t.feed.followingEmpty : t.feed.empty} />
+              <FeedList key={mode} initial={posts} mode={mode} t={t} locale={locale} userId={profile?.id ?? null} pageSize={FEED_PAGE} emptyText={mode === "following" ? t.feed.followingEmpty : t.feed.empty} ads={mode === "all" ? feedAds : []} />
             </>
           )}
         </div>

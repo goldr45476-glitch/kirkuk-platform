@@ -25,7 +25,7 @@ function useRun(t: Dictionary) {
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const run = (fn: () => Promise<Res & { error?: string }>, okText = t.dash.saved) => start(async () => {
     const r = await fn();
-    setMsg(r.ok ? { ok: true, text: okText } : { ok: false, text: r.error === "rate_limited" ? t.post.errors.rate_limited : t.post.errors.generic });
+    setMsg(r.ok ? { ok: true, text: okText } : { ok: false, text: r.error === "rate_limited" ? t.post.errors.rate_limited : r.error === "plan_limit_images" ? t.money.limitImages : r.error === "plan_limit_offers" ? t.money.limitOffers : t.post.errors.generic });
     if (r.ok) router.refresh();
   });
   const line = msg && <p role={msg.ok ? "status" : "alert"} className={cn("text-sm font-semibold", msg.ok ? "text-success" : "text-destructive")}>{msg.text}</p>;
@@ -198,8 +198,9 @@ export function GalleryEditor({ b, t }: { b: DashboardBusiness; t: Dictionary })
   const add = async (files: FileList | null) => {
     if (!files?.length) return;
     setBusy(true);
-    for (const f of Array.from(files).slice(0, 6)) { try { const u = await uploadImage(f, "business-media"); await A.addGalleryImageAction(b.id, u.url); } catch {} }
-    setBusy(false); run(async () => ({ ok: true }));
+    let limit = false;
+    for (const f of Array.from(files).slice(0, 6)) { try { const u = await uploadImage(f, "business-media"); const r = await A.addGalleryImageAction(b.id, u.url); if (!r.ok && r.error === "plan_limit_images") { limit = true; break; } } catch {} }
+    setBusy(false); run(async () => (limit ? { ok: false, error: "plan_limit_images" } : { ok: true }));
   };
   return (
     <Section title={d.gallery}>

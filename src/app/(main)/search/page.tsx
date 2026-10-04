@@ -3,6 +3,7 @@ import { BusinessCard } from "@/components/business-card";
 import { SearchForm } from "@/features/search/search-form";
 import { PAGE_SIZE, getCategories, getDistricts, searchBusinesses } from "@/lib/data";
 import { getI18n, localized } from "@/lib/i18n/server";
+import { spreadFeatured } from "@/lib/spread";
 import type { SearchParams } from "@/lib/types";
 
 type Raw = Record<string, string | string[] | undefined>;
@@ -32,7 +33,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     page: Math.max(1, Math.floor(num(one(raw.page)) ?? 1)),
   };
 
-  const [cats, districts, { rows, total }] = await Promise.all([getCategories(), getDistricts(), searchBusinesses(params)]);
+  const [cats, districts, found] = await Promise.all([getCategories(), getDistricts(), searchBusinesses(params)]);
+  const { total } = found;
+  const rows = !params.sort || params.sort === "relevance" ? spreadFeatured(found.rows) : found.rows;
   const catOptions = cats
     .filter((c) => c.parent_id === null)
     .flatMap((c) => [

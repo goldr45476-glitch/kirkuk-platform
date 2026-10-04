@@ -167,6 +167,13 @@ const ar = {
     del: { link: "حذف حسابي", title: "حذف الحساب", warn: "سيتم حذف حسابك وكل منشوراتك وتقييماتك ومحفوظاتك نهائياً ولا يمكن التراجع. الأنشطة التي تملكها تبقى منشورة بدون مالك.", confirm: "اكتب كلمة «{word}» للتأكيد", word: "حذف", button: "حذف حسابي نهائياً", lastAdmin: "أنت المدير الوحيد، عيّن مديراً آخر أولاً", error: "تعذّر حذف الحساب", done: "تم حذف حسابك" },
     err: { title: "حدث خطأ غير متوقع", retry: "حاول مجدداً", home: "الرئيسية", offline: "أنت غير متصل بالإنترنت", offlineHint: "الصفحات التي زرتها سابقاً قد تبقى متاحة. تحقق من اتصالك ثم حاول مجدداً." },
   },
+  money: {
+    title: "الأسعار والباقات", subtitle: "ابدأ مجاناً، وارتقِ عندما تريد وصولاً أكبر", perMonth: "د.ع / {n} يوماً", free: "مجاناً", current: "باقتك الحالية", request: "اطلب هذه الباقة",
+    requested: "وصلنا طلبك — سنتواصل معك لتأكيد الدفع وتفعيل الباقة", pending: "طلب قيد المراجعة", cancelRequest: "إلغاء الطلب", business: "النشاط", note: "ملاحظة (رقم الحوالة…)", noBusiness: "أضف نشاطاً أو طالب بصفحة لتتمكن من الاشتراك",
+    howToPay: "الدفع حالياً نقداً أو بتحويل (زين كاش / فاست باي / كي كارد) عبر فريقنا، ثم نفعّل الباقة يدوياً خلال يوم عمل.", contact: "تواصل عبر واتساب", activeUntil: "فعّالة حتى {date}",
+    sponsored: "إعلان", limitImages: "وصلت الحد الأقصى للصور في الباقة المجانية (5). رقِّ باقتك لإضافة المزيد.", limitOffers: "لديك عرض فعّال بالفعل؛ الباقة المجانية تسمح بعرض واحد في كل مرة.",
+    plan: "الباقة", upgrade: "ترقية الباقة", loginOwner: "سجّل الدخول لتطلب باقة", pricing: "الأسعار", planNames: { free: "مجانية", pro: "احترافية", featured: "مميزة" },
+  },
   trust: { verifiedAgo: "تحققنا من المعلومات {when}", neverVerified: "لم نتحقق من المعلومات بعد", wrongInfo: "المعلومة غلط؟", wrongThanks: "شكراً، سنراجعها", hoursUnknown: "الساعات غير معروفة", priceLevel: "مستوى السعر" },
 };
 
@@ -340,6 +347,13 @@ const ku: Dictionary = {
     del: { link: "سڕینەوەی هەژمارەکەم", title: "سڕینەوەی هەژمار", warn: "هەژمار و هەموو پۆست و هەڵسەنگاندن و پاشەکەوتکراوەکانت بە یەکجاری دەسڕدرێنەوە و ناگەڕێتەوە. ئەو چالاکییانەی خاوەنیانیت بێ خاوەن دەمێننەوە.", confirm: "وشەی «{word}» بنووسە بۆ دڵنیابوون", word: "سڕینەوە", button: "هەژمارەکەم بە یەکجاری بسڕەوە", lastAdmin: "تۆ تاکە بەڕێوەبەریت، سەرەتا بەڕێوەبەرێکی تر دابنێ", error: "نەتوانرا هەژمار بسڕدرێتەوە", done: "هەژمارەکەت سڕایەوە" },
     err: { title: "هەڵەیەکی چاوەڕواننەکراو ڕوویدا", retry: "دووبارە هەوڵبدەرەوە", home: "سەرەکی", offline: "پەیوەندیت بە ئینتەرنێتەوە نییە", offlineHint: "ئەو لاپەڕانەی پێشتر بینیوتن لەوانەیە بەردەست بن. پەیوەندیەکەت بپشکنە و دووبارە هەوڵبدەرەوە." },
   },
+  money: {
+    title: "نرخ و باقەکان", subtitle: "بە خۆڕایی دەستپێبکە، و کاتێک ویستت بەرزی بکەرەوە", perMonth: "د.ع / {n} ڕۆژ", free: "بێبەرامبەر", current: "باقەی ئێستات", request: "ئەم باقەیە داوا بکە",
+    requested: "داواکارییەکەت گەیشت — پەیوەندیت پێوە دەکەین بۆ دڵنیابوونەوە لە پارەدان و چالاککردنی باقە", pending: "داواکاری لە پێداچوونەوەدایە", cancelRequest: "هەڵوەشاندنەوەی داواکاری", business: "چالاکی", note: "تێبینی (ژمارەی حەواڵە…)", noBusiness: "چالاکییەک زیاد بکە یان پەڕەیەک داوا بکە بۆ ئەوەی بتوانیت بەشداربیت",
+    howToPay: "ئێستا پارەدان بە کاش یان حەواڵە (زەین کاش / فاست پەی / کی کارد)ە لەڕێی تیمەکەمانەوە، پاشان باقەکە بە دەست چالاک دەکەین لە ماوەی ڕۆژێکی کاردا.", contact: "بە واتساپ پەیوەندی بکە", activeUntil: "چالاکە تا {date}",
+    sponsored: "ڕیکلام", limitImages: "گەیشتیتە زۆرترین ژمارەی وێنە لە باقەی بێبەرامبەر (٥). باقەکەت بەرز بکەرەوە.", limitOffers: "ئۆفەرێکی چالاکت هەیە؛ باقەی بێبەرامبەر تەنها ئۆفەرێک لە هەر کاتێکدا ڕێگە دەدات.",
+    plan: "باقە", upgrade: "بەرزکردنەوەی باقە", loginOwner: "بچۆ ژوورەوە بۆ داواکردنی باقە", pricing: "نرخەکان", planNames: { free: "بێبەرامبەر", pro: "پیشەگەر", featured: "تایبەت" },
+  },
   trust: { verifiedAgo: "زانیارییەکانمان پشتڕاست کردەوە {when}", neverVerified: "هێشتا زانیارییەکان پشتڕاست نەکراونەتەوە", wrongInfo: "زانیارییەکە هەڵەیە؟", wrongThanks: "سوپاس، پێداچوونەوەی بۆ دەکەین", hoursUnknown: "کاتژمێرەکان نەزانراون", priceLevel: "ئاستی نرخ" },
 };
 
@@ -511,6 +525,13 @@ const tr: Dictionary = {
     del: { link: "Hesabımı sil", title: "Hesabı sil", warn: "Hesabınız, tüm gönderileriniz, değerlendirmeleriniz ve kayıtlarınız kalıcı olarak silinir, geri alınamaz. Sahibi olduğunuz işletmeler sahipsiz olarak yayında kalır.", confirm: "Onaylamak için «{word}» yazın", word: "SİL", button: "Hesabımı kalıcı olarak sil", lastAdmin: "Tek yöneticisiniz, önce başka bir yönetici atayın", error: "Hesap silinemedi", done: "Hesabınız silindi" },
     err: { title: "Beklenmedik bir hata oluştu", retry: "Tekrar dene", home: "Ana sayfa", offline: "İnternet bağlantınız yok", offlineHint: "Daha önce ziyaret ettiğiniz sayfalar açılabilir. Bağlantınızı kontrol edip tekrar deneyin." },
   },
+  money: {
+    title: "Fiyatlar ve paketler", subtitle: "Ücretsiz başlayın, daha fazla erişim için yükseltin", perMonth: "IQD / {n} gün", free: "Ücretsiz", current: "Mevcut paketiniz", request: "Bu paketi talep et",
+    requested: "Talebiniz alındı — ödemeyi onaylamak ve paketi etkinleştirmek için sizinle iletişime geçeceğiz", pending: "Talep inceleniyor", cancelRequest: "Talebi iptal et", business: "İşletme", note: "Not (havale numarası…)", noBusiness: "Abone olmak için bir işletme ekleyin veya bir sayfa talep edin",
+    howToPay: "Şu an ödeme ekibimiz aracılığıyla nakit veya havale (ZainCash / FastPay / Qi Card) ile yapılır; paketi bir iş günü içinde elle etkinleştiririz.", contact: "WhatsApp ile iletişim", activeUntil: "{date} tarihine kadar geçerli",
+    sponsored: "Reklam", limitImages: "Ücretsiz pakette fotoğraf sınırına ulaştınız (5). Daha fazlası için paketinizi yükseltin.", limitOffers: "Zaten aktif bir fırsatınız var; ücretsiz paket aynı anda bir fırsata izin verir.",
+    plan: "Paket", upgrade: "Paketi yükselt", loginOwner: "Paket talep etmek için giriş yapın", pricing: "Fiyatlar", planNames: { free: "Ücretsiz", pro: "Profesyonel", featured: "Öne çıkan" },
+  },
   trust: { verifiedAgo: "Bilgileri doğruladık: {when}", neverVerified: "Bilgiler henüz doğrulanmadı", wrongInfo: "Bilgi yanlış mı?", wrongThanks: "Teşekkürler, inceleyeceğiz", hoursUnknown: "Saatler bilinmiyor", priceLevel: "Fiyat düzeyi" },
 };
 
@@ -681,6 +702,13 @@ const en: Dictionary = {
     legal: { privacy: "Privacy", terms: "Terms of use", content: "Content policy", suggest: "Suggest a place", rights: "All rights reserved", updated: "Last updated" },
     del: { link: "Delete my account", title: "Delete account", warn: "Your account, posts, reviews and saved items will be permanently deleted. This cannot be undone. Businesses you own stay published without an owner.", confirm: "Type “{word}” to confirm", word: "DELETE", button: "Permanently delete my account", lastAdmin: "You are the only admin — assign another admin first", error: "Couldn't delete the account", done: "Your account was deleted" },
     err: { title: "Something unexpected happened", retry: "Try again", home: "Home", offline: "You're offline", offlineHint: "Pages you visited before may still work. Check your connection and try again." },
+  },
+  money: {
+    title: "Pricing & plans", subtitle: "Start free, upgrade when you want more reach", perMonth: "IQD / {n} days", free: "Free", current: "Your current plan", request: "Request this plan",
+    requested: "We got your request — we'll contact you to confirm payment and activate the plan", pending: "Request under review", cancelRequest: "Cancel request", business: "Business", note: "Note (transfer number…)", noBusiness: "Add a business or claim a page to subscribe",
+    howToPay: "For now payment is cash or transfer (ZainCash / FastPay / Qi Card) through our team, and we activate the plan manually within one working day.", contact: "Contact on WhatsApp", activeUntil: "Active until {date}",
+    sponsored: "Ad", limitImages: "You've reached the photo limit of the free plan (5). Upgrade to add more.", limitOffers: "You already have a live offer; the free plan allows one at a time.",
+    plan: "Plan", upgrade: "Upgrade plan", loginOwner: "Log in to request a plan", pricing: "Pricing", planNames: { free: "Free", pro: "Pro", featured: "Featured" },
   },
   trust: { verifiedAgo: "We verified this info {when}", neverVerified: "Not verified yet", wrongInfo: "Wrong info?", wrongThanks: "Thanks, we will review it", hoursUnknown: "Hours unknown", priceLevel: "Price level" },
 };

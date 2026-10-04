@@ -373,3 +373,33 @@ export async function listCollections(limit = 20): Promise<CollectionSummary[]> 
   const { data } = await supabase.rpc("list_collections", { p_city: city.id, p_limit: limit });
   return ((data ?? []) as CollectionSummary[]).map((c) => ({ ...c, item_count: Number(c.item_count) }));
 }
+
+// ---------------------------------------------------------------------
+// Plans, subscriptions, ads (migration 0009)
+// ---------------------------------------------------------------------
+export interface Plan {
+  id: number; code: "free" | "pro" | "featured"; name_ar: string; name_ku: string | null; name_tr: string | null; name_en: string | null;
+  price_iqd: number; duration_days: number; features: Record<string, string[]>; is_featured_tier: boolean;
+}
+export async function getPlans(): Promise<Plan[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.from("plans").select("id, code, name_ar, name_ku, name_tr, name_en, price_iqd, duration_days, features, is_featured_tier").eq("is_active", true).order("sort_order");
+  return (data ?? []) as unknown as Plan[];
+}
+
+export interface MySubscription { id: string; business_id: string; status: "pending" | "active" | "expired" | "cancelled"; starts_at: string | null; ends_at: string | null; plan: { code: string; name_ar: string; name_en: string | null; price_iqd: number } }
+export async function getSubscriptionsFor(businessIds: string[]): Promise<MySubscription[]> {
+  if (!supabaseConfigured || businessIds.length === 0) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.from("subscriptions").select("id, business_id, status, starts_at, ends_at, plan:plans(code, name_ar, name_en, price_iqd)").in("business_id", businessIds).in("status", ["pending", "active"]).order("created_at", { ascending: false });
+  return (data ?? []) as unknown as MySubscription[];
+}
+
+export interface AdRow { id: string; business_id: string | null; business_slug: string | null; title: string; body: string | null; image_url: string | null; link_url: string | null }
+export async function getAds(placement: "feed" | "category" | "home_banner" | "search", category: number | null = null, limit = 1): Promise<AdRow[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("get_ads", { p_placement: placement, p_category: category, p_limit: limit });
+  return (data ?? []) as AdRow[];
+}

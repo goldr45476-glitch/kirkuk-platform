@@ -22,7 +22,10 @@ const done = async (id: string): Promise<ActionResult> => {
   revalidatePath("/business/[slug]", "page");
   return { ok: true };
 };
-const dbFail = (e: { message?: string } | null): ActionResult => ({ ok: false, error: e?.message?.includes("rate_limited") ? "rate_limited" : "generic" });
+const dbFail = (e: { message?: string } | null): ActionResult => ({
+  ok: false,
+  error: e?.message?.includes("plan_limit_images") ? "plan_limit_images" : e?.message?.includes("plan_limit_offers") ? "plan_limit_offers" : e?.message?.includes("rate_limited") ? "rate_limited" : "generic",
+});
 
 const infoSchema = z.object({
   name: z.string().trim().min(2).max(120),

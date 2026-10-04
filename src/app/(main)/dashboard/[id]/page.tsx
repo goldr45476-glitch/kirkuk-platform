@@ -5,6 +5,9 @@ import { z } from "zod";
 import { Badge } from "@/components/ui/card";
 import { AmenitiesEditor, GalleryEditor, HoursEditor, InfoEditor, OffersEditor, ProductsEditor, SpecialHoursEditor } from "@/features/dashboard/editors";
 import { StatsPanel } from "@/features/dashboard/stats-panel";
+import { SubscriptionPanel } from "@/features/money/subscription-panel";
+import { getPlans, getSubscriptionsFor } from "@/lib/data";
+import { formatDate } from "@/lib/time";
 import { getCity } from "@/lib/city";
 import { getAmenities, getCurrentProfile, getDistricts } from "@/lib/data";
 import { getBusinessStats, getDashboardBusiness } from "@/lib/data-dashboard";
@@ -25,7 +28,9 @@ export default async function DashboardPage({ params, searchParams }: { params: 
   if (!b || (b.owner_id !== profile.id && !isStaff)) notFound();
 
   const days = [7, 30, 90].includes(Number((await searchParams).days)) ? Number((await searchParams).days) : 30;
-  const [{ t, locale }, stats, districts, amenities, city] = await Promise.all([getI18n(), getBusinessStats(id, days), getDistricts(), getAmenities(), getCity()]);
+  const [{ t, locale }, stats, districts, amenities, city, plans, subs] = await Promise.all([getI18n(), getBusinessStats(id, days), getDistricts(), getAmenities(), getCity(), getPlans(), getSubscriptionsFor([id])]);
+  const active = subs.find((s) => s.status === "active" && (!s.ends_at || new Date(s.ends_at) > new Date()));
+  const pend = subs.find((s) => s.status === "pending");
 
   return (
     <div className="mx-auto max-w-2xl space-y-4">
@@ -40,6 +45,12 @@ export default async function DashboardPage({ params, searchParams }: { params: 
       {!b.last_verified_at && <p className="rounded-xl bg-muted p-3 text-xs text-muted-foreground">{t.dash.verifyHint}</p>}
 
       {stats && <StatsPanel s={stats} id={id} t={t} />}
+      <section aria-label={t.money.plan} className="space-y-2">
+        <SubscriptionPanel business={{ id, name: t.money.plan, activePlan: active?.plan.code ?? "free", activeUntil: active?.ends_at ?? null, pending: pend ? { id: pend.id, plan: pend.plan.code } : null }}
+          plans={plans.filter((p) => p.price_iqd > 0).map((p) => ({ code: p.code as "pro" | "featured", name: t.money.planNames[p.code] ?? p.name_ar, price: p.price_iqd, days: p.duration_days }))}
+          t={t} activeLabel={active?.ends_at ? t.money.activeUntil.replace("{date}", formatDate(active.ends_at, locale)) : ""} />
+        <Link href="/pricing" className="text-xs font-bold text-primary underline">{t.money.pricing}</Link>
+      </section>
       <InfoEditor b={b} t={t} districts={districts.map((d) => ({ id: d.id, label: localized(d, locale) }))} center={{ lat: city?.center_lat ?? 35.4681, lng: city?.center_lng ?? 44.3922 }} />
       <HoursEditor b={b} t={t} />
       <SpecialHoursEditor b={b} t={t} />

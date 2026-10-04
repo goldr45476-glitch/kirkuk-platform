@@ -80,7 +80,8 @@ const live = (await q(`select count(*)::int c from offers`))[0].c; assert.equal(
 await q(`insert into offers (business_id, title, starts_at, ends_at) values ($1,'منتهي', now() - interval '3 days', now() - interval '1 day')`, [biz]);
 assert.equal((await as(3, () => q(`select * from offers`))).length, 4, "expired offers hidden from public");
 assert.equal((await as(1, () => q(`select * from offers`))).length, 5, "owner sees own expired offer");
-await as(1, () => db.query(`insert into offers (business_id, title, ends_at) values ($1,'عرض جديد', now() + interval '1 day')`, [biz]));
+await fails(() => as(1, () => db.query(`insert into offers (business_id, title, ends_at) values ($1,'عرض جديد', now() + interval '1 day')`, [biz])), "free plan: one live offer at a time");
+await q(`insert into offers (business_id, title, ends_at) values ($1,'عرض جديد', now() + interval '1 day')`, [biz]);
 await fails(() => as(3, () => db.query(`insert into offers (business_id, title, ends_at) values ($1,'مزيف', now() + interval '1 day')`, [biz])), "non-owner cannot add offer");
 assert.equal((await q(`select city_id from offers where title='عرض جديد'`))[0].city_id, kirkuk.id, "offer city derived from business");
 

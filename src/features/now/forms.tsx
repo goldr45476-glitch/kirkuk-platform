@@ -27,7 +27,7 @@ export function OfferForm({ businesses, t }: { businesses: { id: string; name: s
         e.preventDefault();
         start(async () => {
           const r = await createOfferAction({ businessId: biz, title, details, endsOn: ends });
-          setMsg({ ok: r.ok, text: r.ok ? o.published : t.post.errors.generic });
+          setMsg({ ok: r.ok, text: r.ok ? o.published : r.error === "plan_limit_offers" ? t.money.limitOffers : t.post.errors.generic });
           if (r.ok) { setTitle(""); setDetails(""); router.refresh(); }
         });
       }}>

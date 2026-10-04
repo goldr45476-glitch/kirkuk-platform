@@ -61,7 +61,7 @@ export async function createOfferAction(input: z.input<typeof offerSchema>): Pro
   const ends = new Date(`${p.data.endsOn}T23:59:59+03:00`);
   if (!(ends.getTime() > Date.now())) return { ok: false, error: "invalid" };
   const { error } = await supabase.from("offers").insert({ business_id: p.data.businessId, title: p.data.title, details: p.data.details || null, ends_at: ends.toISOString() });
-  if (error) return { ok: false, error: "generic" };
+  if (error) return { ok: false, error: error.message.includes("plan_limit_offers") ? "plan_limit_offers" : "generic" };
   revalidatePath("/", "layout");
   return { ok: true };
 }

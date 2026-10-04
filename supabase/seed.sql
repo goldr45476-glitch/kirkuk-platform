@@ -75,9 +75,9 @@ select p.id, v.slug, v.name_ar, v.name_en, v.icon, v.ord from p join (values
 
 -- Plans -----------------------------------------------------------------
 insert into public.plans (code, name_ar, name_en, price_iqd, duration_days, features, is_featured_tier, sort_order) values
- ('free',    'مجانية', 'Free',     0,      3650, '["صفحة نشاط أساسية","5 صور","منشور واحد يومياً"]', false, 1),
- ('pro',     'احترافية','Pro',     25000,  30,   '["شارة موثّق","صور غير محدودة","إحصائيات متقدمة","منشورات غير محدودة"]', false, 2),
- ('featured','مميزة',   'Featured',60000,  30,   '["كل مزايا الاحترافية","ظهور أعلى النتائج","شارة مميز","ظهور في الخلاصة"]', true, 3);
+ ('free',    'مجانية',   'Free',     0,     3650, '{"ar":["صفحة نشاط أساسية","حتى 5 صور","عرض واحد فعّال"],"en":["Basic business page","Up to 5 photos","1 active offer at a time"]}', false, 1),
+ ('pro',     'احترافية', 'Pro',      25000, 30,   '{"ar":["أولوية في المراجعة والتوثيق","صور غير محدودة","عروض غير محدودة","إحصائيات كاملة"],"en":["Priority review & verification","Unlimited photos","Unlimited offers","Full analytics"]}', false, 2),
+ ('featured','مميزة',    'Featured', 60000, 30,   '{"ar":["كل مزايا الاحترافية","ظهور أعلى النتائج","شارة «مميز»","ظهور في المساحات الممولة"],"en":["Everything in Pro","Top of search results","Featured badge","Shown in sponsored slots"]}', true, 3);
 
 -- Businesses (demo) -----------------------------------------------------
 create temp table _biz (slug text, cat text, dist text, name text, descr text, phone text, addr text,
@@ -293,3 +293,9 @@ from (values
  ('draft-example','cafe-asri',1,null)
 ) as v(col, slug, pos, note)
 join public.collections c on c.slug = v.col join public.businesses b on b.slug = v.slug;
+
+-- Demo sponsored ads ----------------------------------------------------
+insert into public.ads (business_id, placement, title, body, ends_at)
+select id, 'feed', 'جرّب مشويات القلعة', 'كباب على الفحم وجلسات عائلية — اطلب الآن.', now() + interval '30 days' from public.businesses where slug = 'mutaam-al-qala';
+insert into public.ads (business_id, placement, title, body, ends_at)
+select id, 'category', 'آزادي مول: عروض نهاية الأسبوع', 'ألعاب أطفال وتخفيضات على الملابس.', now() + interval '30 days' from public.businesses where slug = 'azadi-mall';

@@ -7,7 +7,7 @@ import { SUPABASE_URL } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 import type { FeedPost } from "@/lib/types";
 
-export type ActionResult<T = undefined> = { ok: true; data?: T } | { ok: false; error: "rate_limited" | "account_banned" | "auth" | "invalid" | "generic" };
+export type ActionResult<T = undefined> = { ok: true; data?: T } | { ok: false; error: "rate_limited" | "account_banned" | "auth" | "invalid" | "generic" | "plan_limit_images" | "plan_limit_offers" };
 
 const uuid = z.string().uuid();
 const fail = (e: { message?: string } | null): ActionResult => ({
