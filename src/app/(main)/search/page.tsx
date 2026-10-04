@@ -61,6 +61,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <p className="py-12 text-center text-muted-foreground">{t.search.noResults}</p>
       ) : (
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <h2 className="sr-only">{t.search.results}</h2>
           {rows.map((b) => <BusinessCard key={b.id} b={b} t={t} locale={locale} />)}
         </div>
       )}

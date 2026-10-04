@@ -90,6 +90,7 @@ export async function ListingsPage({ kind, raw }: { kind: ListingKind; raw: Raw 
       <p className="text-sm text-muted-foreground" aria-live="polite">{total} {L.results}</p>
       {rows.length === 0 ? <p className="py-12 text-center text-muted-foreground">{L.noResults}</p> : (
         <div className="grid gap-3 lg:grid-cols-2">
+          <h2 className="sr-only">{L.kinds[kind]}</h2>
           {rows.map((l) => <ListingCard key={l.id} l={l} t={t} locale={locale} district={l.district_id ? dName.get(l.district_id) : undefined} />)}
         </div>
       )}
