@@ -38,7 +38,7 @@ for (const f of await q(`select p.proname, pg_get_function_identity_arguments(p.
   if (!(f.proconfig ?? []).some((c) => c.startsWith("search_path="))) problems.push(`SECURITY DEFINER ${f.proname}(${f.args}) has no pinned search_path`);
 
 // 4) internal helpers must NOT be callable by clients
-for (const name of ["audit", "_notify_system"]) {
+for (const name of ["audit", "_notify_system", "queue_expiring_offer_alerts", "pending_push", "mark_pushed"]) {
   const r = await q(`select has_function_privilege('authenticated', p.oid, 'execute') a, has_function_privilege('anon', p.oid, 'execute') b from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.proname='${name}'`);
   for (const x of r) if (x.a || x.b) problems.push(`internal helper ${name}() is executable by clients`);
 }

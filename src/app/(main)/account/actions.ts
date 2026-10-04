@@ -55,3 +55,43 @@ export async function deleteAccountAction(): Promise<"last_admin" | "error" | vo
   revalidatePath("/", "layout");
   redirect("/");
 }
+
+const subSchema = z.object({
+  endpoint: z.string().url().max(1000).startsWith("https://"),
+  keys: z.object({ p256dh: z.string().min(10).max(200), auth: z.string().min(8).max(100) }),
+});
+
+/** Stores this device's push subscription (RLS: own rows only). */
+export async function savePushSubscriptionAction(input: unknown, userAgent: string): Promise<boolean> {
+  const parsed = subSchema.safeParse(input);
+  if (!parsed.success) return false;
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return false;
+  const { error } = await supabase.from("push_subscriptions").upsert(
+    { user_id: auth.user.id, endpoint: parsed.data.endpoint, keys: parsed.data.keys, user_agent: userAgent.slice(0, 200) },
+    { onConflict: "endpoint" },
+  );
+  return !error;
+}
+
+export async function deletePushSubscriptionAction(endpoint: string): Promise<boolean> {
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return false;
+  const { error } = await supabase.from("push_subscriptions").delete().eq("endpoint", endpoint).eq("user_id", auth.user.id);
+  return !error;
+}
+
+const prefsSchema = z.object({ push_social: z.boolean(), push_offers: z.boolean(), push_reviews: z.boolean(), push_system: z.boolean() });
+export type PushPrefs = z.infer<typeof prefsSchema>;
+
+export async function savePushPrefsAction(input: unknown): Promise<boolean> {
+  const parsed = prefsSchema.safeParse(input);
+  if (!parsed.success) return false;
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return false;
+  const { error } = await supabase.from("notification_prefs").upsert({ user_id: auth.user.id, ...parsed.data });
+  return !error;
+}

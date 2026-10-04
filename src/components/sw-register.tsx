@@ -15,7 +15,11 @@ export function SwRegister() {
     let unsub: (() => void) | undefined;
     import("@/lib/supabase/client").then(({ createClient }) => {
       const { data } = createClient().auth.onAuthStateChange((event) => {
-        if (event === "SIGNED_OUT") navigator.serviceWorker.controller?.postMessage("clear-pages");
+        if (event === "SIGNED_OUT") {
+          navigator.serviceWorker.controller?.postMessage("clear-pages");
+          // stop pushes for the previous user on this device (the stale server row is purged on the first 410)
+          navigator.serviceWorker.getRegistration().then((r) => r?.pushManager.getSubscription()).then((s) => s?.unsubscribe()).catch(() => {});
+        }
       });
       unsub = () => data.subscription.unsubscribe();
     });

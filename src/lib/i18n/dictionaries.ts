@@ -70,10 +70,11 @@ const ar = {
   notifications: {
     title: "الإشعارات", empty: "لا توجد إشعارات", markAll: "تعليم الكل كمقروء",
     follow: "{actor} بدأ بمتابعة {business}", like: "{actor} أعجبه منشورك", comment: "{actor} علّق على منشورك", offer: "{business} نشر عرضاً جديداً",
- events: { submission_approved: "تمت الموافقة على اقتراحك «{name}»", submission_rejected: "لم نتمكن من قبول اقتراحك «{name}»", claim_approved: "تمت الموافقة على مطالبتك بصفحتك", claim_rejected: "تم رفض مطالبتك بالصفحة", event_published: "تم نشر فعاليتك «{name}»", event_hidden: "لم تُنشر فعاليتك «{name}»" },
+ events: { offer_ending: "ينتهي عرض «{name}» المحفوظ قريباً", subscription_active: "تم تفعيل اشتراك «{name}» لصفحتك", submission_approved: "تمت الموافقة على اقتراحك «{name}»", submission_rejected: "لم نتمكن من قبول اقتراحك «{name}»", claim_approved: "تمت الموافقة على مطالبتك بصفحتك", claim_rejected: "تم رفض مطالبتك بالصفحة", event_published: "تم نشر فعاليتك «{name}»", event_hidden: "لم تُنشر فعاليتك «{name}»" },
     review: "{actor} قيّم {business}", review_reply: "{business} ردّ على تقييمك",
     post: "{business} نشر منشوراً جديداً", system: "إشعار جديد", someone: "أحد المستخدمين",
   },
+  push: { title: "إشعارات الجهاز", enable: "تفعيل الإشعارات على هذا الجهاز", disable: "إيقاف الإشعارات", on: "الإشعارات مفعّلة", denied: "الإشعارات محظورة في المتصفح. فعّلها من إعدادات الموقع.", unsupported: "هذا المتصفح لا يدعم الإشعارات. على الآيفون ثبّت الموقع على الشاشة الرئيسية أولاً.", error: "تعذّر تفعيل الإشعارات", saved: "تم حفظ التفضيلات", social: "التفاعلات (إعجابات، تعليقات، متابعات)", offers: "عروض ومنشورات الأنشطة التي أتابعها وعروضي المحفوظة", reviews: "التقييمات والردود", system: "حالة اقتراحاتي ومطالباتي واشتراكاتي" },
   stories: { title: "القصص", close: "إغلاق", next: "التالي", prev: "السابق" },
   profile: { myPosts: "منشوراتي", following: "الأنشطة التي أتابعها", noPosts: "لم تنشر شيئاً بعد", noFollowing: "لا تتابع أي نشاط بعد" },
 
@@ -250,10 +251,11 @@ const ku: Dictionary = {
   notifications: {
     title: "ئاگادارکردنەوەکان", empty: "هیچ ئاگادارکردنەوەیەک نییە", markAll: "هەموو وەک خوێندراوە دیاری بکە",
     follow: "{actor} دەستی کرد بە فۆڵۆکردنی {business}", like: "{actor} پۆستەکەتی بەدڵ بوو", comment: "{actor} کۆمێنتی لەسەر پۆستەکەت کرد", offer: "{business} ئۆفەرێکی نوێی بڵاوکردەوە",
- events: { submission_approved: "پێشنیارەکەت «{name}» پەسەند کرا", submission_rejected: "نەمانتوانی پێشنیارەکەت «{name}» وەربگرین", claim_approved: "داواکارییەکەت بۆ پەڕەکە پەسەند کرا", claim_rejected: "داواکارییەکەت بۆ پەڕەکە ڕەتکرایەوە", event_published: "بۆنەکەت «{name}» بڵاوکرایەوە", event_hidden: "بۆنەکەت «{name}» بڵاو نەکرایەوە" },
+ events: { offer_ending: "ئۆفەری «{name}»ی پاشەکەوتکراو بەم زووانە کۆتایی دێت", subscription_active: "بەشداریکردنی «{name}» بۆ پەڕەکەت چالاک کرا", submission_approved: "پێشنیارەکەت «{name}» پەسەند کرا", submission_rejected: "نەمانتوانی پێشنیارەکەت «{name}» وەربگرین", claim_approved: "داواکارییەکەت بۆ پەڕەکە پەسەند کرا", claim_rejected: "داواکارییەکەت بۆ پەڕەکە ڕەتکرایەوە", event_published: "بۆنەکەت «{name}» بڵاوکرایەوە", event_hidden: "بۆنەکەت «{name}» بڵاو نەکرایەوە" },
     review: "{actor} {business}ی هەڵسەنگاند", review_reply: "{business} وەڵامی هەڵسەنگاندنەکەتی دایەوە",
     post: "{business} پۆستێکی نوێی بڵاوکردەوە", system: "ئاگادارکردنەوەی نوێ", someone: "بەکارهێنەرێک",
   },
+  push: { title: "ئاگادارکردنەوەی ئامێر", enable: "ئاگادارکردنەوە لەسەر ئەم ئامێرە چالاک بکە", disable: "ئاگادارکردنەوە ڕابگرە", on: "ئاگادارکردنەوە چالاکە", denied: "ئاگادارکردنەوە لە وێبگەڕدا بلۆک کراوە. لە ڕێکخستنەکانی ماڵپەڕ چالاکی بکە.", unsupported: "ئەم وێبگەڕە پشتگیری ئاگادارکردنەوە ناکات. لە ئایفۆن سەرەتا ماڵپەڕەکە بخە سەر شاشەی سەرەکی.", error: "نەتوانرا ئاگادارکردنەوە چالاک بکرێت", saved: "هەڵبژاردنەکان پاشەکەوت کران", social: "کارلێککردن (بەدڵبوون، کۆمێنت، فۆڵۆ)", offers: "ئۆفەر و پۆستی چالاکییە فۆڵۆکراوەکان و ئۆفەرە پاشەکەوتکراوەکان", reviews: "هەڵسەنگاندن و وەڵامەکان", system: "دۆخی پێشنیار و داواکاری و بەشداریکردنەکانم" },
   stories: { title: "ستۆرییەکان", close: "داخستن", next: "دواتر", prev: "پێشوو" },
   profile: { myPosts: "پۆستەکانم", following: "ئەو چالاکییانەی فۆڵۆم کردوون", noPosts: "هێشتا هیچت بڵاو نەکردووەتەوە", noFollowing: "هێشتا هیچ چالاکییەکت فۆڵۆ نەکردووە" },
 
@@ -428,10 +430,11 @@ const tr: Dictionary = {
   notifications: {
     title: "Bildirimler", empty: "Bildirim yok", markAll: "Tümünü okundu say",
     follow: "{actor}, {business} işletmesini takip etmeye başladı", like: "{actor} gönderinizi beğendi", comment: "{actor} gönderinize yorum yaptı", offer: "{business} yeni bir fırsat paylaştı",
- events: { submission_approved: "«{name}» öneriniz onaylandı", submission_rejected: "«{name}» önerinizi kabul edemedik", claim_approved: "Sayfa talebiniz onaylandı", claim_rejected: "Sayfa talebiniz reddedildi", event_published: "«{name}» etkinliğiniz yayınlandı", event_hidden: "«{name}» etkinliğiniz yayınlanmadı" },
+ events: { offer_ending: "Kaydettiğiniz «{name}» fırsatı yakında bitiyor", subscription_active: "Sayfanız için «{name}» aboneliği etkinleştirildi", submission_approved: "«{name}» öneriniz onaylandı", submission_rejected: "«{name}» önerinizi kabul edemedik", claim_approved: "Sayfa talebiniz onaylandı", claim_rejected: "Sayfa talebiniz reddedildi", event_published: "«{name}» etkinliğiniz yayınlandı", event_hidden: "«{name}» etkinliğiniz yayınlanmadı" },
     review: "{actor}, {business} işletmesini değerlendirdi", review_reply: "{business} değerlendirmenize yanıt verdi",
     post: "{business} yeni bir gönderi paylaştı", system: "Yeni bildirim", someone: "Bir kullanıcı",
   },
+  push: { title: "Cihaz bildirimleri", enable: "Bu cihazda bildirimleri aç", disable: "Bildirimleri kapat", on: "Bildirimler açık", denied: "Bildirimler tarayıcıda engellenmiş. Site ayarlarından açın.", unsupported: "Bu tarayıcı bildirimleri desteklemiyor. iPhone’da önce siteyi ana ekrana ekleyin.", error: "Bildirimler etkinleştirilemedi", saved: "Tercihler kaydedildi", social: "Etkileşimler (beğeni, yorum, takip)", offers: "Takip ettiğim işletmelerin fırsatları/gönderileri ve kayıtlı fırsatlarım", reviews: "Değerlendirmeler ve yanıtlar", system: "Önerilerimin, taleplerimin ve aboneliklerimin durumu" },
   stories: { title: "Hikâyeler", close: "Kapat", next: "Sonraki", prev: "Önceki" },
   profile: { myPosts: "Gönderilerim", following: "Takip ettiğim işletmeler", noPosts: "Henüz paylaşım yapmadınız", noFollowing: "Henüz hiçbir işletmeyi takip etmiyorsunuz" },
 
@@ -606,10 +609,11 @@ const en: Dictionary = {
   notifications: {
     title: "Notifications", empty: "No notifications", markAll: "Mark all as read",
     follow: "{actor} started following {business}", like: "{actor} liked your post", comment: "{actor} commented on your post", offer: "{business} posted a new offer",
- events: { submission_approved: "Your suggestion “{name}” was approved", submission_rejected: "We couldn't accept your suggestion “{name}”", claim_approved: "Your page claim was approved", claim_rejected: "Your page claim was declined", event_published: "Your event “{name}” was published", event_hidden: "Your event “{name}” wasn't published" },
+ events: { offer_ending: "Your saved offer “{name}” ends soon", subscription_active: "The “{name}” plan is now active for your page", submission_approved: "Your suggestion “{name}” was approved", submission_rejected: "We couldn't accept your suggestion “{name}”", claim_approved: "Your page claim was approved", claim_rejected: "Your page claim was declined", event_published: "Your event “{name}” was published", event_hidden: "Your event “{name}” wasn't published" },
     review: "{actor} reviewed {business}", review_reply: "{business} replied to your review",
     post: "{business} shared a new post", system: "New notification", someone: "Someone",
   },
+  push: { title: "Device notifications", enable: "Enable notifications on this device", disable: "Turn off notifications", on: "Notifications are on", denied: "Notifications are blocked in your browser. Enable them in site settings.", unsupported: "This browser does not support notifications. On iPhone, add the site to your Home Screen first.", error: "Could not enable notifications", saved: "Preferences saved", social: "Interactions (likes, comments, follows)", offers: "Offers/posts from places I follow and my saved offers", reviews: "Reviews and replies", system: "Status of my suggestions, claims and plans" },
   stories: { title: "Stories", close: "Close", next: "Next", prev: "Previous" },
   profile: { myPosts: "My posts", following: "Businesses I follow", noPosts: "You haven't posted yet", noFollowing: "You don't follow any business yet" },
 

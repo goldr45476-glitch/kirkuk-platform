@@ -43,6 +43,7 @@
 - **وقت التشغيل**: UptimeRobot (أو مثيله) على `/api/health` كل دقيقة مع تنبيه واتساب/بريد.
 - **الأخطاء**: سجلات Railway تحمل أخطاء الخادم كسطر JSON (`"level":"error"`). فعّل تنبيهاً على هذا النص.
 - **جدولة** (pg_cron أو Edge Function): `select public.sync_subscriptions();` كل ساعة؛ وحذف القصص المنتهية؛ وتنظيف ملفات المستخدمين المحذوفين.
+- **Push**: Cron كل دقيقة على `POST /api/push/dispatch` (ترويسة `x-push-secret`) + Database Webhook اختياري على `notifications`. راقب الحقل `failed` في الاستجابة؛ جرّب على أندرويد وآيفون (PWA مثبّت) قبل البيتا.
 - **مراجعة يومية** (10 دقائق): `/admin` ← طوابير المراجعة ← بلاغات الليل.
 - **جولة تحقق أسبوعية**: `/admin/businesses?filter=stale` (أقدم من 60 يوماً) ← اتصال سريع ← «تحققنا الآن».
 

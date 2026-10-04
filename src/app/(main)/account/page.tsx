@@ -11,6 +11,8 @@ import { getMyContributions, getOwnedBusinesses } from "@/lib/data-dashboard";
 import { formatDate } from "@/lib/time";
 import Link from "next/link";
 import { getI18n } from "@/lib/i18n/server";
+import { PushSettings } from "@/features/notifications/push-settings";
+import { createClient } from "@/lib/supabase/server";
 import { signOutAction } from "./actions";
 
 export async function generateMetadata() {
@@ -23,6 +25,9 @@ export default async function AccountPage() {
   if (!profile) redirect("/login?next=/account");
   const { t, locale } = await getI18n();
   const [mine, followed, myListings, contribs, owned] = await Promise.all([getFeed({ author: profile.id, limit: 20 }), getFollowedBusinesses(), getMyListings(), getMyContributions(), getOwnedBusinesses()]);
+  const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
+  const { data: prefRow } = vapidKey ? await (await createClient()).from("notification_prefs").select("push_social,push_offers,push_reviews,push_system").eq("user_id", profile.id).maybeSingle() : { data: null };
+  const prefs = { push_social: false, push_offers: true, push_reviews: true, push_system: true, ...prefRow };
   const isStaff = profile.role === "admin" || profile.role === "moderator";
 
   return (
@@ -33,6 +38,7 @@ export default async function AccountPage() {
       </div>
       {profile.phone && <p className="text-sm text-muted-foreground" dir="ltr">+{profile.phone.replace(/^\+/, "")}</p>}
       <Card className="p-5"><ProfileForm profile={profile} t={t.account} common={t.common} /></Card>
+      {vapidKey && <PushSettings vapidKey={vapidKey} initial={prefs} t={t.push} />}
       <nav aria-label={t.account.title} className="flex flex-wrap gap-2 text-sm font-bold">
         {(owned.length > 0 || profile.role === "owner") && <Link href="/dashboard" className="rounded-full bg-primary px-4 py-2 text-primary-foreground">{t.dash.title}</Link>}
         <Link href="/suggest" className="rounded-full border bg-card px-4 py-2 hover:bg-muted">{t.suggest.title}</Link>

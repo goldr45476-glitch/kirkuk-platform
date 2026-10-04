@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { MarkRead } from "@/features/notifications/mark-read";
 import { getCurrentProfile, getNotifications } from "@/lib/data";
 import { getI18n } from "@/lib/i18n/server";
+import { notificationHref, notificationText } from "@/lib/notification-text";
 import { timeAgo } from "@/lib/time";
 import { cn } from "@/lib/utils";
 
@@ -21,15 +22,8 @@ export default async function NotificationsPage() {
   const { t, locale } = await getI18n();
   const items = await getNotifications();
   const n = t.notifications;
-  const text = (i: (typeof items)[number]) => {
-    if (i.type === "system") {
-      const ev = (i.data as { event?: string }).event;
-      const tpl = ev ? (n.events as Record<string, string>)[ev] : undefined;
-      if (tpl) return tpl.replace("{name}", i.data.excerpt ?? "");
-    }
-    const tpl = (n as unknown as Record<string, string>)[i.type] ?? n.system;
-    return tpl.replace("{actor}", i.actor?.full_name || n.someone).replace("{business}", i.business?.name ?? "");
-  };
+  const like = (i: (typeof items)[number]) => ({ type: i.type, data: i.data, post_id: i.post_id, actor_name: i.actor?.full_name ?? null, business_name: i.business?.name ?? null, business_slug: i.business?.slug ?? null });
+  const text = (i: (typeof items)[number]) => notificationText(like(i), n);
 
   return (
     <div className="mx-auto max-w-xl space-y-4">
@@ -41,7 +35,7 @@ export default async function NotificationsPage() {
         <ul className="space-y-2">
           {items.map((i) => {
             const Icon = ICONS[i.type as keyof typeof ICONS] ?? Bell;
-            const href = i.post_id ? `/post/${i.post_id}` : i.business ? `/business/${i.business.slug}${i.type.startsWith("review") ? "#reviews" : ""}` : "#";
+            const href = notificationHref(like(i));
             return (
               <li key={i.id}>
                 <Link href={href}>
