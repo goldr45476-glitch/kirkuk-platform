@@ -40,6 +40,7 @@
 - **المُرسِل** `POST /api/push/dispatch` (ترويسة `x-push-secret`): يستخدم دوال خدمية فقط (`pending_push` / `mark_pushed` / `queue_expiring_offer_alerts` — غير متاحة للعميل ومُغطّاة في `npm run audit`)، يرسل بلغة المستخدم، يحذف الاشتراكات المنتهية (404/410)، ويعيد المحاولة عند فشل مؤقت خلال 6 ساعات. النص والروابط مشتركة مع صفحة الإشعارات (`src/lib/notification-text.ts`).
 - **التشغيل:** `node scripts/generate-vapid.mjs` ثم ضع المتغيرات الأربعة في Railway (`NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`, `PUSH_DISPATCH_SECRET`؛ والمفتاح العام يُدمج وقت البناء). ثم شغّل المُرسِل: إما Supabase Database Webhook على `notifications` (INSERT) ← `POST <site>/api/push/dispatch` بالترويسة، و/أو Cron في Railway كل دقيقة: `curl -X POST -H "x-push-secret: $PUSH_DISPATCH_SECRET" <site>/api/push/dispatch` (الـ Cron ضروري لتنبيهات انتهاء العروض).
 - **آيفون:** يتطلب تثبيت الموقع على الشاشة الرئيسية (PWA) أولاً؛ الواجهة تشرح ذلك عند عدم الدعم.
+**الخطوة 8 (التكامل المستمر) ✅ — `.github/workflows/ci.yml`:** عند كل push/PR: typecheck ← lint ← اختبارات الوحدة ← اختبارات قاعدة البيانات (الهجرات/RLS/الدوال) ← التدقيق الأمني ← البناء ← فحص إقلاع الخادم الإنتاجي (`/api/health` واتجاه RTL وصفحة offline). `npm run smoke` يبقى للنشر الحقيقي لأنه يحتاج بيانات حية.
 **التالي:** مراجعة الخصوصية قانونياً، جمع البيانات الميدانية، ثم البيتا المغلقة.
 
 ## الحالة: المراحل 1 و2 و3 و4 ✅
