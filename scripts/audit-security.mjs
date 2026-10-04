@@ -44,7 +44,7 @@ for (const name of ["audit", "_notify_system", "queue_expiring_offer_alerts", "p
 }
 
 // 5) staff/admin RPCs must check the role in their body
-const GUARDED = ["approve_submission", "reject_submission", "review_claim", "moderate_report", "moderate_event", "set_business_state", "admin_set_user", "staff_add_business", "admin_overview", "activate_subscription", "cancel_subscription", "import_businesses", "mark_verified", "review_verification"];
+const GUARDED = ["approve_submission", "reject_submission", "review_claim", "moderate_report", "moderate_event", "set_business_state", "admin_set_user", "staff_add_business", "admin_overview", "activate_subscription", "cancel_subscription", "import_businesses", "admin_push_stats", "mark_verified", "review_verification"];
 for (const name of GUARDED) {
   const r = await q(`select pg_get_functiondef(p.oid) d from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.proname='${name}'`);
   if (r.length === 0) problems.push(`expected function ${name} is missing`);

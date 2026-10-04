@@ -75,4 +75,14 @@ assert.equal((await q(`select count(*)::int c from notifications where user_id=$
 await q(`update offers set ends_at = now() + interval '3 days' where id=$1`, [offer]);
 await q(`delete from notifications`);
 assert.equal((await svc(() => q(`select queue_expiring_offer_alerts() n`)))[0].n, 0, "not yet near the end");
+// admin health snapshot: staff only
+await fails(() => as(1, () => db.query(`select admin_push_stats()`)), "non-staff cannot read push stats");
+await q(`update profiles set role='admin' where id=$1`, [id(3)]);
+await q(`insert into notifications (user_id, type, business_id, data) values ($1,'review',$2,'{}')`, [id(2), biz]);
+const st = (await as(3, () => q(`select admin_push_stats() s`)))[0].s;
+assert.equal(st.devices, 2); assert.equal(st.subscribed_users, 2); assert.equal(st.backlog, 1); assert.ok(st.oldest_backlog_min >= 0);
+assert.equal(st.pushed_24h, 0);
+await q(`update notifications set pushed_at = now() where user_id=$1`, [id(2)]);
+const st2 = (await as(3, () => q(`select admin_push_stats() s`)))[0].s;
+assert.equal(st2.pushed_24h, 1); assert.equal(st2.backlog, 0); assert.ok(st2.last_pushed_at);
 console.log("push tests passed");

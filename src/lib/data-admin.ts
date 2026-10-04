@@ -74,3 +74,13 @@ export async function getAudit() {
   const name = new Map((people ?? []).map((p) => [p.id as string, p.full_name as string]));
   return rows.map((r) => ({ ...r, actor: r.actor_id ? { full_name: name.get(r.actor_id) ?? r.actor_id.slice(0, 8) } : null }));
 }
+
+export type PushStats = {
+  subscribed_users: number; devices: number; backlog: number; oldest_backlog_min: number;
+  pushed_24h: number; last_pushed_at: string | null; opted_out_social: number; prefs_rows: number;
+};
+export async function getPushStats(): Promise<PushStats | null> {
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("admin_push_stats");
+  return (data as PushStats) ?? null;
+}
