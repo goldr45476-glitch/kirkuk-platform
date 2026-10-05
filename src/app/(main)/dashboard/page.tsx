@@ -1,4 +1,4 @@
-import { BadgeCheck, ChevronLeft, Plus } from "lucide-react";
+import { BadgeCheck, ChevronLeft, Plus, Store } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Badge, Card } from "@/components/ui/card";
@@ -21,7 +21,14 @@ export default async function DashboardHome() {
     <div className="mx-auto max-w-2xl space-y-4">
       <div className="flex items-center justify-between"><h1 className="text-2xl font-extrabold">{t.dash.myPlaces}</h1>
         <Button asChild size="sm"><Link href="/suggest"><Plus aria-hidden />{t.suggest.title}</Link></Button></div>
-      {list.length === 0 ? <p className="rounded-xl bg-muted p-6 text-center text-sm text-muted-foreground">{t.dash.none}</p> : (
+      {list.length === 0 ? (
+        <Card className="space-y-3 border-accent/40 bg-gradient-to-br from-accent/15 to-card p-6 text-center">
+          <span className="mx-auto grid size-14 place-items-center rounded-2xl bg-accent text-accent-foreground"><Store className="size-7" aria-hidden /></span>
+          <h2 className="text-lg font-extrabold">{t.owner.ctaTitle}</h2>
+          <p className="text-sm text-muted-foreground">{t.owner.ctaBody}</p>
+          <Button asChild><Link href="/suggest"><Plus aria-hidden />{t.owner.ctaButton}</Link></Button>
+        </Card>
+      ) : (
         <ul className="space-y-3">
           {list.map((b) => (
             <li key={b.id}>

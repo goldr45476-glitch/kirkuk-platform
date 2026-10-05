@@ -1,4 +1,4 @@
-import { MapPin } from "lucide-react";
+import { CitadelLogo } from "@/components/citadel-logo";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Card } from "@/components/ui/card";
@@ -13,25 +13,21 @@ export async function generateMetadata() {
   return { title: t.nav.login, robots: { index: false } };
 }
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
-  const { next } = await searchParams;
-  const target = safeNext(next, "/account");
-  if (await getCurrentProfile()) redirect(target);
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string; type?: string }> }) {
+  const { next, type } = await searchParams;
+  const explicitNext = next ? safeNext(next, "/") : null;
+  if (await getCurrentProfile()) redirect(explicitNext ?? (type === "owner" ? "/dashboard" : "/"));
   const { t } = await getI18n();
 
   return (
     <main className="container grid min-h-dvh place-items-center py-10">
       <div className="w-full max-w-md space-y-6">
         <Link href="/" className="flex items-center justify-center gap-2 text-xl font-extrabold text-primary">
-          <span className="grid size-10 place-items-center rounded-xl bg-primary text-primary-foreground"><MapPin className="size-5" aria-hidden /></span>
+          <span className="grid size-11 place-items-center rounded-xl bg-gradient-to-br from-primary to-primary/75 p-1.5 shadow-sm shadow-primary/30"><CitadelLogo className="size-full" /></span>
           {t.appName}
         </Link>
         <Card className="space-y-5 p-6">
-          <div className="space-y-1 text-center">
-            <h1 className="text-xl font-extrabold">{t.auth.title}</h1>
-            <p className="text-sm text-muted-foreground">{t.auth.subtitle}</p>
-          </div>
-          <LoginForm t={t.auth} next={target} configured={supabaseConfigured} />
+          <LoginForm t={t.auth} explicitNext={explicitNext} initialType={type === "owner" ? "owner" : "user"} configured={supabaseConfigured} />
         </Card>
       </div>
     </main>

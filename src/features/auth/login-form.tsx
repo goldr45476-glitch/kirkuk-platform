@@ -1,5 +1,6 @@
 "use client";
 
+import { Store, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
@@ -10,10 +11,15 @@ import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
 type Tab = "phone" | "email";
+type AccountType = "user" | "owner";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function LoginForm({ t, next, configured }: { t: Dictionary["auth"]; next: string; configured: boolean }) {
+export function LoginForm({ t, explicitNext, initialType, configured }: { t: Dictionary["auth"]; explicitNext: string | null; initialType: AccountType; configured: boolean }) {
   const router = useRouter();
+  const [type, setType] = useState<AccountType>(initialType);
+  // Owners land on their dashboard, regular users on the home feed (unless the visitor came from a specific page).
+  const next = explicitNext ?? (type === "owner" ? "/dashboard" : "/");
+  const meta = { account_type: type };
   const [tab, setTab] = useState<Tab>("phone");
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +40,7 @@ export function LoginForm({ t, next, configured }: { t: Dictionary["auth"]; next
   const sendCode = () => run(async () => {
     const n = normalizeIraqiPhone(phone);
     if (!n) return setError(t.invalidPhone);
-    const { error } = await createClient().auth.signInWithOtp({ phone: n });
+    const { error } = await createClient().auth.signInWithOtp({ phone: n, options: { data: meta } });
     if (error) return setError(error.message);
     setE164(n);
   });
@@ -53,7 +59,7 @@ export function LoginForm({ t, next, configured }: { t: Dictionary["auth"]; next
     if (signup) {
       const { data, error } = await supabase.auth.signUp({
         email, password,
-        options: { emailRedirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
+        options: { data: meta, emailRedirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
       });
       if (error) return setError(error.message);
       if (!data.session) return setInfo(t.checkEmail);
@@ -72,10 +78,31 @@ export function LoginForm({ t, next, configured }: { t: Dictionary["auth"]; next
     if (error) setError(error.message);
   });
 
+  const picker = (
+    <fieldset className="space-y-2">
+      <legend className="mb-2 block text-center text-sm font-bold">{t.typeLabel}</legend>
+      <div className="grid grid-cols-2 gap-2">
+        {([["user", User, t.typeUser, t.typeUserHint], ["owner", Store, t.typeOwner, t.typeOwnerHint]] as const).map(([k, Icon, label, hint]) => (
+          <button key={k} type="button" aria-pressed={type === k} onClick={() => setType(k)}
+            className={cn("flex flex-col items-center gap-1.5 rounded-2xl border-2 p-3 text-center transition", type === k ? "border-primary bg-primary/8 shadow-sm shadow-primary/15" : "border-border bg-card hover:bg-muted")}>
+            <span className={cn("grid size-10 place-items-center rounded-xl", type === k ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}><Icon className="size-5" aria-hidden /></span>
+            <span className="text-sm font-extrabold leading-tight">{label}</span>
+            <span className="text-[11px] leading-snug text-muted-foreground">{hint}</span>
+          </button>
+        ))}
+      </div>
+    </fieldset>
+  );
+
   if (!configured) return <p role="alert" className="rounded-lg bg-accent/15 p-4 text-sm font-semibold">{t.notConfigured}</p>;
 
   return (
     <div className="space-y-5">
+      <div className="space-y-1 text-center">
+        <h1 className="text-xl font-extrabold">{t.title}</h1>
+        <p className="text-sm text-muted-foreground">{type === "owner" ? t.ownerSubtitle : t.subtitle}</p>
+      </div>
+      {picker}
       <div role="tablist" className="grid grid-cols-2 rounded-xl bg-muted p-1">
         {(["phone", "email"] as const).map((k) => (
           <button key={k} role="tab" aria-selected={tab === k} onClick={() => { setTab(k); setError(null); setInfo(null); }}

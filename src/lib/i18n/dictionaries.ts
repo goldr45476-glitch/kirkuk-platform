@@ -16,6 +16,7 @@ const ar = {
   },
   category: { businesses: "الأنشطة", noBusinesses: "لا توجد أنشطة في هذا القسم بعد", sub: "أقسام فرعية" },
   auth: {
+    typeLabel: "اختر نوع حسابك", typeUser: "مستخدم عادي", typeUserHint: "أبحث عن أماكن وعروض وأتابع وأقيّم", typeOwner: "صاحب محل أو نشاط", typeOwnerHint: "أدير صفحة نشاطي وأنشر العروض والقصص والريلز", ownerSubtitle: "سجّل دخولك لإدارة نشاطك التجاري",
     title: "أهلاً بك في كركوك الآن", subtitle: "سجّل دخولك للمتابعة والتقييم والنشر",
     tabPhone: "رقم الهاتف", tabEmail: "البريد",
     phone: "رقم الهاتف", phoneHint: "مثال: 07701234567", sendCode: "إرسال رمز التحقق",
@@ -209,6 +210,7 @@ const ku: Dictionary = {
   },
   category: { businesses: "چالاکییەکان", noBusinesses: "هێشتا هیچ چالاکییەک لەم بەشەدا نییە", sub: "بەشە لاوەکییەکان" },
   auth: {
+    typeLabel: "جۆری هەژمارەکەت هەڵبژێرە", typeUser: "بەکارهێنەری ئاسایی", typeUserHint: "بەدوای شوێن و ئۆفەردا دەگەڕێم و فۆڵۆ و هەڵسەنگاندن دەکەم", typeOwner: "خاوەن دوکان یان چالاکی", typeOwnerHint: "پەڕەی چالاکییەکەم بەڕێوە دەبەم و ئۆفەر و ستۆری و ڕیلز بڵاو دەکەمەوە", ownerSubtitle: "بچۆ ژوورەوە بۆ بەڕێوەبردنی چالاکییە بازرگانییەکەت",
     title: "بەخێربێیت بۆ کەرکووک ئێستا", subtitle: "بچۆ ژوورەوە بۆ فۆڵۆکردن و هەڵسەنگاندن و بڵاوکردنەوە",
     tabPhone: "ژمارەی مۆبایل", tabEmail: "ئیمەیڵ",
     phone: "ژمارەی مۆبایل", phoneHint: "نموونە: 07701234567", sendCode: "ناردنی کۆدی پشتڕاستکردنەوە",
@@ -400,6 +402,7 @@ const tr: Dictionary = {
   },
   category: { businesses: "İşletmeler", noBusinesses: "Bu kategoride henüz işletme yok", sub: "Alt kategoriler" },
   auth: {
+    typeLabel: "Hesap türünüzü seçin", typeUser: "Normal kullanıcı", typeUserHint: "Mekân ve fırsat arıyorum, takip eder ve değerlendiririm", typeOwner: "Dükkân / işletme sahibi", typeOwnerHint: "İşletme sayfamı yönetir, fırsat, hikâye ve Reels paylaşırım", ownerSubtitle: "İşletmenizi yönetmek için giriş yapın",
     title: "Kerkük Şimdi'ye hoş geldiniz", subtitle: "Takip, değerlendirme ve paylaşım için giriş yapın",
     tabPhone: "Telefon", tabEmail: "E-posta",
     phone: "Telefon numarası", phoneHint: "Örnek: 07701234567", sendCode: "Doğrulama kodu gönder",
@@ -591,6 +594,7 @@ const en: Dictionary = {
   },
   category: { businesses: "Businesses", noBusinesses: "No businesses in this category yet", sub: "Subcategories" },
   auth: {
+    typeLabel: "Choose your account type", typeUser: "Regular user", typeUserHint: "I look for places and offers, follow and review", typeOwner: "Shop or business owner", typeOwnerHint: "I manage my business page and post offers, stories and reels", ownerSubtitle: "Log in to manage your business",
     title: "Welcome to Kirkuk Now", subtitle: "Log in to follow, review and post",
     tabPhone: "Phone", tabEmail: "Email",
     phone: "Phone number", phoneHint: "e.g. 07701234567", sendCode: "Send verification code",

@@ -78,7 +78,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
       )}
 
       {!ownerMode && (
-        <Link href="/suggest" className="flex items-center gap-4 rounded-2xl border border-accent/40 bg-gradient-to-br from-accent/15 to-card p-4 shadow-sm transition hover:-translate-y-0.5">
+        <Link href={profile ? "/suggest" : "/login?type=owner&next=/suggest"} className="flex items-center gap-4 rounded-2xl border border-accent/40 bg-gradient-to-br from-accent/15 to-card p-4 shadow-sm transition hover:-translate-y-0.5">
           <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-accent text-accent-foreground"><Store className="size-6" aria-hidden /></span>
           <span className="min-w-0"><span className="block font-extrabold">{t.owner.ctaTitle}</span><span className="block text-sm text-muted-foreground">{t.owner.ctaBody}</span></span>
           <span className="ms-auto hidden shrink-0 rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground sm:block">{t.owner.ctaButton}</span>
