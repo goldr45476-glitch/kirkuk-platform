@@ -2,6 +2,7 @@ import { Compass, Database, Search } from "lucide-react";
 import Link from "next/link";
 import { BusinessCard } from "@/components/business-card";
 import { AdSlider } from "@/components/ad-slider";
+import { CitadelLogo } from "@/components/citadel-logo";
 import { Badge, Card } from "@/components/ui/card";
 import { Composer } from "@/features/feed/composer";
 import { FeedList } from "@/features/feed/feed-list";
@@ -28,22 +29,29 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
   return (
     <div className="mx-auto max-w-5xl space-y-4">
-      {/* Compact top: greeting + search + quick intents (the full discovery rows live on /explore) */}
-      <section className="space-y-3">
-        <p className="text-sm font-semibold text-muted-foreground">{t.now.greet[dayPart()]} 👋 {t.now.headline.replace("{city}", cname)}</p>
-        <form action="/search" className="relative" role="search">
-          <Search className="pointer-events-none absolute start-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden />
-          <input name="q" type="search" placeholder={t.search.placeholder} aria-label={t.search.title} enterKeyHint="search"
-            className="h-12 w-full rounded-full border bg-card ps-10 pe-4 text-base shadow-sm placeholder:text-muted-foreground" />
-        </form>
-        <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <li className="shrink-0"><Link href="/explore" className="flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground"><Compass className="size-4" aria-hidden />{t.explore.title}</Link></li>
-          {intents.map(([k, href, emoji]) => (
-            <li key={k} className="shrink-0">
-              <Link href={href} className="flex items-center gap-2 rounded-full border bg-card px-4 py-2.5 text-sm font-bold hover:bg-muted"><span aria-hidden>{emoji}</span>{t.now.intents[k]}</Link>
-            </li>
-          ))}
-        </ul>
+      {/* Hero: greeting + search + quick intents, above the ads slider */}
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-primary/70 p-5 text-primary-foreground shadow-lg shadow-primary/25 md:p-8">
+        <CitadelLogo className="pointer-events-none absolute -bottom-6 -start-6 size-48 opacity-[.12] md:size-64" gate="transparent" flag="transparent" />
+        <span className="pointer-events-none absolute -end-16 -top-20 size-56 rounded-full bg-accent/30 blur-2xl" aria-hidden />
+        <div className="relative space-y-4">
+          <div>
+            <p className="text-sm font-semibold text-primary-foreground/85">{t.now.greet[dayPart()]} 👋</p>
+            <h1 className="mt-1 text-2xl font-extrabold leading-tight md:text-4xl">{t.now.headline.replace("{city}", cname)}</h1>
+          </div>
+          <form action="/search" className="relative max-w-xl" role="search">
+            <Search className="pointer-events-none absolute start-3.5 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden />
+            <input name="q" type="search" placeholder={t.search.placeholder} aria-label={t.search.title} enterKeyHint="search"
+              className="h-12 w-full rounded-2xl bg-card ps-11 pe-4 text-base text-card-foreground shadow-lg shadow-black/10 placeholder:text-muted-foreground" />
+          </form>
+          <ul className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 md:mx-0 md:flex-wrap md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <li className="shrink-0"><Link href="/explore" className="flex items-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-extrabold text-accent-foreground shadow-sm transition hover:brightness-105"><Compass className="size-4" aria-hidden />{t.explore.title}</Link></li>
+            {intents.map(([k, href, emoji]) => (
+              <li key={k} className="shrink-0">
+                <Link href={href} className="flex items-center gap-2 rounded-full bg-white/15 px-4 py-2.5 text-sm font-bold text-white backdrop-blur transition hover:bg-white/25"><span aria-hidden>{emoji}</span>{t.now.intents[k]}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {!supabaseConfigured && (

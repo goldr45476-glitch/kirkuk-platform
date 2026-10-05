@@ -10,7 +10,7 @@ export interface LatLng { lat: number; lng: number }
 
 const pin = L.divIcon({
   className: "", iconSize: [28, 28], iconAnchor: [14, 28],
-  html: '<span style="display:block;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#5b47d6;border:3px solid #fff;box-shadow:0 1px 6px rgba(0,0,0,.5)"></span>',
+  html: '<span style="display:block;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#0f766e;border:3px solid #fff;box-shadow:0 1px 6px rgba(0,0,0,.5)"></span>',
 });
 
 /** Tap-to-place map used by "suggest a place" and the owner dashboard. */

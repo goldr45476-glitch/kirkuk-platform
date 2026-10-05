@@ -4,41 +4,41 @@
 
 @layer base {
   :root {
-    --background: 240 45% 98%;        /* soft lavender white */
-    --foreground: 243 28% 14%;
+    --background: 40 30% 97%;         /* warm cream */
+    --foreground: 222 28% 14%;
     --card: 0 0% 100%;
-    --card-foreground: 243 28% 14%;
-    --muted: 240 33% 95%;
-    --muted-foreground: 240 8% 40%;
-    --primary: 248 65% 54%;           /* soft indigo-violet */
+    --card-foreground: 222 28% 14%;
+    --muted: 40 22% 93%;
+    --muted-foreground: 220 9% 40%;
+    --primary: 170 74% 28%;           /* deep teal */
     --primary-foreground: 0 0% 100%;
-    --accent: 14 92% 64%;             /* warm coral */
-    --accent-foreground: 20 45% 10%;
+    --accent: 38 92% 52%;             /* amber */
+    --accent-foreground: 30 45% 10%;
     --destructive: 0 72% 46%;
     --destructive-foreground: 0 0% 100%;
-    --success: 160 62% 32%;
-    --border: 240 24% 91%;
-    --input: 240 20% 85%;
-    --ring: 248 65% 60%;
+    --success: 152 60% 32%;
+    --border: 40 18% 88%;
+    --input: 40 14% 82%;
+    --ring: 170 74% 34%;
     --radius: 1rem;
   }
   .dark {
-    --background: 245 32% 8%;
-    --foreground: 240 25% 95%;
-    --card: 245 26% 12%;
-    --card-foreground: 240 25% 95%;
-    --muted: 245 22% 17%;
-    --muted-foreground: 240 10% 70%;
-    --primary: 248 90% 74%;
-    --primary-foreground: 245 40% 8%;
-    --accent: 14 90% 66%;
-    --accent-foreground: 20 45% 10%;
-    --destructive: 0 70% 58%;
+    --background: 222 24% 8%;
+    --foreground: 40 20% 94%;
+    --card: 222 22% 12%;
+    --card-foreground: 40 20% 94%;
+    --muted: 222 18% 17%;
+    --muted-foreground: 220 10% 68%;
+    --primary: 168 62% 46%;
+    --primary-foreground: 222 30% 6%;
+    --accent: 38 92% 56%;
+    --accent-foreground: 30 40% 10%;
+    --destructive: 0 70% 56%;
     --destructive-foreground: 0 0% 100%;
-    --success: 158 55% 50%;
-    --border: 245 20% 21%;
-    --input: 245 18% 25%;
-    --ring: 248 90% 70%;
+    --success: 152 55% 50%;
+    --border: 222 16% 20%;
+    --input: 222 16% 24%;
+    --ring: 168 62% 50%;
   }
   * { @apply border-border; }
   html { -webkit-tap-highlight-color: transparent; }

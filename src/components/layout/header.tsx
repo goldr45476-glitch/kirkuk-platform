@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { MapPin, Search } from "lucide-react";
+import { Search } from "lucide-react";
+import { CitadelLogo } from "@/components/citadel-logo";
 import { Button } from "@/components/ui/button";
 import { getI18n } from "@/lib/i18n/server";
 import { NotificationBell } from "@/features/notifications/bell";
@@ -15,7 +16,7 @@ export async function Header() {
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="container flex h-14 items-center gap-2">
         <Link href="/" className="flex min-w-0 shrink items-center gap-2 whitespace-nowrap font-extrabold text-primary">
-          <span className="grid size-8 place-items-center rounded-xl bg-gradient-to-br from-primary to-accent text-white shadow-sm"><MapPin className="size-4" aria-hidden /></span>
+          <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-primary to-primary/75 p-1.5 shadow-sm shadow-primary/30"><CitadelLogo className="size-full" /></span>
           <span className="max-w-[9rem] truncate text-base sm:max-w-none sm:text-lg">{t.appName}</span>
         </Link>
         <nav className="ms-4 hidden min-w-0 flex-1 items-center gap-1 overflow-hidden md:flex" aria-label="main">
