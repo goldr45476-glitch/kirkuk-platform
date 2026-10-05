@@ -14,27 +14,21 @@ export async function Header() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
       <div className="container flex h-14 items-center gap-2">
-        <Link href="/" className="flex shrink-0 items-center gap-2 whitespace-nowrap font-extrabold text-primary">
+        <Link href="/" className="flex min-w-0 shrink items-center gap-2 whitespace-nowrap font-extrabold text-primary">
           <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground"><MapPin className="size-4" aria-hidden /></span>
-          <span className="text-base sm:text-lg">{t.appName}</span>
+          <span className="max-w-[9rem] truncate text-base sm:max-w-none sm:text-lg">{t.appName}</span>
         </Link>
-        <nav className="ms-4 hidden min-w-0 items-center gap-1 md:flex" aria-label="main">
+        <nav className="ms-4 hidden min-w-0 flex-1 items-center gap-1 overflow-hidden md:flex" aria-label="main">
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/">{t.nav.home}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/reels">{t.nav.reels}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/explore">{t.nav.explore}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/categories">{t.nav.categories}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/where">{t.nav.where}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/search">{t.nav.search}</Link>
-          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/map">{t.nav.map}</Link>
-          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/offers">{t.nav.offers}</Link>
-          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/events">{t.nav.events}</Link>
-          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/real-estate">{t.listings.kinds.property}</Link>
-          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/cars">{t.listings.kinds.vehicle}</Link>
-          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/jobs">{t.listings.kinds.job}</Link>
-          <Link className="hidden rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap xl:block" href="/live/pharmacies">{t.live.title}</Link>
+          <Link className="hidden lg:block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/where">{t.nav.where}</Link>
+          <Link className="hidden xl:block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/categories">{t.nav.categories}</Link>
+          <Link className="hidden 2xl:block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/offers">{t.nav.offers}</Link>
+          <Link className="hidden 2xl:block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/events">{t.nav.events}</Link>
         </nav>
-        <div className="ms-auto flex items-center gap-1">
-          <Link href="/search" aria-label={t.search.title} className="inline-flex size-9 items-center justify-center rounded-lg hover:bg-muted sm:size-10"><Search className="size-5" aria-hidden /></Link>
+        <div className="ms-auto flex shrink-0 items-center gap-1">
+          <Link href="/search" aria-label={t.search.title} className="hidden size-9 items-center justify-center rounded-lg hover:bg-muted sm:inline-flex sm:size-10"><Search className="size-5" aria-hidden /></Link>
           <LocaleSwitcher current={locale} label={t.common.language} />
           <ThemeToggle label={t.common.theme} />
           {profile && <NotificationBell userId={profile.id} initial={unread} label={t.nav.notifications} />}
