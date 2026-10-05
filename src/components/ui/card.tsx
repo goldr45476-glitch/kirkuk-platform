@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 export const Card = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)} {...props} />
+  <div className={cn("rounded-2xl border border-border/70 bg-card text-card-foreground shadow-[0_1px_2px_hsl(var(--foreground)/.04),0_10px_28px_-14px_hsl(var(--primary)/.22)]", className)} {...props} />
 );
 
 export const Badge = ({

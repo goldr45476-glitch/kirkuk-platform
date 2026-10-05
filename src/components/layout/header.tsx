@@ -12,10 +12,10 @@ export async function Header() {
   const profile = await getCurrentProfile();
   const unread = profile ? await getUnreadCount() : 0;
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="container flex h-14 items-center gap-2">
         <Link href="/" className="flex min-w-0 shrink items-center gap-2 whitespace-nowrap font-extrabold text-primary">
-          <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground"><MapPin className="size-4" aria-hidden /></span>
+          <span className="grid size-8 place-items-center rounded-xl bg-gradient-to-br from-primary to-accent text-white shadow-sm"><MapPin className="size-4" aria-hidden /></span>
           <span className="max-w-[9rem] truncate text-base sm:max-w-none sm:text-lg">{t.appName}</span>
         </Link>
         <nav className="ms-4 hidden min-w-0 flex-1 items-center gap-1 overflow-hidden md:flex" aria-label="main">

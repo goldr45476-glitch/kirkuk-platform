@@ -1,4 +1,4 @@
-# دليل كركوك العام — Kirkuk Guide
+# كركوك الآن — Kirkuk Now
 
 منصة اجتماعية + دليل أعمال لمحافظة كركوك. Next.js 15 (App Router) · TypeScript · Tailwind · Supabase.
 

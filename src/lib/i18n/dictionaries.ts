@@ -1,6 +1,6 @@
 // UI strings. Arabic is the source of truth; other locales must match its shape.
 const ar = {
-  appName: "دليل كركوك",
+  appName: "كركوك الآن",
   tagline: "كل ما تحتاجه في كركوك، في مكان واحد",
   nav: { reels: "ريلز", explore: "استكشف", saved: "المحفوظات", where: "وين نروح؟", offers: "العروض", events: "الفعاليات",  home: "الرئيسية", categories: "الأقسام", account: "حسابي", login: "دخول", search: "بحث", map: "الخريطة", notifications: "الإشعارات" },
   common: {
@@ -16,7 +16,7 @@ const ar = {
   },
   category: { businesses: "الأنشطة", noBusinesses: "لا توجد أنشطة في هذا القسم بعد", sub: "أقسام فرعية" },
   auth: {
-    title: "أهلاً بك في دليل كركوك", subtitle: "سجّل دخولك للمتابعة والتقييم والنشر",
+    title: "أهلاً بك في كركوك الآن", subtitle: "سجّل دخولك للمتابعة والتقييم والنشر",
     tabPhone: "رقم الهاتف", tabEmail: "البريد",
     phone: "رقم الهاتف", phoneHint: "مثال: 07701234567", sendCode: "إرسال رمز التحقق",
     code: "رمز التحقق", codeHint: "أدخل الرمز المكوّن من 6 أرقام المرسل إلى", verify: "تأكيد", changeNumber: "تغيير الرقم",
@@ -188,7 +188,7 @@ const ar = {
 export type Dictionary = typeof ar;
 
 const ku: Dictionary = {
-  appName: "ڕێنمای کەرکووک",
+  appName: "کەرکووک ئێستا",
   tagline: "هەموو پێداویستییەکانت لە کەرکووک، لە یەک شوێن",
   nav: { reels: "ڕیلز", explore: "دۆزینەوە", saved: "پاشەکەوتکراو", where: "بۆ کوێ بچین؟", offers: "ئۆفەرەکان", events: "بۆنەکان",  home: "سەرەکی", categories: "بەشەکان", account: "هەژمارەکەم", login: "چوونەژوورەوە", search: "گەڕان", map: "نەخشە", notifications: "ئاگادارکردنەوە" },
   common: {
@@ -204,7 +204,7 @@ const ku: Dictionary = {
   },
   category: { businesses: "چالاکییەکان", noBusinesses: "هێشتا هیچ چالاکییەک لەم بەشەدا نییە", sub: "بەشە لاوەکییەکان" },
   auth: {
-    title: "بەخێربێیت بۆ ڕێنمای کەرکووک", subtitle: "بچۆ ژوورەوە بۆ فۆڵۆکردن و هەڵسەنگاندن و بڵاوکردنەوە",
+    title: "بەخێربێیت بۆ کەرکووک ئێستا", subtitle: "بچۆ ژوورەوە بۆ فۆڵۆکردن و هەڵسەنگاندن و بڵاوکردنەوە",
     tabPhone: "ژمارەی مۆبایل", tabEmail: "ئیمەیڵ",
     phone: "ژمارەی مۆبایل", phoneHint: "نموونە: 07701234567", sendCode: "ناردنی کۆدی پشتڕاستکردنەوە",
     code: "کۆدی پشتڕاستکردنەوە", codeHint: "کۆدی ٦ ژمارەیی نێردراو بۆ ئەم ژمارەیە بنووسە", verify: "پشتڕاستکردنەوە", changeNumber: "گۆڕینی ژمارە",
@@ -374,7 +374,7 @@ const ku: Dictionary = {
 };
 
 const tr: Dictionary = {
-  appName: "Kerkük Rehberi",
+  appName: "Kerkük Şimdi",
   tagline: "Kerkük'te ihtiyacınız olan her şey, tek yerde",
   nav: { reels: "Reels", explore: "Keşfet", saved: "Kaydedilenler", where: "Nereye?", offers: "Fırsatlar", events: "Etkinlikler",  home: "Ana Sayfa", categories: "Kategoriler", account: "Hesabım", login: "Giriş", search: "Ara", map: "Harita", notifications: "Bildirimler" },
   common: {
@@ -390,7 +390,7 @@ const tr: Dictionary = {
   },
   category: { businesses: "İşletmeler", noBusinesses: "Bu kategoride henüz işletme yok", sub: "Alt kategoriler" },
   auth: {
-    title: "Kerkük Rehberi'ne hoş geldiniz", subtitle: "Takip, değerlendirme ve paylaşım için giriş yapın",
+    title: "Kerkük Şimdi'ye hoş geldiniz", subtitle: "Takip, değerlendirme ve paylaşım için giriş yapın",
     tabPhone: "Telefon", tabEmail: "E-posta",
     phone: "Telefon numarası", phoneHint: "Örnek: 07701234567", sendCode: "Doğrulama kodu gönder",
     code: "Doğrulama kodu", codeHint: "Şu numaraya gönderilen 6 haneli kodu girin:", verify: "Doğrula", changeNumber: "Numarayı değiştir",
@@ -560,7 +560,7 @@ const tr: Dictionary = {
 };
 
 const en: Dictionary = {
-  appName: "Kirkuk Guide",
+  appName: "Kirkuk Now",
   tagline: "Everything you need in Kirkuk, in one place",
   nav: { reels: "Reels", explore: "Explore", saved: "Saved", where: "Where to?", offers: "Offers", events: "Events",  home: "Home", categories: "Categories", account: "Account", login: "Log in", search: "Search", map: "Map", notifications: "Notifications" },
   common: {
@@ -576,7 +576,7 @@ const en: Dictionary = {
   },
   category: { businesses: "Businesses", noBusinesses: "No businesses in this category yet", sub: "Subcategories" },
   auth: {
-    title: "Welcome to Kirkuk Guide", subtitle: "Log in to follow, review and post",
+    title: "Welcome to Kirkuk Now", subtitle: "Log in to follow, review and post",
     tabPhone: "Phone", tabEmail: "Email",
     phone: "Phone number", phoneHint: "e.g. 07701234567", sendCode: "Send verification code",
     code: "Verification code", codeHint: "Enter the 6-digit code sent to", verify: "Verify", changeNumber: "Change number",

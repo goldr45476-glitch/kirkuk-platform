@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "دليل كركوك",
-    short_name: "دليل كركوك",
+    name: "كركوك الآن",
+    short_name: "كركوك الآن",
     description: "كل ما تحتاجه في كركوك، في مكان واحد",
     start_url: "/",
     scope: "/",
@@ -11,8 +11,8 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: "portrait",
     lang: "ar",
     dir: "rtl",
-    background_color: "#f8f6f1",
-    theme_color: "#0f766e",
+    background_color: "#f8f8fd",
+    theme_color: "#5b47d6",
     categories: ["lifestyle", "navigation", "shopping"],
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },

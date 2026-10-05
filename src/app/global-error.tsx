@@ -8,7 +8,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
         <div>
           <h1 style={{ fontSize: 22 }}>حدث خطأ غير متوقع</h1>
           <p style={{ color: "#666" }}>Something went wrong</p>
-          <button onClick={reset} style={{ marginTop: 12, padding: "10px 20px", borderRadius: 10, border: 0, background: "#0f766e", color: "#fff", fontWeight: 700 }}>حاول مجدداً / Retry</button>
+          <button onClick={reset} style={{ marginTop: 12, padding: "10px 20px", borderRadius: 10, border: 0, background: "#5b47d6", color: "#fff", fontWeight: 700 }}>حاول مجدداً / Retry</button>
         </div>
       </body>
     </html>

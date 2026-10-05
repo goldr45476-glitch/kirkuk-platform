@@ -15,13 +15,13 @@ export function BottomNav({ labels }: { labels: { home: string; reels: string; e
     { href: "/account", label: labels.account, Icon: User, active: path.startsWith("/account") || path.startsWith("/login") },
   ];
   return (
-    <nav aria-label="primary" className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t bg-card/95 backdrop-blur md:hidden">
+    <nav aria-label="primary" className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-card/90 shadow-[0_-8px_24px_-16px_hsl(var(--primary)/.3)] backdrop-blur-xl md:hidden">
       <ul className="grid grid-cols-5">
         {items.map(({ href, label, Icon, active }) => (
           <li key={href}>
             <Link href={href} aria-current={active ? "page" : undefined}
-              className={cn("flex h-16 flex-col items-center justify-center gap-1 text-xs font-semibold", active ? "text-primary" : "text-muted-foreground")}>
-              <Icon className="size-5" aria-hidden />
+              className={cn("flex h-16 flex-col items-center justify-center gap-0.5 text-xs font-semibold transition-colors", active ? "text-primary" : "text-muted-foreground")}>
+              <span className={cn("grid h-7 w-12 place-items-center rounded-full transition-colors", active && "bg-primary/12")}><Icon className="size-5" aria-hidden /></span>
               {label}
             </Link>
           </li>
