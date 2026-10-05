@@ -1,16 +1,16 @@
 "use client";
 
-import { Bookmark, Compass, Home, Map, User } from "lucide-react";
+import { Bookmark, Clapperboard, Compass, Home, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-export function BottomNav({ labels }: { labels: { home: string; where: string; saved: string; map: string; account: string } }) {
+export function BottomNav({ labels }: { labels: { home: string; reels: string; explore: string; saved: string; account: string } }) {
   const path = usePathname();
   const items = [
     { href: "/", label: labels.home, Icon: Home, active: path === "/" },
-    { href: "/where", label: labels.where, Icon: Compass, active: path.startsWith("/where") },
-    { href: "/map", label: labels.map, Icon: Map, active: path.startsWith("/map") },
+    { href: "/reels", label: labels.reels, Icon: Clapperboard, active: path.startsWith("/reels") },
+    { href: "/explore", label: labels.explore, Icon: Compass, active: path.startsWith("/explore") || path.startsWith("/where") || path.startsWith("/map") },
     { href: "/saved", label: labels.saved, Icon: Bookmark, active: path.startsWith("/saved") },
     { href: "/account", label: labels.account, Icon: User, active: path.startsWith("/account") || path.startsWith("/login") },
   ];

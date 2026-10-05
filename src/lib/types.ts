@@ -100,6 +100,12 @@ export interface StoryRing {
   business_id: string; slug: string; name: string; logo_url: string | null; is_verified: boolean; followed: boolean;
   stories: { id: string; media_url: string; caption: string | null; created_at: string }[];
 }
+export interface ReelRow {
+  id: string; video_url: string; caption: string | null; likes_count: number; views_count: number; created_at: string;
+  author: { id: string; full_name: string | null; avatar_url: string | null } | null;
+  business: { name: string; slug: string; logo_url: string | null } | null;
+  liked?: boolean;
+}
 export interface NotificationRow {
   id: string; type: string; created_at: string; read_at: string | null; post_id: string | null; business_id: string | null;
   data: { excerpt?: string; event?: string };

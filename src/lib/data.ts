@@ -2,7 +2,7 @@ import { cache } from "react";
 import { getCity } from "@/lib/city";
 import { supabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
-import type { EventRow, NewPlaceRow, OfferRow, OpenNowRow, ListingCardRow, ListingDetail, ListingFilters, ReviewRow, ServiceStatusRow, Business, BusinessDetail, BusinessHour, Category, CommentRow, District, FeedPost, MapBusiness, NotificationRow, Product, Profile, SearchParams, StoryRing } from "@/lib/types";
+import type { EventRow, NewPlaceRow, OfferRow, OpenNowRow, ListingCardRow, ListingDetail, ListingFilters, ReviewRow, ServiceStatusRow, Business, BusinessDetail, BusinessHour, Category, CommentRow, District, FeedPost, MapBusiness, NotificationRow, ReelRow, Product, Profile, SearchParams, StoryRing } from "@/lib/types";
 
 /** Current auth user's profile, or null (guest / not configured). */
 export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
@@ -402,4 +402,23 @@ export async function getAds(placement: "feed" | "category" | "home_banner" | "s
   const supabase = await createClient();
   const { data } = await supabase.rpc("get_ads", { p_placement: placement, p_category: category, p_limit: limit });
   return (data ?? []) as AdRow[];
+}
+
+const REEL_SELECT = "id, video_url, caption, likes_count, views_count, created_at, author:profiles(id, full_name, avatar_url), business:businesses(name, slug, logo_url)";
+/** Newest reels first; `liked` is filled in for the signed-in user. */
+export async function getReels(limit = 20, startId: string | null = null): Promise<ReelRow[]> {
+  if (!supabaseConfigured) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.from("reels").select(REEL_SELECT).eq("is_hidden", false).order("created_at", { ascending: false }).limit(limit);
+  let rows = (data ?? []) as unknown as ReelRow[];
+  if (startId) {
+    const i = rows.findIndex((r) => r.id === startId);
+    if (i > 0) rows = [...rows.slice(i), ...rows.slice(0, i)];
+  }
+  if (rows.length === 0) return rows;
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return rows;
+  const { data: mine } = await supabase.from("reel_likes").select("reel_id").eq("user_id", auth.user.id).in("reel_id", rows.map((r) => r.id));
+  const set = new Set((mine ?? []).map((m: { reel_id: string }) => m.reel_id));
+  return rows.map((r) => ({ ...r, liked: set.has(r.id) }));
 }

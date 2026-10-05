@@ -133,3 +133,40 @@ export async function markNotificationsReadAction(): Promise<void> {
   await supabase.from("notifications").update({ read_at: new Date().toISOString() }).eq("user_id", user.id).is("read_at", null);
   revalidatePath("/", "layout");
 }
+
+const reelSchema = z.object({ businessId: uuid.nullable(), caption: z.string().trim().max(300), videoUrl: z.string() });
+export async function createReelAction(input: z.input<typeof reelSchema>): Promise<ActionResult<{ id: string }>> {
+  const parsed = reelSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "invalid" };
+  const { supabase, user } = await authed();
+  if (!user) return { ok: false, error: "auth" };
+  if (!mediaUrl(user.id, "reels").safeParse(parsed.data.videoUrl).success) return { ok: false, error: "invalid" };
+  const { data, error } = await supabase.from("reels")
+    .insert({ author_id: user.id, business_id: parsed.data.businessId, video_url: parsed.data.videoUrl, caption: parsed.data.caption || null })
+    .select("id").single();
+  if (error || !data) return fail(error);
+  revalidatePath("/");
+  revalidatePath("/reels");
+  return { ok: true, data: { id: data.id } };
+}
+
+export async function toggleReelLikeAction(reelId: string, like: boolean): Promise<ActionResult> {
+  if (!uuid.safeParse(reelId).success) return { ok: false, error: "invalid" };
+  const { supabase, user } = await authed();
+  if (!user) return { ok: false, error: "auth" };
+  const { error } = like
+    ? await supabase.from("reel_likes").upsert({ reel_id: reelId, user_id: user.id }, { onConflict: "reel_id,user_id", ignoreDuplicates: true })
+    : await supabase.from("reel_likes").delete().eq("reel_id", reelId).eq("user_id", user.id);
+  return error ? fail(error) : { ok: true };
+}
+
+export async function deleteReelAction(reelId: string): Promise<ActionResult> {
+  if (!uuid.safeParse(reelId).success) return { ok: false, error: "invalid" };
+  const { supabase, user } = await authed();
+  if (!user) return { ok: false, error: "auth" };
+  const { error } = await supabase.from("reels").delete().eq("id", reelId);
+  if (error) return fail(error);
+  revalidatePath("/reels");
+  revalidatePath("/");
+  return { ok: true };
+}

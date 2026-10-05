@@ -20,6 +20,8 @@ export async function Header() {
         </Link>
         <nav className="ms-4 hidden min-w-0 items-center gap-1 md:flex" aria-label="main">
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/">{t.nav.home}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/reels">{t.nav.reels}</Link>
+          <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/explore">{t.nav.explore}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/categories">{t.nav.categories}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/where">{t.nav.where}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/search">{t.nav.search}</Link>
