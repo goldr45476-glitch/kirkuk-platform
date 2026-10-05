@@ -3,16 +3,17 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { SavedProvider } from "@/features/saved/saved-context";
 import { getSavedIds } from "@/lib/data";
+import { getOwnedBusinesses } from "@/lib/data-dashboard";
 import { getI18n } from "@/lib/i18n/server";
 
 export default async function MainLayout({ children }: { children: React.ReactNode }) {
-  const [{ t }, { ids, loggedIn }] = await Promise.all([getI18n(), getSavedIds()]);
+  const [{ t }, { ids, loggedIn }, owned] = await Promise.all([getI18n(), getSavedIds(), getOwnedBusinesses()]);
   return (
     <SavedProvider initial={ids} loggedIn={loggedIn}>
       <Header />
       <main className="container pb-8 pt-4 md:pt-6">{children}</main>
       <Footer t={t} />
-      <BottomNav labels={t.nav} />
+      <BottomNav labels={t.nav} isOwner={owned.length > 0} />
     </SavedProvider>
   );
 }

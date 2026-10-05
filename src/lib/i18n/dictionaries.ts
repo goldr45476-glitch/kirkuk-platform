@@ -2,7 +2,7 @@
 const ar = {
   appName: "كركوك الآن",
   tagline: "كل ما تحتاجه في كركوك، في مكان واحد",
-  nav: { reels: "ريلز", explore: "استكشف", saved: "المحفوظات", where: "وين نروح؟", offers: "العروض", events: "الفعاليات",  home: "الرئيسية", categories: "الأقسام", account: "حسابي", login: "دخول", search: "بحث", map: "الخريطة", notifications: "الإشعارات" },
+  nav: { dashboard: "نشاطي", reels: "ريلز", explore: "استكشف", saved: "المحفوظات", where: "وين نروح؟", offers: "العروض", events: "الفعاليات",  home: "الرئيسية", categories: "الأقسام", account: "حسابي", login: "دخول", search: "بحث", map: "الخريطة", notifications: "الإشعارات" },
   common: {
     call: "اتصال", whatsapp: "واتساب", verified: "موثّق", featured: "مميز", openNow: "مفتوح الآن",
     all: "الكل", empty: "لا توجد نتائج بعد", back: "رجوع", save: "حفظ", saving: "جارٍ الحفظ…",
@@ -76,6 +76,11 @@ const ar = {
   },
   push: { title: "إشعارات الجهاز", enable: "تفعيل الإشعارات على هذا الجهاز", disable: "إيقاف الإشعارات", on: "الإشعارات مفعّلة", denied: "الإشعارات محظورة في المتصفح. فعّلها من إعدادات الموقع.", unsupported: "هذا المتصفح لا يدعم الإشعارات. على الآيفون ثبّت الموقع على الشاشة الرئيسية أولاً.", error: "تعذّر تفعيل الإشعارات", saved: "تم حفظ التفضيلات", social: "التفاعلات (إعجابات، تعليقات، متابعات)", offers: "عروض ومنشورات الأنشطة التي أتابعها وعروضي المحفوظة", reviews: "التقييمات والردود", system: "حالة اقتراحاتي ومطالباتي واشتراكاتي" },
   stories: { title: "القصص", close: "إغلاق", next: "التالي", prev: "السابق" },
+  owner: {
+    panel: "لوحة صاحب النشاط", hello: "أهلاً", last7: "آخر 7 أيام", quick: "إجراءات سريعة", newReel: "ريل جديد", newOffer: "عرض جديد", editPage: "تعديل الصفحة", stats: "الإحصائيات",
+    advertise: "أعلن أو ارفع باقتك", visitorView: "عرض الموقع كزائر", ownerView: "العودة للوحة النشاط", addPlace: "إضافة نشاط آخر", shareHint: "انشر منشوراً أو قصة من الأسفل ليراها متابعوك",
+    ctaTitle: "هل تملك محلاً أو نشاطاً؟", ctaBody: "أضف نشاطك مجاناً ووصّل لعملاء كركوك: صفحة خاصة وعروض وقصص وريلز.", ctaButton: "أضف نشاطك",
+  },
   reels: {
     title: "ريلز", create: "ريل جديد", empty: "لا توجد ريلز بعد. كن أول من ينشر!", newTitle: "نشر ريل", pick: "اختر فيديو", hint: "فيديو عمودي قصير: حتى 90 ثانية و30 ميغابايت (MP4 أو WebM)",
     caption: "اكتب وصفاً (اختياري)", publish: "نشر الريل", publishing: "جارٍ الرفع…", tooBig: "حجم الفيديو أكبر من 30 ميغابايت", tooLong: "الفيديو أطول من 90 ثانية", badType: "صيغة غير مدعومة، استخدم MP4 أو WebM",
@@ -190,7 +195,7 @@ export type Dictionary = typeof ar;
 const ku: Dictionary = {
   appName: "کەرکووک ئێستا",
   tagline: "هەموو پێداویستییەکانت لە کەرکووک، لە یەک شوێن",
-  nav: { reels: "ڕیلز", explore: "دۆزینەوە", saved: "پاشەکەوتکراو", where: "بۆ کوێ بچین؟", offers: "ئۆفەرەکان", events: "بۆنەکان",  home: "سەرەکی", categories: "بەشەکان", account: "هەژمارەکەم", login: "چوونەژوورەوە", search: "گەڕان", map: "نەخشە", notifications: "ئاگادارکردنەوە" },
+  nav: { dashboard: "چالاکیم", reels: "ڕیلز", explore: "دۆزینەوە", saved: "پاشەکەوتکراو", where: "بۆ کوێ بچین؟", offers: "ئۆفەرەکان", events: "بۆنەکان",  home: "سەرەکی", categories: "بەشەکان", account: "هەژمارەکەم", login: "چوونەژوورەوە", search: "گەڕان", map: "نەخشە", notifications: "ئاگادارکردنەوە" },
   common: {
     call: "پەیوەندی", whatsapp: "واتساپ", verified: "پشتڕاستکراوە", featured: "تایبەت", openNow: "ئێستا کراوەیە",
     all: "هەموو", empty: "هێشتا هیچ ئەنجامێک نییە", back: "گەڕانەوە", save: "پاشەکەوتکردن", saving: "پاشەکەوت دەکرێت…",
@@ -264,6 +269,11 @@ const ku: Dictionary = {
   },
   push: { title: "ئاگادارکردنەوەی ئامێر", enable: "ئاگادارکردنەوە لەسەر ئەم ئامێرە چالاک بکە", disable: "ئاگادارکردنەوە ڕابگرە", on: "ئاگادارکردنەوە چالاکە", denied: "ئاگادارکردنەوە لە وێبگەڕدا بلۆک کراوە. لە ڕێکخستنەکانی ماڵپەڕ چالاکی بکە.", unsupported: "ئەم وێبگەڕە پشتگیری ئاگادارکردنەوە ناکات. لە ئایفۆن سەرەتا ماڵپەڕەکە بخە سەر شاشەی سەرەکی.", error: "نەتوانرا ئاگادارکردنەوە چالاک بکرێت", saved: "هەڵبژاردنەکان پاشەکەوت کران", social: "کارلێککردن (بەدڵبوون، کۆمێنت، فۆڵۆ)", offers: "ئۆفەر و پۆستی چالاکییە فۆڵۆکراوەکان و ئۆفەرە پاشەکەوتکراوەکان", reviews: "هەڵسەنگاندن و وەڵامەکان", system: "دۆخی پێشنیار و داواکاری و بەشداریکردنەکانم" },
   stories: { title: "ستۆرییەکان", close: "داخستن", next: "دواتر", prev: "پێشوو" },
+  owner: {
+    panel: "داشبۆردی خاوەنکار", hello: "بەخێربێیت", last7: "٧ ڕۆژی ڕابردوو", quick: "کردارە خێراکان", newReel: "ڕیلی نوێ", newOffer: "ئۆفەری نوێ", editPage: "دەستکاریکردنی پەڕە", stats: "ئامار",
+    advertise: "ڕیکلام بکە یان باقەکەت بەرز بکەرەوە", visitorView: "بینینی ماڵپەڕ وەک میوان", ownerView: "گەڕانەوە بۆ داشبۆرد", addPlace: "زیادکردنی چالاکییەکی تر", shareHint: "لە خوارەوە پۆست یان ستۆری بڵاو بکەرەوە بۆ ئەوەی فۆڵۆوەرەکانت ببینن",
+    ctaTitle: "دوکان یان چالاکییەکت هەیە؟", ctaBody: "بە خۆڕایی چالاکییەکەت زیاد بکە و بگە بە کڕیارانی کەرکووک: پەڕەی تایبەت، ئۆفەر، ستۆری و ڕیلز.", ctaButton: "چالاکییەکەت زیاد بکە",
+  },
   reels: {
     title: "ڕیلز", create: "ڕیلی نوێ", empty: "هێشتا ڕیلز نییە. یەکەم کەس بە کە بڵاوی دەکاتەوە!", newTitle: "بڵاوکردنەوەی ڕیل", pick: "ڤیدیۆیەک هەڵبژێرە", hint: "ڤیدیۆی کورتی ستوونی: تا ٩٠ چرکە و ٣٠ مێگابایت (MP4 یان WebM)",
     caption: "وەسفێک بنووسە (ئارەزوومەندانە)", publish: "بڵاوکردنەوەی ڕیل", publishing: "بارکردن…", tooBig: "قەبارەی ڤیدیۆ لە ٣٠ مێگابایت زیاترە", tooLong: "ڤیدیۆکە لە ٩٠ چرکە درێژترە", badType: "فۆرماتەکە پشتگیری ناکرێت، MP4 یان WebM بەکاربهێنە",
@@ -376,7 +386,7 @@ const ku: Dictionary = {
 const tr: Dictionary = {
   appName: "Kerkük Şimdi",
   tagline: "Kerkük'te ihtiyacınız olan her şey, tek yerde",
-  nav: { reels: "Reels", explore: "Keşfet", saved: "Kaydedilenler", where: "Nereye?", offers: "Fırsatlar", events: "Etkinlikler",  home: "Ana Sayfa", categories: "Kategoriler", account: "Hesabım", login: "Giriş", search: "Ara", map: "Harita", notifications: "Bildirimler" },
+  nav: { dashboard: "İşletmem", reels: "Reels", explore: "Keşfet", saved: "Kaydedilenler", where: "Nereye?", offers: "Fırsatlar", events: "Etkinlikler",  home: "Ana Sayfa", categories: "Kategoriler", account: "Hesabım", login: "Giriş", search: "Ara", map: "Harita", notifications: "Bildirimler" },
   common: {
     call: "Ara", whatsapp: "WhatsApp", verified: "Onaylı", featured: "Öne çıkan", openNow: "Şimdi açık",
     all: "Tümü", empty: "Henüz sonuç yok", back: "Geri", save: "Kaydet", saving: "Kaydediliyor…",
@@ -450,6 +460,11 @@ const tr: Dictionary = {
   },
   push: { title: "Cihaz bildirimleri", enable: "Bu cihazda bildirimleri aç", disable: "Bildirimleri kapat", on: "Bildirimler açık", denied: "Bildirimler tarayıcıda engellenmiş. Site ayarlarından açın.", unsupported: "Bu tarayıcı bildirimleri desteklemiyor. iPhone’da önce siteyi ana ekrana ekleyin.", error: "Bildirimler etkinleştirilemedi", saved: "Tercihler kaydedildi", social: "Etkileşimler (beğeni, yorum, takip)", offers: "Takip ettiğim işletmelerin fırsatları/gönderileri ve kayıtlı fırsatlarım", reviews: "Değerlendirmeler ve yanıtlar", system: "Önerilerimin, taleplerimin ve aboneliklerimin durumu" },
   stories: { title: "Hikâyeler", close: "Kapat", next: "Sonraki", prev: "Önceki" },
+  owner: {
+    panel: "İşletme paneli", hello: "Merhaba", last7: "Son 7 gün", quick: "Hızlı işlemler", newReel: "Yeni Reels", newOffer: "Yeni fırsat", editPage: "Sayfayı düzenle", stats: "İstatistikler",
+    advertise: "Reklam ver veya paketi yükselt", visitorView: "Siteyi ziyaretçi olarak gör", ownerView: "Panele dön", addPlace: "Başka işletme ekle", shareHint: "Takipçilerinizin görmesi için aşağıdan gönderi veya hikâye paylaşın",
+    ctaTitle: "Dükkânınız veya işletmeniz mi var?", ctaBody: "İşletmenizi ücretsiz ekleyin, Kerkük'teki müşterilere ulaşın: özel sayfa, fırsatlar, hikâyeler ve Reels.", ctaButton: "İşletmenizi ekleyin",
+  },
   reels: {
     title: "Reels", create: "Yeni Reels", empty: "Henüz Reels yok. İlk paylaşan siz olun!", newTitle: "Reels paylaş", pick: "Video seç", hint: "Kısa dikey video: en fazla 90 saniye ve 30 MB (MP4 veya WebM)",
     caption: "Açıklama yazın (isteğe bağlı)", publish: "Reels'i paylaş", publishing: "Yükleniyor…", tooBig: "Video 30 MB'dan büyük", tooLong: "Video 90 saniyeden uzun", badType: "Desteklenmeyen biçim, MP4 veya WebM kullanın",
@@ -562,7 +577,7 @@ const tr: Dictionary = {
 const en: Dictionary = {
   appName: "Kirkuk Now",
   tagline: "Everything you need in Kirkuk, in one place",
-  nav: { reels: "Reels", explore: "Explore", saved: "Saved", where: "Where to?", offers: "Offers", events: "Events",  home: "Home", categories: "Categories", account: "Account", login: "Log in", search: "Search", map: "Map", notifications: "Notifications" },
+  nav: { dashboard: "My business", reels: "Reels", explore: "Explore", saved: "Saved", where: "Where to?", offers: "Offers", events: "Events",  home: "Home", categories: "Categories", account: "Account", login: "Log in", search: "Search", map: "Map", notifications: "Notifications" },
   common: {
     call: "Call", whatsapp: "WhatsApp", verified: "Verified", featured: "Featured", openNow: "Open now",
     all: "All", empty: "Nothing here yet", back: "Back", save: "Save", saving: "Saving…",
@@ -636,6 +651,11 @@ const en: Dictionary = {
   },
   push: { title: "Device notifications", enable: "Enable notifications on this device", disable: "Turn off notifications", on: "Notifications are on", denied: "Notifications are blocked in your browser. Enable them in site settings.", unsupported: "This browser does not support notifications. On iPhone, add the site to your Home Screen first.", error: "Could not enable notifications", saved: "Preferences saved", social: "Interactions (likes, comments, follows)", offers: "Offers/posts from places I follow and my saved offers", reviews: "Reviews and replies", system: "Status of my suggestions, claims and plans" },
   stories: { title: "Stories", close: "Close", next: "Next", prev: "Previous" },
+  owner: {
+    panel: "Business panel", hello: "Welcome", last7: "Last 7 days", quick: "Quick actions", newReel: "New reel", newOffer: "New offer", editPage: "Edit page", stats: "Stats",
+    advertise: "Advertise or upgrade", visitorView: "View site as a visitor", ownerView: "Back to business panel", addPlace: "Add another business", shareHint: "Post an update or story below so your followers see it",
+    ctaTitle: "Own a shop or business?", ctaBody: "Add your business for free and reach Kirkuk customers: your own page, offers, stories and reels.", ctaButton: "Add your business",
+  },
   reels: {
     title: "Reels", create: "New reel", empty: "No reels yet. Be the first to post!", newTitle: "Post a reel", pick: "Choose a video", hint: "Short vertical video: up to 90 seconds and 30 MB (MP4 or WebM)",
     caption: "Write a caption (optional)", publish: "Post reel", publishing: "Uploading…", tooBig: "Video is larger than 30 MB", tooLong: "Video is longer than 90 seconds", badType: "Unsupported format, use MP4 or WebM",

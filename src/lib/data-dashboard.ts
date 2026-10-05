@@ -3,14 +3,14 @@ import { supabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 import type { BusinessHour } from "@/lib/types";
 
-export interface OwnedBusiness { id: string; slug: string; name: string; status: "pending" | "active" | "suspended"; rating_avg: number; rating_count: number; followers_count: number; last_verified_at: string | null }
+export interface OwnedBusiness { id: string; slug: string; name: string; status: "pending" | "active" | "suspended"; rating_avg: number; rating_count: number; followers_count: number; last_verified_at: string | null; logo_url: string | null }
 
 export const getOwnedBusinesses = cache(async (): Promise<OwnedBusiness[]> => {
   if (!supabaseConfigured) return [];
   const supabase = await createClient();
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) return [];
-  const { data } = await supabase.from("businesses").select("id, slug, name, status, rating_avg, rating_count, followers_count, last_verified_at").eq("owner_id", auth.user.id).order("created_at");
+  const { data } = await supabase.from("businesses").select("id, slug, name, status, rating_avg, rating_count, followers_count, last_verified_at, logo_url").eq("owner_id", auth.user.id).order("created_at");
   return (data ?? []) as OwnedBusiness[];
 });
 

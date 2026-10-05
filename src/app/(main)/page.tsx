@@ -1,4 +1,4 @@
-import { Compass, Database, Search } from "lucide-react";
+import { Compass, Database, Search, Store } from "lucide-react";
 import Link from "next/link";
 import { BusinessCard } from "@/components/business-card";
 import { AdSlider } from "@/components/ad-slider";
@@ -7,20 +7,27 @@ import { Badge, Card } from "@/components/ui/card";
 import { Composer } from "@/features/feed/composer";
 import { FeedList } from "@/features/feed/feed-list";
 import { StoriesRow } from "@/features/feed/stories";
+import { OwnerPanel } from "@/features/owner/owner-panel";
 import { ReelsStrip } from "@/features/reels/reels-strip";
 import { cityName, getCity } from "@/lib/city";
+import { getBusinessStats, getOwnedBusinesses } from "@/lib/data-dashboard";
 import { dayPart } from "@/lib/format-time";
 import { FEED_PAGE, getAds, getCurrentProfile, getDistricts, getDutyPharmacies, getFeed, getMyBusinesses, getReels, getStoryRings } from "@/lib/data";
 import { supabaseConfigured } from "@/lib/env";
 import { getI18n, localized } from "@/lib/i18n/server";
 
-export default async function HomePage({ searchParams }: { searchParams: Promise<{ feed?: string }> }) {
-  const mode = (await searchParams).feed === "following" ? "following" : "all";
+export default async function HomePage({ searchParams }: { searchParams: Promise<{ feed?: string; as?: string }> }) {
+  const sp = await searchParams;
+  const mode = sp.feed === "following" ? "following" : "all";
   const { t, locale } = await getI18n();
   const [districts, duty, profile, rings, myBiz, posts, city, feedAds, bannerAds, reels] = await Promise.all([
     getDistricts(), getDutyPharmacies(), getCurrentProfile(), getStoryRings(), getMyBusinesses(), getFeed({ mode }),
     getCity(), getAds("feed", null, 3), getAds("home_banner", null, 6), getReels(10),
   ]);
+  const owned = await getOwnedBusinesses();
+  const ownerMode = owned.length > 0 && sp.as !== "visitor";
+  const statsList = ownerMode ? await Promise.all(owned.slice(0, 4).map((b) => getBusinessStats(b.id, 7))) : [];
+  const stats = Object.fromEntries(owned.slice(0, 4).map((b, i) => [b.id, statsList[i] ?? null]));
   const cname = cityName(city, locale) || t.appName;
   const intents = [
     ["eat", "/search?category=food&open=1", "🍽️"], ["coffee", "/search?category=cafes&open=1", "☕"], ["shop", "/search?category=shops", "🛍️"],
@@ -29,9 +36,13 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
   return (
     <div className="mx-auto max-w-5xl space-y-4">
+      {ownerMode ? (
+        <OwnerPanel owned={owned} stats={stats} name={profile?.full_name ?? ""} t={t} />
+      ) : (
+        <>
       {/* Hero: greeting + search + quick intents, above the ads slider */}
       <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-primary/70 p-5 text-primary-foreground shadow-lg shadow-primary/25 md:p-8">
-        <CitadelLogo className="pointer-events-none absolute -bottom-6 -start-6 size-48 opacity-[.12] md:size-64" gate="transparent" flag="transparent" />
+        <CitadelLogo className="pointer-events-none absolute -bottom-6 -start-6 size-48 opacity-[.12] md:size-64" gate="transparent" sun="transparent" />
         <span className="pointer-events-none absolute -end-16 -top-20 size-56 rounded-full bg-accent/30 blur-2xl" aria-hidden />
         <div className="relative space-y-4">
           <div>
@@ -53,6 +64,8 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           </ul>
         </div>
       </section>
+        </>
+      )}
 
       {!supabaseConfigured && (
         <Card className="flex items-start gap-3 border-accent/60 bg-accent/10 p-4">
@@ -62,6 +75,14 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
             <p className="text-sm text-muted-foreground">{t.home.setupBody}</p>
           </div>
         </Card>
+      )}
+
+      {!ownerMode && (
+        <Link href="/suggest" className="flex items-center gap-4 rounded-2xl border border-accent/40 bg-gradient-to-br from-accent/15 to-card p-4 shadow-sm transition hover:-translate-y-0.5">
+          <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-accent text-accent-foreground"><Store className="size-6" aria-hidden /></span>
+          <span className="min-w-0"><span className="block font-extrabold">{t.owner.ctaTitle}</span><span className="block text-sm text-muted-foreground">{t.owner.ctaBody}</span></span>
+          <span className="ms-auto hidden shrink-0 rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground sm:block">{t.owner.ctaButton}</span>
+        </Link>
       )}
 
       <AdSlider ads={bannerAds} label={t.adsSlider.label} prev={t.adsSlider.prev} next={t.adsSlider.next} />

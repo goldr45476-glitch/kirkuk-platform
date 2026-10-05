@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { getI18n } from "@/lib/i18n/server";
 import { NotificationBell } from "@/features/notifications/bell";
 import { getCurrentProfile, getUnreadCount } from "@/lib/data";
+import { getOwnedBusinesses } from "@/lib/data-dashboard";
 import { LocaleSwitcher } from "./locale-switcher";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -12,6 +13,7 @@ export async function Header() {
   const { t, locale } = await getI18n();
   const profile = await getCurrentProfile();
   const unread = profile ? await getUnreadCount() : 0;
+  const isOwner = profile ? (await getOwnedBusinesses()).length > 0 : false;
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="container flex h-14 items-center gap-2">
@@ -23,6 +25,7 @@ export async function Header() {
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/">{t.nav.home}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/reels">{t.nav.reels}</Link>
           <Link className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/explore">{t.nav.explore}</Link>
+          {isOwner && <Link className="rounded-lg bg-primary/10 px-3 py-2 text-sm font-bold text-primary whitespace-nowrap" href="/dashboard">{t.nav.dashboard}</Link>}
           <Link className="hidden lg:block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/where">{t.nav.where}</Link>
           <Link className="hidden xl:block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/categories">{t.nav.categories}</Link>
           <Link className="hidden 2xl:block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-muted whitespace-nowrap" href="/offers">{t.nav.offers}</Link>

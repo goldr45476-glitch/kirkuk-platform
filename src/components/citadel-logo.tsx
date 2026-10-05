@@ -1,23 +1,18 @@
-/** Kirkuk Citadel silhouette: a walled hilltop fortress with corner towers, a central keep, crenellations and a gate. */
-export function CitadelLogo({ className, gate = "#0f766e", flag = "#f59e0b" }: { className?: string; gate?: string; flag?: string }) {
-  const merlons = (xs: number[], y: number, w: number, h: number) => xs.map((x) => <rect key={`${x}-${y}`} x={x} y={y} width={w} height={h} />);
+/** Kirkuk Citadel: a long crenellated wall meeting a round corner tower, with arrow slits and a sun disc behind (after the real citadel's silhouette). */
+export function CitadelLogo({ className, gate = "#0f766e", sun = "#f59e0b" }: { className?: string; gate?: string; sun?: string }) {
+  const merlons = (xs: number[], y: number, w: number, h: number) => xs.map((x) => <rect key={`${x}-${y}`} x={x} y={y} width={w} height={h} rx="1.1" />);
+  const slits = (xs: number[], y: number, h: number) => xs.map((x) => <rect key={`${x}-${y}`} x={x} y={y} width="1.9" height={h} rx=".95" fill={gate} />);
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden fill="#fff">
-      <path d="M1 61c5-10 15-14 31-14s26 4 31 14z" opacity=".5" />
-      <rect x="8" y="35" width="48" height="14" rx="1" />
-      {merlons([8, 16.6, 25.2, 33.8, 42.4, 51], 31, 5, 4)}
-      <rect x="5" y="25" width="11" height="24" rx="1" />
-      {merlons([5, 9.2, 13.4], 21.5, 3.2, 3.5)}
-      <rect x="48" y="25" width="11" height="24" rx="1" />
-      {merlons([48, 52.2, 56.4], 21.5, 3.2, 3.5)}
-      <rect x="24.5" y="14" width="15" height="36" rx="1" />
-      {merlons([24.5, 30, 35.5], 10.5, 4, 3.5)}
-      <path d="M32 10.5V3.5" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" />
-      <path d="M32.6 3.8l6 2.2-6 2.2z" fill={flag} />
-      <path d="M28 50V43a4 4 0 0 1 8 0v7z" fill={gate} />
-      <rect x="8.5" y="39" width="3" height="5" rx="1.5" fill={gate} />
-      <rect x="52.5" y="39" width="3" height="5" rx="1.5" fill={gate} />
-      <rect x="29.5" y="21" width="5" height="7" rx="2.5" fill={gate} />
+      <circle cx="42" cy="27" r="19" fill={sun} opacity=".95" />
+      <rect x="6" y="26" width="36" height="27" />
+      {merlons([6, 12.4, 18.8, 25.2, 31.6], 21, 4, 5.5)}
+      <path d="M40 45l-2.5 8h24L58 45z" />
+      <rect x="40" y="20" width="18" height="32" />
+      {merlons([40, 44.8, 49.6, 54.4], 14.5, 3.6, 6)}
+      <rect x="2" y="54.5" width="60" height="4" rx="2" opacity=".6" />
+      {slits([10.5, 18, 25.5, 33], 32, 9)}
+      {slits([45.5, 52], 28, 10)}
     </svg>
   );
 }
