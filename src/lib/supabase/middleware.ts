@@ -23,8 +23,7 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getUser();
   const path = request.nextUrl.pathname;
   if (!data.user && PROTECTED.some((p) => path === p || path.startsWith(p + "/"))) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
+    const url = new URL("/login", SITE_URL);
     url.search = `?next=${encodeURIComponent(path + request.nextUrl.search)}`;
     return NextResponse.redirect(url);
   }
