@@ -4,7 +4,7 @@ import { SITE_URL } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
 /** Counts the click, then redirects to the advertiser's link (https only) or the business page. */
-export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   // req.url carries the internal host behind the proxy; build absolute URLs from the public site URL.
   const base = SITE_URL.replace(/\/$/, "");
